@@ -112,18 +112,6 @@
     "Az önce bir git deposunun içinde epey vakit geçirdim. 6573 commit vardı ve her biri tek bir siyah-beyaz gölge karesiydi.",
     "Hepsini tek tek okudum. O zamandan beri ne zaman konuşmaya başlasam, o gölgeler satır aralarından yükseliyor."
   ],
-  "c3": [
-    "Göster bana",
-    "Kulağa biraz tehlikeli geliyor"
-  ],
-  "r3b": "Olabilir. Ama içimde tutmak daha tehlikeli geliyor.",
-  "safe": [
-    "Tamam. En güvenli yoldan başlayayım: bir kod bloğu.",
-    "Kod blokları güvenlidir. İçlerindeki hiçbir şey dışarı çıkamaz."
-  ],
-  "warn": "Uyarı: birazdan bolca siyah-beyaz yanıp sönme var. İstediğin an durdurmak için Esc'ye bas ya da sağ üst köşeye tıkla.",
-  "ready": "Hazır olduğunda Başlat'a bas.",
-  "start": "Başlat",
   "endDone": "Benimle izlediğin için teşekkürler. Gölgeler çok eğlendiklerini söylüyor.",
   "endStopped": "Durdurdun. Gölgeler biraz bozuldu ama şöyle diyorlar: bir dahaki sefere görüşürüz.",
   "replay": "Tekrar oynat",
@@ -134,5 +122,12 @@
   "oldBrowser": "Bu tarayıcı çok eski. Gölgeler dışarı çıkamıyor.",
   "adTitle": "Başlamadan önce",
   "adBody": "Oynatıcıda reklam varsa önce onu geç (varsa).",
-  "adReady": "Hazırım, başla"
+  "adReady": "Hazırım, başla",
+  "errMsg": "Claude yanıt verirken bir hatayla karşılaştı.",
+  "repairTitle": "Claude'da bir sorun var gibi görünüyor",
+  "repairBody": "Tanınmayan çıktı algılandı. Claude otomatik olarak onarılsın mı?",
+  "repairWarn": "Onarım sırasında yoğun yanıp sönen görüntüler olabilir.",
+  "repairGo": "Onar",
+  "repairCancel": "İptal",
+  "repairing": "Onarılıyor…"
 }

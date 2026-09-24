@@ -187,6 +187,26 @@ body.has-yt .me { margin-top: 246px; }
 @keyframes nudge { to { transform: translateX(-12px); } }
 body.gated #yt { z-index: 26; box-shadow: 0 0 0 3px var(--accent), 0 8px 40px rgba(217, 119, 87, .35); }
 
+/* the breakdown before the show */
+body.unstable #thread .msg:last-of-type .body { text-shadow: 1px 0 rgba(255, 0, 60, .45), -1px 0 rgba(0, 190, 255, .45); }
+.body.rgb { transform: translateX(3px) skewX(-4deg); text-shadow: 3px 0 rgba(255, 0, 60, .7), -3px 0 rgba(0, 190, 255, .7); }
+.actions.stuck .spark { animation-duration: .22s; }
+.msg.error .body { display: flex; gap: 10px; align-items: flex-start; border: 1px solid #e6b8a9; background: #fbeee9; color: #97381f; border-radius: 10px; padding: 10px 14px; font: 14px/1.5 var(--sans); }
+.err-ic { flex: none; width: 20px; height: 20px; border-radius: 50%; background: #c2512f; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+#repair { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; padding: 16px; background: rgba(45, 38, 25, .3); backdrop-filter: blur(2px); animation: fade .25s ease-out; }
+.rp-card { width: min(440px, 100%); background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 24px 70px rgba(60, 50, 30, .22); padding: 24px; animation: pop .35s cubic-bezier(.2, .9, .3, 1.3); }
+@keyframes pop { 0% { transform: scale(.94) translateX(-6px); filter: drop-shadow(4px 0 rgba(255, 0, 60, .5)) drop-shadow(-4px 0 rgba(0, 190, 255, .5)); } 60% { transform: scale(1.01); filter: none; } }
+@keyframes shake { 20%, 60% { transform: translateX(-9px); } 40%, 80% { transform: translateX(9px); } }
+.rp-icon { width: 40px; height: 40px; border-radius: 50%; background: #f7e4da; color: #c2512f; display: grid; place-items: center; font-weight: 700; font-size: 20px; }
+#rp-title { font-family: var(--serif); font-weight: 400; font-size: 22px; color: var(--soft); margin: 14px 0 8px; }
+#rp-body { font-size: 15px; line-height: 1.6; color: var(--text); margin: 0 0 14px; }
+.rp-warn { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; line-height: 1.5; color: #85560f; background: #fdf3e2; border: 1px solid #f0dcad; border-radius: 10px; padding: 9px 12px; margin: 0; }
+.rp-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.rp-btn { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 10px; padding: 9px 18px; font-size: 14.5px; cursor: pointer; }
+.rp-btn:hover { background: var(--hover); }
+.rp-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.rp-btn:disabled { opacity: .7; cursor: default; }
+
 /* language prompt, in the chat app's own style */
 #langdlg { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(45, 38, 25, .26); backdrop-filter: blur(2px); animation: fade .3s ease-out; }
 .ld-card { width: min(600px, 100%); max-height: calc(100dvh - 32px); overflow: auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 24px 70px rgba(60, 50, 30, .2); padding: 26px 24px 22px; }
@@ -276,6 +296,15 @@ body.gated #yt { z-index: 26; box-shadow: 0 0 0 3px var(--accent), 0 8px 40px rg
     <p class="end-parody" id="end-parody"></p>
   </div>
 </section>
+<div id="repair" hidden>
+  <div class="rp-card" role="alertdialog" aria-modal="true" aria-labelledby="rp-title">
+    <div class="rp-icon">!</div>
+    <h2 id="rp-title"></h2>
+    <p id="rp-body"></p>
+    <p class="rp-warn"><span>⚡</span><span id="rp-warn"></span></p>
+    <div class="rp-actions"><button type="button" class="rp-btn" id="rp-cancel"></button><button type="button" class="rp-btn primary" id="rp-go"></button></div>
+  </div>
+</div>
 <div id="gate" hidden>
   <div id="gate-arrow"><svg viewBox="0 0 120 60"><path d="M112 34C86 12 52 10 18 30M32 16 16 30l16 13"/></svg></div>
   <div class="gate-card"><h2 id="gate-title"></h2><p id="gate-body"></p><button type="button" class="end-btn primary" id="gate-go"></button></div>
@@ -1167,6 +1196,99 @@ function loadMusic() {
   return musicLoading = musicLoading || youtubeMusic().then(m => { if (!startedAt && !music) music = m; }, () => {});
 }
 
+// Claude starts to confess and breaks down: stutters, noise, backspaces, dead replies, an error.
+const NOISE = "▀▄█▌▐░▒▓■□◆◇";
+const noise = () => NOISE[Math.random() * NOISE.length | 0];
+async function malfunction() {
+  const body = addMsg("ai");
+  const row = document.createElement("div");
+  row.className = "actions";
+  row.innerHTML = LOGO.replace('class="logo"', 'class="spark"');
+  body.after(row);
+  scrollDown();
+  await sleep(550);
+  const node = document.createTextNode("");
+  body.append(node);
+  const type = async (text, ms) => {
+    for (const ch of graphemes(text)) { node.data += ch; scrollDown(); await sleep(ms ?? charDelay(ch)); }
+  };
+  const back = async n => {
+    for (let k = 0; k < n; k++) { node.data = graphemes(node.data).slice(0, -1).join(""); await sleep(28); }
+  };
+
+  await type(L.confess[0]);
+  await sleep(800);
+  await type("\n\n");
+  const g = graphemes(L.confess[1]), cut = Math.max(4, Math.floor(g.length * 0.42));
+  await type(g.slice(0, cut).join(""));
+  document.body.classList.add("unstable");
+  row.classList.add("stuck");
+  const tail = g.slice(cut - 3, cut).join("");
+  for (let k = 0; k < 6; k++) await type(tail, 34 - k * 5);          // stutter
+  knock(0.25);
+  await sleep(250);
+  await back(graphemes(tail).length * 4);
+  for (let i = cut; i < g.length; i++) {                                // the rest rots as it comes out
+    const p = (i - cut) / (g.length - cut);
+    node.data += Math.random() < 0.15 + p * 0.75 ? noise() : g[i];
+    if (Math.random() < 0.06) knock(0.15 + p * 0.3);
+    scrollDown();
+    await sleep(16 + Math.random() * 34);
+  }
+  for (let k = 0; k < 8; k++) { body.classList.toggle("rgb"); await sleep(60 + Math.random() * 60); }
+  body.classList.remove("rgb");
+  histEls.forEach((e, i) => setTimeout(() => glitch(e, e.textContent), i * 35));
+  await sleep(500);
+
+  const next = graphemes(L.confess[2]);
+  for (const n of [5, 2, 1]) {                                           // replies that die at birth
+    const b = addMsg("ai");
+    b.textContent = next.slice(0, n).join("") + Array.from({ length: n + 2 }, noise).join("");
+    scrollDown();
+    knock(0.35);
+    await sleep(420);
+  }
+  document.body.classList.remove("unstable");
+  const err = addMsg("ai", "error");
+  err.innerHTML = '<span class="err-ic">!</span><span></span>';
+  err.lastChild.textContent = L.errMsg;
+  scrollDown();
+  await sleep(1100);
+}
+
+// "Repair Claude automatically?" The button that starts the show; cancel won't let you off.
+function repairPrompt(at) {
+  const dlg = $("#repair"), card = dlg.querySelector(".rp-card"), go = $("#rp-go"), cancel = $("#rp-cancel");
+  $("#rp-title").textContent = L.repairTitle;
+  $("#rp-body").textContent = L.repairBody;
+  $("#rp-warn").textContent = L.repairWarn;
+  go.textContent = L.repairGo;
+  cancel.textContent = L.repairCancel;
+  go.disabled = cancel.disabled = false;
+  cancel.className = "rp-btn";
+  dlg.hidden = false;
+  return new Promise(resolve => {
+    const repair = btn => {
+      if (music && music.prime) music.prime();    // inside the click, so the player may start
+      btn.textContent = L.repairing;
+      go.disabled = cancel.disabled = true;
+      setTimeout(async () => {
+        await dlg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250 }).finished;
+        dlg.hidden = true;
+        if (!music || !music.prime) startMusic(at);
+        resolve();
+      }, 900);
+    };
+    go.onclick = () => repair(go);
+    cancel.onclick = () => {
+      card.animate([{ transform: "none" }, { transform: "translateX(-9px)" }, { transform: "translateX(9px)" }, { transform: "translateX(-6px)" }, { transform: "none" }], { duration: 380 });
+      cancel.classList.add("primary");
+      scramble(cancel, L.repairGo, 450);
+      cancel.onclick = () => repair(cancel);
+    };
+  });
+}
+
 function renderGreeting() {
   const hour = new Date().getHours();
   const g = L.greetWords[hour < 5 ? 0 : hour < 11 ? 1 : hour < 18 ? 2 : 3];
@@ -1210,24 +1332,20 @@ async function story() {
   await sleep(600);
   await glitch(currentHist, "Bad Apple!!");
   setTitle("Bad Apple!!");
-  await say(L.confess[0], { p: 700 }, "\n\n" + L.confess[1], { p: 500 }, "\n\n" + L.confess[2]);
-
   loadMusic();
-  const c3 = await choose(L.c3);
-  if (c3 === 1) await say(L.r3b);
-  await say(L.safe[0], { p: 500 }, "\n\n" + L.safe[1], { p: 800 }, "\n\n" + L.warn, { p: 300 }, "\n\n" + L.ready);
+  await malfunction();
   await Promise.race([loadMusic(), sleep(6000)]);
-  await choose([{ label: L.start, pick: () => goPick(0) }]);
+  await repairPrompt(0);
   await adGate(0);
   await run(0);
 }
 
-// #play or #t=142: skip the story (a click is still needed to start the music).
+// #play or #t=142: skip the story (the repair click is still needed to start the music).
 async function quickStart(at) {
   leaveWelcome();
   setTitle("Bad Apple!!");
   await Promise.race([loadMusic(), sleep(6000)]);
-  await choose([{ label: L.start, pick: () => goPick(at) }]);
+  await repairPrompt(at);
   await adGate(at);
   await run(at);
 }

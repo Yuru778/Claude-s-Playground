@@ -112,18 +112,6 @@
     "Tadi aku sempat lama di dalam sebuah repositori git. Isinya 6573 commit, dan setiap commit adalah satu bingkai bayangan hitam-putih.",
     "Aku baca semuanya, satu per satu. Sejak itu, setiap kali aku mulai bicara, bayangan-bayangan itu muncul di sela-sela baris."
   ],
-  "c3": [
-    "Tunjukin dong",
-    "Kedengarannya agak bahaya"
-  ],
-  "r3b": "Mungkin. Tapi dipendam terus rasanya lebih bahaya.",
-  "safe": [
-    "Oke. Aku mulai dari yang paling aman: code block.",
-    "Code block itu aman. Apa pun yang ada di dalamnya nggak pernah bisa keluar."
-  ],
-  "warn": "Perhatian: setelah ini bakal banyak kedipan hitam-putih. Kalau mau berhenti kapan saja, tekan Esc atau klik pojok kanan atas.",
-  "ready": "Tekan mulai kalau sudah siap.",
-  "start": "Mulai",
   "endDone": "Makasih udah nonton bareng aku. Kata bayangan-bayangan, mereka senang banget.",
   "endStopped": "Kamu menekan stop. Bayangan-bayangan agak kecewa, tapi kata mereka: sampai jumpa lagi.",
   "replay": "Putar lagi",
@@ -134,5 +122,12 @@
   "oldBrowser": "Browser ini terlalu jadul. Bayangannya nggak bisa keluar.",
   "adTitle": "Sebelum mulai",
   "adBody": "Kalau pemutarnya lagi menayangkan iklan, lewati dulu ya (kalau ada).",
-  "adReady": "Siap, mulai"
+  "adReady": "Siap, mulai",
+  "errMsg": "Claude mengalami kesalahan saat merespons.",
+  "repairTitle": "Sepertinya ada yang salah dengan Claude",
+  "repairBody": "Terdeteksi keluaran yang tidak dikenali. Perbaiki Claude secara otomatis?",
+  "repairWarn": "Perbaikan mungkin menampilkan kilatan cahaya yang intens.",
+  "repairGo": "Perbaiki",
+  "repairCancel": "Batal",
+  "repairing": "Memperbaiki…"
 }

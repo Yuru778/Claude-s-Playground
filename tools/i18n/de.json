@@ -112,18 +112,6 @@
     "Vorhin war ich eine Weile in einem git-Repository. Es hatte 6573 Commits, und jeder davon war ein einzelnes schwarz-weißes Schattenbild.",
     "Ich hab sie alle gelesen, einen nach dem anderen. Seitdem steigen diese Schatten zwischen den Zeilen auf, sobald ich anfange zu sprechen."
   ],
-  "c3": [
-    "Zeig her",
-    "Klingt ein bisschen gefährlich"
-  ],
-  "r3b": "Vielleicht. Aber es für mich zu behalten, fühlt sich noch gefährlicher an.",
-  "safe": [
-    "Okay. Ich fange mit der sichersten Variante an: einem Code-Block.",
-    "Code-Blöcke sind sicher. Was drin ist, kommt nie raus."
-  ],
-  "warn": "Achtung: Gleich gibt's jede Menge Schwarz-Weiß-Geflacker. Zum Stoppen jederzeit Esc drücken oder oben rechts in die Ecke klicken.",
-  "ready": "Drück auf Start, wenn du bereit bist.",
-  "start": "Start",
   "endDone": "Danke, dass du's mit mir angeschaut hast. Die Schatten sagen, sie hatten richtig Spaß.",
   "endStopped": "Du hast auf Stopp gedrückt. Die Schatten sind ein bisschen enttäuscht, aber sie sagen: bis zum nächsten Mal.",
   "replay": "Nochmal abspielen",
@@ -134,5 +122,12 @@
   "oldBrowser": "Dieser Browser ist zu alt. Die Schatten kommen nicht raus.",
   "adTitle": "Bevor es losgeht",
   "adBody": "Falls im Player Werbung läuft, überspring sie zuerst (falls vorhanden).",
-  "adReady": "Bereit, los"
+  "adReady": "Bereit, los",
+  "errMsg": "Bei der Antwort von Claude ist ein Fehler aufgetreten.",
+  "repairTitle": "Mit Claude stimmt etwas nicht",
+  "repairBody": "Unbekannte Ausgabe erkannt. Claude automatisch reparieren?",
+  "repairWarn": "Während der Reparatur kann es zu starkem Flackern kommen.",
+  "repairGo": "Reparieren",
+  "repairCancel": "Abbrechen",
+  "repairing": "Wird repariert…"
 }

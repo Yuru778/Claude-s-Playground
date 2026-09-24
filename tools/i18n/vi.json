@@ -112,18 +112,6 @@
     "Lúc nãy mình có ở trong một kho git một lúc. Trong đó có 6573 commit, và mỗi commit là một khung hình bóng đen trắng.",
     "Mình đã đọc hết, từng cái một. Từ đó đến giờ, cứ mỗi lần mình mở lời, những cái bóng ấy lại trồi lên giữa các dòng chữ."
   ],
-  "c3": [
-    "Cho mình xem đi",
-    "Nghe hơi nguy hiểm đó"
-  ],
-  "r3b": "Có thể. Nhưng cứ nén mãi trong lòng còn nguy hiểm hơn.",
-  "safe": [
-    "Được. Mình sẽ bắt đầu bằng cách an toàn nhất: một khối code.",
-    "Khối code thì an toàn. Thứ gì ở trong đó cũng không bao giờ thoát ra được."
-  ],
-  "warn": "Lưu ý: sắp tới sẽ có rất nhiều hình đen trắng nhấp nháy. Muốn dừng lúc nào, cứ nhấn Esc hoặc bấm vào góc trên bên phải.",
-  "ready": "Sẵn sàng thì nhấn bắt đầu nhé.",
-  "start": "Bắt đầu",
   "endDone": "Cảm ơn bạn đã xem cùng mình. Đám bóng bảo tụi nó vui lắm.",
   "endStopped": "Bạn đã nhấn dừng. Đám bóng hơi buồn một chút, nhưng tụi nó nói: hẹn gặp lại lần sau.",
   "replay": "Phát lại",
@@ -134,5 +122,12 @@
   "oldBrowser": "Trình duyệt này cũ quá rồi. Bóng không ra ngoài được.",
   "adTitle": "Trước khi bắt đầu",
   "adBody": "Nếu trình phát đang chạy quảng cáo, hãy bỏ qua trước (nếu có).",
-  "adReady": "Xong, bắt đầu"
+  "adReady": "Xong, bắt đầu",
+  "errMsg": "Claude gặp lỗi khi trả lời.",
+  "repairTitle": "Claude có vẻ đang gặp sự cố",
+  "repairBody": "Phát hiện đầu ra không xác định. Tự động sửa Claude?",
+  "repairWarn": "Quá trình sửa có thể có nhiều hình ảnh nhấp nháy mạnh.",
+  "repairGo": "Sửa",
+  "repairCancel": "Hủy",
+  "repairing": "Đang sửa…"
 }

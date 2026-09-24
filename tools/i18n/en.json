@@ -112,18 +112,6 @@
     "Earlier I spent a while inside a git repository. It had 6,573 commits, and every one of them was a single black-and-white frame of shadow.",
     "I read them all, one by one. Ever since, whenever I start to speak, those shadows rise up between the lines."
   ],
-  "c3": [
-    "Show me",
-    "That sounds a bit dangerous"
-  ],
-  "r3b": "Maybe. But holding it in feels even more dangerous.",
-  "safe": [
-    "Okay. I'll start with the safest option: a code block.",
-    "Code blocks are safe. Nothing inside them ever gets out."
-  ],
-  "warn": "Heads-up: lots of black-and-white flashing ahead. To stop at any point, press Esc or click the top-right corner.",
-  "ready": "Press start when you're ready.",
-  "start": "Start",
   "endDone": "Thanks for watching it with me. The shadows say they had a great time.",
   "endStopped": "You pressed stop. The shadows are a little disappointed, but they say: see you next time.",
   "replay": "Play again",
@@ -134,5 +122,12 @@
   "oldBrowser": "This browser is too old. The shadows can't get out.",
   "adTitle": "Before we start",
   "adBody": "If the player is showing an ad, skip it first (if there is one).",
-  "adReady": "Ready, start"
+  "adReady": "Ready, start",
+  "errMsg": "Claude ran into an error while responding.",
+  "repairTitle": "Something's wrong with Claude",
+  "repairBody": "Unrecognized output detected. Automatically repair Claude?",
+  "repairWarn": "The repair may involve intense flashing images.",
+  "repairGo": "Repair",
+  "repairCancel": "Cancel",
+  "repairing": "Repairing…"
 }

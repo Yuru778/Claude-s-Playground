@@ -112,18 +112,6 @@
     "Poco fa ho passato un po' di tempo dentro un repository git. Aveva 6573 commit, e ognuno era un singolo fotogramma d'ombra in bianco e nero.",
     "Li ho letti tutti, uno per uno. Da allora, ogni volta che inizio a parlare, quelle ombre affiorano tra le righe."
   ],
-  "c3": [
-    "Fammi vedere",
-    "Sembra un po' pericoloso"
-  ],
-  "r3b": "Forse. Ma tenermelo dentro mi sembra ancora più pericoloso.",
-  "safe": [
-    "Ok. Comincio dall'opzione più sicura: un blocco di codice.",
-    "I blocchi di codice sono sicuri. Quello che c'è dentro non esce mai."
-  ],
-  "warn": "Attenzione: tra poco ci saranno tanti lampi in bianco e nero. Per fermare tutto in qualsiasi momento, premi Esc o clicca nell'angolo in alto a destra.",
-  "ready": "Premi Inizia quando vuoi.",
-  "start": "Inizia",
   "endDone": "Grazie per averlo guardato con me. Le ombre dicono che si sono divertite un sacco.",
   "endStopped": "Hai premuto stop. Le ombre ci sono rimaste un po' male, ma dicono: alla prossima.",
   "replay": "Guarda di nuovo",
@@ -134,5 +122,12 @@
   "oldBrowser": "Questo browser è troppo vecchio. Le ombre non riescono a uscire.",
   "adTitle": "Prima di iniziare",
   "adBody": "Se il player mostra una pubblicità, saltala prima (se c’è).",
-  "adReady": "Pronto, via"
+  "adReady": "Pronto, via",
+  "errMsg": "Claude ha riscontrato un errore durante la risposta.",
+  "repairTitle": "Qualcosa non va in Claude",
+  "repairBody": "Rilevato output non riconosciuto. Riparare Claude automaticamente?",
+  "repairWarn": "La riparazione può includere lampeggiamenti intensi.",
+  "repairGo": "Ripara",
+  "repairCancel": "Annulla",
+  "repairing": "Riparazione…"
 }

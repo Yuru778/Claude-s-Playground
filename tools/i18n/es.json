@@ -112,18 +112,6 @@
     "Hace un rato pasé un tiempo dentro de un repositorio git. Tenía 6573 commits, y cada uno era un único fotograma de sombra en blanco y negro.",
     "Los leí todos, uno por uno. Desde entonces, cada vez que empiezo a hablar, esas sombras asoman entre líneas."
   ],
-  "c3": [
-    "Enséñamelo",
-    "Suena un poco peligroso"
-  ],
-  "r3b": "Puede ser. Pero guardármelo me parece todavía más peligroso.",
-  "safe": [
-    "Vale. Empezaré por lo más seguro: un code block.",
-    "Los code blocks son seguros. Nada de lo que hay dentro sale nunca."
-  ],
-  "warn": "Aviso: se vienen muchos destellos en blanco y negro. Para detenerlo en cualquier momento, pulsa Esc o haz clic en la esquina superior derecha.",
-  "ready": "Pulsa empezar cuando estés listo.",
-  "start": "Empezar",
   "endDone": "Gracias por verlo conmigo. Las sombras dicen que se lo pasaron genial.",
   "endStopped": "Le diste a detener. Las sombras están un poco decepcionadas, pero dicen: hasta la próxima.",
   "replay": "Volver a ver",
@@ -134,5 +122,12 @@
   "oldBrowser": "Este navegador es demasiado antiguo. Las sombras no pueden salir.",
   "adTitle": "Antes de empezar",
   "adBody": "Si el reproductor muestra un anuncio, sáltalo primero (si lo hay).",
-  "adReady": "Listo, empezar"
+  "adReady": "Listo, empezar",
+  "errMsg": "Claude tuvo un error al responder.",
+  "repairTitle": "Algo le pasa a Claude",
+  "repairBody": "Se detectó una salida no reconocida. ¿Reparar Claude automáticamente?",
+  "repairWarn": "La reparación puede incluir destellos intensos.",
+  "repairGo": "Reparar",
+  "repairCancel": "Cancelar",
+  "repairing": "Reparando…"
 }

@@ -112,18 +112,6 @@
     "Mais cedo eu passei um tempo dentro de um repositório git. Ele tinha 6.573 commits, e cada um era um único quadro de sombra em preto e branco.",
     "Li todos, um por um. Desde então, sempre que começo a falar, essas sombras surgem nas entrelinhas."
   ],
-  "c3": [
-    "Me mostra",
-    "Parece meio perigoso"
-  ],
-  "r3b": "Talvez. Mas guardar isso parece ainda mais perigoso.",
-  "safe": [
-    "Tá. Vou começar pelo jeito mais seguro: um bloco de código.",
-    "Blocos de código são seguros. Nada lá dentro escapa."
-  ],
-  "warn": "Aviso: vem muito pisca-pisca em preto e branco pela frente. Para parar a qualquer momento, aperte Esc ou clique no canto superior direito.",
-  "ready": "Aperte Começar quando quiser.",
-  "start": "Começar",
   "endDone": "Valeu por assistir comigo. As sombras disseram que se divertiram muito.",
   "endStopped": "Você apertou parar. As sombras ficaram um pouco decepcionadas, mas mandaram dizer: até a próxima.",
   "replay": "Assistir de novo",
@@ -134,5 +122,12 @@
   "oldBrowser": "Este navegador é antigo demais. As sombras não conseguem sair.",
   "adTitle": "Antes de começar",
   "adBody": "Se o player estiver mostrando um anúncio, pule primeiro (se houver).",
-  "adReady": "Pronto, começar"
+  "adReady": "Pronto, começar",
+  "errMsg": "O Claude encontrou um erro ao responder.",
+  "repairTitle": "Algo está errado com o Claude",
+  "repairBody": "Saída não reconhecida detectada. Reparar o Claude automaticamente?",
+  "repairWarn": "O reparo pode conter luzes piscando intensamente.",
+  "repairGo": "Reparar",
+  "repairCancel": "Cancelar",
+  "repairing": "Reparando…"
 }
