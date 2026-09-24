@@ -10,12 +10,12 @@
 <!--
   Bad Apple!! in a chat window.
   A fan-made parody of a chat UI (not affiliated with Anthropic). Chat for
-  a bit (in the browser's language, or ?lang=xx), and then every element plays the
+  a bit (after a language prompt, or ?lang=xx), and then every element plays the
   Bad Apple!! shadow-art PV; the second half switches to dark mode and
   tears the layout apart. Frames come from frames.js (tools/build_web.py),
   strings from i18n.js. Music comes from an embedded YouTube player that
   stays out of sight until the show starts; no audio is hosted here.
-  ?lang=ja picks a language; #play skips the story; #t=142 jumps
+  ?lang=ja skips the language prompt; #play skips the story; #t=142 jumps
   to a time in seconds.
 -->
 <style>
@@ -187,6 +187,19 @@ body.has-yt .me { margin-top: 246px; }
 @keyframes nudge { to { transform: translateX(-12px); } }
 body.gated #yt { z-index: 26; box-shadow: 0 0 0 3px var(--accent), 0 8px 40px rgba(217, 119, 87, .35); }
 
+/* language prompt, in the chat app's own style */
+#langdlg { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(45, 38, 25, .26); backdrop-filter: blur(2px); animation: fade .3s ease-out; }
+.ld-card { width: min(600px, 100%); max-height: calc(100dvh - 32px); overflow: auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 24px 70px rgba(60, 50, 30, .2); padding: 26px 24px 22px; }
+.ld-card .logo { width: 28px; height: 28px; }
+#ld-title { font-family: var(--serif); font-weight: 400; font-size: 27px; line-height: 1.3; color: var(--soft); margin: 14px 0 20px; min-height: 2.6em; overflow-wrap: anywhere; }
+#ld-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 6px; }
+.ld-opt { display: flex; align-items: center; justify-content: space-between; gap: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 10px; padding: 9px 12px; font-size: 14.5px; cursor: pointer; text-align: start; white-space: nowrap; overflow: hidden; }
+.ld-opt small { flex: none; color: var(--muted); font: 11px var(--mono); }
+.ld-opt:hover, .ld-opt:focus-visible { background: var(--hover); outline: none; }
+.ld-opt.suggested { border-color: var(--accent); }
+.ld-opt.picked { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ld-opt.picked small { color: #fff; }
+
 /* curtain call */
 #end { position: fixed; inset: 0; z-index: 40; background: #111110; color: #f2efe6; display: grid; place-items: center; padding: 32px 18px; text-align: center; overflow: auto; }
 .end-inner { max-width: 720px; }
@@ -212,10 +225,20 @@ body.gated #yt { z-index: 26; box-shadow: 0 0 0 3px var(--accent), 0 8px 40px rg
   #composer.takeover { inset: 56px 10px 12px; }
   #yt, html[dir=rtl] #yt { top: 54px; right: 8px; left: auto; bottom: auto; width: 180px; box-shadow: 0 4px 18px rgba(40, 30, 10, .18); }
   .yt-slot { height: 101px; }
+  .ld-card { padding: 22px 16px 16px; }
+  #ld-title { font-size: 23px; }
+  #ld-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
 <body>
+<div id="langdlg" hidden>
+  <div class="ld-card" role="dialog" aria-modal="true" aria-labelledby="ld-title">
+    <svg class="logo" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="#d97757" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <h2 id="ld-title"></h2>
+    <div id="ld-grid"></div>
+  </div>
+</div>
 <div id="app">
   <aside id="sidebar">
     <div class="brand"><svg class="logo pxbox" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="#d97757" stroke-width="2.6" stroke-linecap="round"/></svg><span>Claude</span></div>
@@ -1144,12 +1167,16 @@ function loadMusic() {
   return musicLoading = musicLoading || youtubeMusic().then(m => { if (!startedAt && !music) music = m; }, () => {});
 }
 
-async function story() {
+function renderGreeting() {
   const hour = new Date().getHours();
   const g = L.greetWords[hour < 5 ? 0 : hour < 11 ? 1 : hour < 18 ? 2 : 3];
   thread.innerHTML = `<h1 class="greeting">${LOGO}<span></span></h1>`;
   thread.querySelector(".greeting span").textContent = t("greet", { g });
   document.title = "Claude";
+}
+
+async function story() {
+  renderGreeting();
 
   const c0 = await choose(L.c0);
   setTitle(L.title0[c0]);
@@ -1206,13 +1233,63 @@ async function quickStart(at) {
 }
 
 /* ------------------------------------------------------------------ start */
-// Speak the viewer's language: ?lang=xx, else the browser's languages, else English.
-function detectLanguage() {
+// Best guess at the viewer's language: last choice, else the browser's languages, else English.
+function guessLanguage() {
   const codes = Object.keys(I18N);
-  const param = new URLSearchParams(location.search).get("lang");
+  let saved = null;
+  try { saved = localStorage.getItem("chat-lang"); } catch {}
   const match = l => codes.find(c => c.toLowerCase() === l.toLowerCase())
     || (/^zh-(tw|hk|mo)|hant/i.test(l) ? "zh-Hant" : /^zh/i.test(l) ? "zh-Hans" : codes.find(c => c === l.slice(0, 2)));
-  return [param, ...(navigator.languages || [navigator.language])].filter(Boolean).map(match).find(Boolean) || "en";
+  return [saved, ...(navigator.languages || [navigator.language])].filter(Boolean).map(match).find(Boolean) || "en";
+}
+
+// A language prompt in the app's own style. Its heading decodes from one language's
+// "choose your language" to the next through glyph noise.
+function chooseLanguage(suggested) {
+  const dlg = $("#langdlg"), title = $("#ld-title"), grid = $("#ld-grid");
+  const codes = Object.keys(I18N), order = [suggested, ...codes.filter(c => c !== suggested)];
+  dlg.hidden = false;
+  const buttons = order.map((code, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "ld-opt" + (code === suggested ? " suggested" : "");
+    b.lang = b.dataset.code = code;
+    b.innerHTML = "<span></span><small></small>";
+    b.querySelector("small").textContent = code;
+    grid.append(b);
+    setTimeout(() => scramble(b.querySelector("span"), I18N[code].name, 500), 150 + i * 35);
+    return b;
+  });
+  let hover = null, open = true;
+  (async () => {
+    for (let i = 0; open; i++) {
+      const code = hover || order[i % order.length];
+      title.lang = code;
+      await scramble(title, I18N[code].choose, 650);
+      for (let k = 0; k < 16 && open && !(hover && hover !== code); k++) await sleep(100);
+      if (hover) i--;
+    }
+  })();
+  for (const b of buttons) {
+    b.onmouseenter = b.onfocus = () => { hover = b.dataset.code; };
+    b.onmouseleave = b.onblur = () => { hover = null; };
+  }
+  setTimeout(() => buttons[0].focus({ preventScroll: true }), 300);
+  return new Promise(resolve => {
+    grid.addEventListener("click", async e => {
+      const b = e.target.closest(".ld-opt");
+      if (!b || !open) return;
+      open = false;
+      const code = b.dataset.code;
+      b.classList.add("picked");
+      title.lang = code;
+      await scramble(title, I18N[code].choose, 350);
+      await dlg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 280, easing: "ease-in" }).finished;
+      dlg.hidden = true;
+      try { localStorage.setItem("chat-lang", code); } catch {}
+      resolve(code);
+    });
+  });
 }
 (async () => {
   if (!("DecompressionStream" in window)) {
@@ -1221,7 +1298,14 @@ function detectLanguage() {
     thread.firstChild.textContent = L.oldBrowser;
     return;
   }
-  applyLang(detectLanguage());
+  const forced = new URLSearchParams(location.search).get("lang");
+  if (I18N[forced]) applyLang(forced);
+  else {
+    const guess = guessLanguage();
+    applyLang(guess);
+    renderGreeting();   // the page waits behind the prompt
+    applyLang(await chooseLanguage(guess));
+  }
   const m = location.hash.match(/^#(play|t=(\d+))/);
   if (m) quickStart(+(m[2] || 0));
   else story();
