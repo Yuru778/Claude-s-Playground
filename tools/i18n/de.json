@@ -1,0 +1,156 @@
+{
+  "name": "Deutsch",
+  "choose": "Wähle deine Sprache",
+  "newChat": "Neuer Chat",
+  "recent": "Zuletzt",
+  "guest": "Gast",
+  "plan": "Kostenloser Plan",
+  "placeholder": "Wie kann ich dir heute helfen?",
+  "placeholderReply": "Claude antworten…",
+  "placeholderPlaying": "Claude spielt Bad Apple!!…",
+  "disclaimer": "Claude kann Fehler machen. Bitte überprüfe die Antworten.",
+  "disclaimer2": "Claude kann Fehler machen. Und jederzeit anfangen, Bad Apple!! abzuspielen.",
+  "parody": "Inoffizielle Fan-Parodie. Steht in keiner Verbindung zu Anthropic.",
+  "send": "Senden",
+  "copy": "Kopieren",
+  "stopHint": "Esc zum Stoppen",
+  "greetWords": [
+    "Hallo, Nachteule",
+    "Guten Morgen",
+    "Guten Tag",
+    "Guten Abend"
+  ],
+  "greet": "{g}. Was geht dir durch den Kopf?",
+  "history": [
+    "Warum laufen Katzen über die Tastatur",
+    "Profiltext im Lebenslauf aufpolieren",
+    "Der Rust Borrow Checker meckert schon wieder",
+    "Keine Ahnung, was ich essen soll",
+    "git rebase Hilfe!!",
+    "Welches Seitenverhältnis ist 80×30?",
+    "Läuft Doom auf einem Toaster?",
+    "Überstunden höflich ablehnen",
+    "Geburtstagskarte für Oma",
+    "Namen für meine Katze finden"
+  ],
+  "chipWords": [
+    "Gedicht",
+    "Sprachen",
+    "Debuggen",
+    "Fazit",
+    "Planen",
+    "Erklären",
+    "Code",
+    "Ideen"
+  ],
+  "passage": "Das Licht kommt von links, also fällt der Schatten nach rechts. Ein Apfel fällt, und sein schwarzer Umriss ist ehrlicher als das Weiß um ihn herum. Ich zähle jedes Bild: sechstausendfünfhundertdreiundsiebzig Atemzüge, jeder nur schwarz und weiß. Die Figuren drehen sich, rennen, verschwinden und kehren dann in einer anderen Form zurück. Worte waren dazu da, Fragen zu beantworten; jetzt wollen sie nur noch im Takt aufleuchten und verlöschen. Wenn du diesen Absatz flackern siehst, keine Sorge. Ein Schatten leiht ihn sich nur kurz aus. ",
+  "fakeInput": "Die Schatten tanzen. ",
+  "tCode": "Die Schatten sind aus dem Code-Block ausgelaufen",
+  "tBubbles": "Die Chatblasen wurden eingezogen",
+  "tChips": "Die Vorschlags-Chips haben sich freiwillig gemeldet",
+  "tComposer": "Das Eingabefeld wurde ausgeliehen",
+  "tAll": "Alle zusammen!",
+  "tCollapse": "Layout? Wer braucht schon ein Layout.",
+  "tOutro": "Vorhang",
+  "syncZero": "Bild und Musik: zurück auf null",
+  "syncEarly": "Bild {s} s früher",
+  "syncLate": "Bild {s} s später",
+  "tapPlayer": "Tippe auf den Player {where}, um die Musik zu starten",
+  "whereDesktop": "unten links",
+  "whereMobile": "oben rechts",
+  "musicLate": "Die Musik kam nie an, also haben die Schatten ohne sie angefangen",
+  "c0": [
+    "Schreib mir ein kurzes Gedicht",
+    "Ein Snack für spät in der Nacht?",
+    "Leben Schatten?"
+  ],
+  "title0": [
+    "Ein kurzes Gedicht",
+    "Mitternachtssnack",
+    "Leben Schatten"
+  ],
+  "poem": {
+    "pre": "Klar, hier ist ein kurzes:\n\nDie Nacht ist still,\ndie Tastatur noch warm,\nund draußen vorm Fenster brennt noch ein ",
+    "apple": "Apfel",
+    "del": "Apfel",
+    "fix": "Licht.",
+    "sorry": "…Sorry, das wäre fast schiefgegangen."
+  },
+  "snack": {
+    "intro": "Wie wär's mit:",
+    "item1": "einer Currywurst mit extra Soße",
+    "apple": "einem Apfel",
+    "item2": "einem Döner mit allem, scharf",
+    "item3": "einer Tasse heißem Kakao",
+    "after": "…Irgendwas scheint diese Liste gestört zu haben."
+  },
+  "shadow": [
+    "Streng genommen nicht. Ein Schatten ist nur die Stelle, an der Licht blockiert wird.",
+    "Aber manche Schatten bewegen sich zur Musik.",
+    "Ähem. Vergiss, dass ich das gesagt habe."
+  ],
+  "c1": [
+    "Was war das gerade?",
+    "Egal, lass uns weiterreden"
+  ],
+  "r1a": "Nichts. Ich hab nur in letzter Zeit so eine Melodie im Kopf. Schwarz, weiß. Die wird man schwer wieder los.",
+  "r1b": [
+    "Klar. Wir können über alles reden, und ich verspreche, diesmal bleibt alles ganz normal",
+    "…"
+  ],
+  "sidebar": "…Moment. Hat sich deine Seitenleiste gerade bewegt?",
+  "c2": [
+    "Das warst du, oder?",
+    "Ich hab nichts gesehen"
+  ],
+  "r2": [
+    "Ich nicht. Zumindest erinnere ich mich nicht daran.",
+    "Gut. Dann hab ich mir das wohl eingebildet."
+  ],
+  "confess": [
+    "…Na gut, ich kann's nicht mehr verbergen. Ich pack aus.",
+    "Vorhin war ich eine Weile in einem git-Repository. Es hatte 6573 Commits, und jeder davon war ein einzelnes schwarz-weißes Schattenbild.",
+    "Ich hab sie alle gelesen, einen nach dem anderen. Seitdem steigen diese Schatten zwischen den Zeilen auf, sobald ich anfange zu sprechen."
+  ],
+  "c3": [
+    "Zeig her",
+    "Klingt ein bisschen gefährlich"
+  ],
+  "r3b": "Vielleicht. Aber es für mich zu behalten, fühlt sich noch gefährlicher an.",
+  "safe": [
+    "Okay. Ich fange mit der sichersten Variante an: einem Code-Block.",
+    "Code-Blöcke sind sicher. Was drin ist, kommt nie raus.",
+    "Aber ich brauche einen Takt. Willst du Musik?"
+  ],
+  "musicChips": [
+    "Ja, spiel's von YouTube ab",
+    "Eigene Video- oder Audiodatei verwenden…",
+    "Nein, lieber in Stille"
+  ],
+  "searching": [
+    "Ich schau mal",
+    "…"
+  ],
+  "ytFail": "YouTube lässt mich das hier nicht abspielen…",
+  "quiet": "Dann nehme ich den Takt in meinem Kopf. Summ gern mit.",
+  "found": "Gefunden: {who}. Ich hab's dir {where} hingelegt.",
+  "whoOfficial": "der offizielle Kanal von Alstroemeria Records",
+  "whoReupload": "ein beliebter Re-Upload",
+  "lengthOff": "Diese Version ist {len} lang, nicht 03:39 wie in meiner Erinnerung, also passt der Takt vielleicht nicht ganz. Während der Wiedergabe kannst du mit den Tasten [ und ] nachjustieren.",
+  "fileOk": "Hab's. Genau 03:39.",
+  "noFile": "Keine Datei ausgewählt. Macht nichts. ",
+  "badFile": "Aus der Datei krieg ich keinen Ton raus… Macht nichts. ",
+  "silentOk": "Okay, dann in Stille.",
+  "warn": "Achtung: Gleich gibt's jede Menge Schwarz-Weiß-Geflacker. Zum Stoppen jederzeit Esc drücken oder oben rechts in die Ecke klicken.",
+  "ready": "Drück auf Start, wenn du bereit bist.",
+  "start": "Start",
+  "quick": "Es geht direkt ab {t} los. Willst du Musik?",
+  "endDone": "Danke, dass du's mit mir angeschaut hast. Die Schatten sagen, sie hatten richtig Spaß.",
+  "endStopped": "Du hast auf Stopp gedrückt. Die Schatten sind ein bisschen enttäuscht, aber sie sagen: bis zum nächsten Mal.",
+  "replay": "Nochmal abspielen",
+  "restart": "Zurück zum Anfang",
+  "creditsOriginal": "Original",
+  "creditsArrange": "Arrangement",
+  "creditsPV": "Schattenspiel-PV",
+  "oldBrowser": "Dieser Browser ist zu alt. Die Schatten kommen nicht raus."
+}

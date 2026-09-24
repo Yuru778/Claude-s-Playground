@@ -1,49 +1,64 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="非官方的同人惡搞作品：一個會開始播 Bad Apple!! 的聊天介面，與 Anthropic 無關。">
+<meta name="description" content="An unofficial fan-made parody: a chat window that starts playing Bad Apple!!. Not affiliated with Anthropic.">
 <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4' stroke='%23d97757' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <!--
   Bad Apple!! in a chat window.
-  A fan-made parody of a chat UI (not affiliated with Anthropic): a short
-  interactive story, after which every element on the page plays the
-  Bad Apple!! shadow-art PV. Frames come from frames.js (tools/build_web.py).
-  Open with #play to skip the story, or #t=142 to jump to a time in seconds.
-  Music comes from an embedded YouTube player (or a local file); the audio is not hosted here.
+  A fan-made parody of a chat UI (not affiliated with Anthropic). Pick a
+  language, chat for a bit, and then every element on the page plays the
+  Bad Apple!! shadow-art PV; the second half switches to dark mode and
+  tears the layout apart. Frames come from frames.js (tools/build_web.py),
+  strings from i18n.js. Music comes from an embedded YouTube player or a
+  local file; no audio is hosted here.
+  ?lang=ja skips the language screen; #play skips the story; #t=142 jumps
+  to a time in seconds.
 -->
 <style>
 :root {
   --bg: #faf9f5; --side: #f3f1ea; --text: #29261b; --soft: #3d3929;
   --muted: #8b877b; --line: #e6e2d7; --bubble: #efebe1; --accent: #d97757;
-  --ink: #1c1b19; --paper: #f5f3ed;
-  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-  --serif: "Noto Serif TC", "Source Han Serif TC", "Songti TC", Georgia, serif;
+  --ink: #1c1b19; --paper: #f5f3ed; --card: #fff; --hover: #ebe8df; --active: #e8e4d9;
+  --lit: #f4f1e8; --lit-text: #bdb8ab;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --serif: "Noto Serif", "Noto Serif TC", "Source Han Serif TC", "Songti TC", Georgia, serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+}
+html:lang(zh-Hans) { --sans: ui-sans-serif, system-ui, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; --serif: "Noto Serif SC", "Songti SC", "SimSun", serif; }
+html:lang(ja) { --sans: ui-sans-serif, system-ui, "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif; --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+html:lang(ko) { --sans: ui-sans-serif, system-ui, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; --serif: "Noto Serif KR", "AppleMyungjo", "Batang", serif; }
+html:lang(ar) { --serif: "Noto Naskh Arabic", "Geeza Pro", "Times New Roman", serif; }
+html:lang(hi) { --serif: "Noto Serif Devanagari", "Kohinoor Devanagari", "Nirmala UI", serif; }
+html:lang(th) { --serif: "Noto Serif Thai", "Thonburi", "Leelawadee UI", serif; }
+body.dark {
+  --bg: #262624; --side: #1f1e1d; --text: #ece9e1; --soft: #d6d2c7; --muted: #8f8b80;
+  --line: #3b3a36; --bubble: #34332f; --paper: #2d2c29; --card: #30302e; --hover: #34332f; --active: #3a3935;
 }
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
-body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow: hidden; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow: hidden; transition: background-color .25s; }
 button { font: inherit; }
 svg { display: block; }
+[hidden] { display: none !important; }
 
 #app { display: grid; grid-template-columns: 260px 1fr; height: 100vh; height: 100dvh; }
 
 /* sidebar */
-#sidebar { background: var(--side); border-right: 1px solid var(--line); display: flex; flex-direction: column; padding: 14px 10px; gap: 4px; min-height: 0; }
-.brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 12px; font-family: var(--serif); font-size: 20px; color: var(--soft); }
+#sidebar { background: var(--side); border-inline-end: 1px solid var(--line); display: flex; flex-direction: column; padding: 14px 10px; gap: 4px; min-height: 0; transition: background-color .25s; }
+.brand { display: flex; align-items: center; gap: 9px; padding: 4px 10px 12px; font-family: Georgia, serif; font-size: 20px; color: var(--soft); }
 .logo { width: 22px; height: 22px; }
-.new-chat { display: flex; align-items: center; gap: 8px; border: 0; background: none; color: var(--soft); font-size: 14px; padding: 8px 10px; border-radius: 8px; cursor: pointer; text-align: left; }
-.new-chat:hover { background: #ebe8df; }
+.new-chat { display: flex; align-items: center; gap: 8px; border: 0; background: none; color: var(--soft); font-size: 14px; padding: 8px 10px; border-radius: 8px; cursor: pointer; text-align: start; }
+.new-chat:hover { background: var(--hover); }
 .new-chat .plus { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 15px; line-height: 1; }
 .section-label { font-size: 12px; color: var(--muted); padding: 14px 10px 4px; }
 #history { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 1px; }
 .hist { flex: none; font-size: 13.5px; padding: 7px 10px; border-radius: 8px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: default; }
-.hist:hover { background: #ebe8df; }
-.hist.active { background: #e8e4d9; }
+.hist:hover { background: var(--hover); }
+.hist.active { background: var(--active); }
 .hist.glitch { color: var(--accent); font-family: var(--mono); }
 .me { display: flex; align-items: center; gap: 10px; padding: 10px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--soft); }
 .me small { display: block; color: var(--muted); font-size: 11.5px; }
@@ -53,7 +68,7 @@ svg { display: block; }
 main { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 #topbar { height: 52px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; gap: 12px; }
 #chat-title { font-size: 14px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#status { font-size: 12px; font-variant-numeric: tabular-nums; border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; background: #fff; color: var(--soft); cursor: pointer; white-space: nowrap; }
+#status { font-size: 12px; font-variant-numeric: tabular-nums; border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; background: var(--card); color: var(--soft); cursor: pointer; white-space: nowrap; direction: ltr; }
 #thread { flex: 1; overflow-y: auto; padding: 12px 24px 16px; min-height: 0; }
 .msg { max-width: 720px; margin: 0 auto 22px; }
 .msg.user { display: flex; justify-content: flex-end; }
@@ -61,86 +76,130 @@ main { position: relative; display: flex; flex-direction: column; min-width: 0; 
 .msg.ai .body { font-family: var(--serif); font-size: 16.5px; line-height: 1.75; white-space: pre-wrap; }
 .actions { display: flex; gap: 2px; margin-top: 6px; align-items: center; min-height: 28px; }
 .actions button { border: 0; background: none; color: var(--muted); width: 28px; height: 28px; border-radius: 6px; display: grid; place-items: center; cursor: pointer; }
-.actions button:hover { background: #efece4; }
+.actions button:hover { background: var(--hover); }
 .actions svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .spark { width: 22px; height: 22px; animation: spark 1.1s ease-in-out infinite; }
 @keyframes spark { 50% { transform: rotate(45deg) scale(.82); } }
 
 #chips { max-width: 720px; width: 100%; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; flex: none; }
-.chip { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 14px; font-size: 14px; color: var(--soft); cursor: pointer; animation: chip-in .25s ease-out both; }
-.chip:hover { border-color: #cfc9ba; background: #fdfcf9; }
+.chip { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 7px 14px; font-size: 14px; color: var(--soft); cursor: pointer; animation: chip-in .25s ease-out both; }
+.chip:hover { border-color: var(--muted); }
 @keyframes chip-in { from { opacity: 0; transform: translateY(4px); } }
 
-#composer { flex: none; max-width: 720px; width: calc(100% - 48px); margin: 10px auto 6px; background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 1px 6px rgba(60, 50, 30, .06); padding: 12px 12px 8px 16px; }
+#composer { flex: none; max-width: 720px; width: calc(100% - 48px); margin: 10px auto 6px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 1px 6px rgba(60, 50, 30, .06); padding: 12px 12px 8px 16px; }
 #input { display: block; width: 100%; border: 0; outline: 0; resize: none; font: inherit; font-size: 15.5px; line-height: 1.5; background: transparent; color: var(--text); height: 24px; padding: 0; }
 .fake-input { font-size: 15.5px; line-height: 1.5; color: var(--text); max-height: 48px; overflow: hidden; }
 .composer-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .tool { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 8px; background: none; color: var(--muted); display: grid; place-items: center; font-size: 17px; }
-.model { margin-left: auto; font-size: 13px; color: var(--muted); }
+.model { margin-inline-start: auto; font-size: 13px; color: var(--muted); }
 #send { width: 32px; height: 32px; border-radius: 9px; border: 0; background: var(--accent); color: #fff; display: grid; place-items: center; cursor: pointer; }
 #send svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 #send:disabled { opacity: .4; cursor: default; }
 .disclaimer { flex: none; text-align: center; font-size: 11.5px; color: var(--muted); margin: 0 12px 10px; }
+.parody { display: none; flex: none; text-align: center; font-size: 11.5px; color: var(--muted); margin: 0 12px 12px; }
 
 /* new-chat landing */
 main.welcome #thread { flex: none; margin-top: auto; overflow: visible; }
 main.welcome #composer { order: 2; }
 main.welcome #chips { order: 3; justify-content: center; padding-top: 14px; }
 main.welcome .disclaimer { order: 4; margin-top: auto; visibility: hidden; }
+main.welcome .parody { display: block; order: 5; }
 .greeting { text-align: center; font-family: var(--serif); font-size: 38px; color: var(--soft); margin: 0 0 20px; display: flex; align-items: center; justify-content: center; gap: 14px; font-weight: 400; }
-.greeting .logo { width: 34px; height: 34px; }
+.greeting .logo { width: 34px; height: 34px; flex: none; }
 
 /* stage 1: code block */
-.msg.stage { max-width: none; }
+.msg.stage { max-width: none; direction: ltr; }
 .code { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--paper); margin: 8px auto 0; width: max-content; max-width: 100%; }
-.code-head { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 6px 12px; font: 12px var(--sans); color: var(--muted); border-bottom: 1px solid var(--line); background: #eeebe3; }
-.code pre { margin: 0; padding: 12px; font-family: var(--mono); line-height: 1.2; color: var(--ink); white-space: pre; overflow: hidden; }
+.code-head { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 6px 12px; font: 12px var(--sans); color: var(--muted); border-bottom: 1px solid var(--line); background: var(--hover); }
+.code pre { margin: 0; padding: 12px; font-family: var(--mono); color: var(--ink); white-space: pre; overflow: hidden; }
 
 /* stage 2: wall of text */
 .wall { margin: 0 auto; font-family: var(--serif); color: #7a7568; width: max-content; }
 .wall div { display: flex; }
-.wall span { display: block; text-align: center; }
-.wall span.ink { background: var(--ink); color: #4a4741; }
+.wall span { display: block; text-align: center; overflow: hidden; }
+.wall span.on { background: var(--ink); color: #4a4741; }
 
 /* stage 3: message bubbles */
 .bubbles { display: grid; margin: 0 auto; width: max-content; }
 .bubbles i { display: block; margin: 12%; border-radius: 45% 45% 45% 12%; background: var(--bubble); }
 .bubbles i:nth-child(2n) { border-radius: 45% 45% 12% 45%; }
-.bubbles i.ink { background: var(--ink); }
+.bubbles i.on { background: var(--ink); }
 
 /* stage 4: suggestion chips */
-#wall { position: absolute; left: 0; right: 0; z-index: 5; display: grid; place-content: center; background: var(--bg); animation: rise .5s ease-out; }
+#wall { position: absolute; left: 0; right: 0; z-index: 5; display: grid; place-content: center; background: var(--bg); animation: rise .5s ease-out; direction: ltr; }
 @keyframes rise { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
 .cw { display: grid; }
-.cw b { font-weight: 400; margin: 8% 5%; border: 1px solid #d8d3c6; border-radius: 999px; display: grid; place-items: center; color: var(--muted); background: #fff; overflow: hidden; white-space: nowrap; }
-.cw b.ink { background: var(--ink); border-color: var(--ink); color: #8d897d; }
+.cw b { font-weight: 400; margin: 8% 5%; border: 1px solid #d8d3c6; border-radius: 999px; display: grid; place-items: center; color: var(--muted); background: var(--card); overflow: hidden; white-space: nowrap; }
+.cw b.on { background: var(--ink); border-color: var(--ink); color: #8d897d; }
 
 /* stage 5: the composer */
 #composer.takeover { position: absolute; z-index: 6; inset: 58px 24px 18px; width: auto; max-width: none; margin: 0; display: flex; flex-direction: column; animation: grow .45s ease-out; }
-#composer.takeover #input { flex: 1; height: auto; font-family: var(--mono); line-height: 1.2; white-space: pre; overflow: hidden; color: var(--ink); }
+#composer.takeover #input { flex: 1; height: auto; font-family: var(--mono); line-height: 1.2; white-space: pre; overflow: hidden; color: var(--ink); direction: ltr; }
 @keyframes grow { from { transform: scale(.4, .15); transform-origin: 50% 100%; opacity: .3; } }
 
-/* stage 6: everything */
+/* stage 6: dark mode, every character and button is a pixel */
 body.dense .msg.ai .body { line-height: 1.35; }
 body.dense .px { padding: .08em 0; }
-body.dense .px.ink { background: var(--ink); color: #45433d; }
-body.dense .pxbox.ink { background: var(--ink) !important; color: var(--ink) !important; border-color: var(--ink) !important; }
-body.dense .released { transition: background-color .7s, color .7s, border-color .7s; }
-#ghost { position: fixed; pointer-events: none; mix-blend-mode: multiply; opacity: 0; z-index: 20; }
+body.dense .px.on { background: var(--lit); color: var(--lit-text); }
+body.dense .pxbox.on { background: var(--lit) !important; color: var(--lit) !important; border-color: var(--lit) !important; }
+#ghost { position: fixed; pointer-events: none; mix-blend-mode: screen; opacity: 0; z-index: 20; }
 
-/* the music: a YouTube player tucked into the sidebar (top-right on phones) */
-#yt { position: fixed; z-index: 25; left: 10px; bottom: 66px; width: 240px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 2px 10px rgba(40, 30, 10, .08); }
-body.has-yt .me { margin-top: 246px; }
-#yt[hidden] { display: none; }
-.yt-head { font-size: 11.5px; color: var(--muted); padding: 5px 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.yt-slot { height: 200px; background: #000; }
-.yt-slot iframe { display: block; width: 100%; height: 100%; }
-.parody { display: none; flex: none; text-align: center; font-size: 11.5px; color: var(--muted); margin: 0 12px 12px; }
-main.welcome .parody { display: block; order: 5; }
+/* stage 7: the layout is gone; a field of UI parts, sized by brightness */
+#soup { position: fixed; inset: 0; z-index: 15; display: grid; pointer-events: none; direction: ltr; }
+#soup i { display: grid; place-items: center; transform: scale(0); will-change: transform; }
+#soup i > * { width: 78%; height: 78%; }
+#soup svg { fill: none; stroke: var(--lit); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#soup .w-spark { stroke: var(--accent); stroke-width: 2.6; animation: spin 2.4s linear infinite; }
+#soup .w-avatar { border-radius: 50%; background: var(--lit); color: #262624; display: grid; place-items: center; font-size: 11px; font-weight: 600; overflow: hidden; }
+#soup .w-send { border-radius: 24%; background: var(--accent); display: grid; place-items: center; }
+#soup .w-send svg { width: 60%; height: 60%; stroke: #fff; }
+#soup .w-chip { height: 46%; border: 1.5px solid var(--lit); border-radius: 999px; }
+#soup .w-bubble { height: 62%; border-radius: 40% 40% 40% 10%; background: var(--lit); }
+#soup .w-char { width: auto; height: auto; color: var(--lit); font-family: var(--serif); font-weight: 700; font-size: 20px; line-height: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 body.playing #thread { overflow: hidden; }
 #toast { position: fixed; top: 14px; left: 50%; transform: translate(-50%, -8px); background: var(--ink); color: #f5f3ec; font-size: 13px; padding: 8px 15px; border-radius: 999px; opacity: 0; transition: opacity .3s, transform .3s; z-index: 30; pointer-events: none; white-space: nowrap; }
+body.dark #toast { background: var(--lit); color: #1c1b19; }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* the music: a YouTube player where the sidebar ends (top corner on phones) */
+#yt { position: fixed; z-index: 25; left: 10px; bottom: 66px; width: 240px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--card); box-shadow: 0 2px 10px rgba(40, 30, 10, .08); }
+html[dir=rtl] #yt { left: auto; right: 10px; }
+.yt-head { font-size: 11.5px; color: var(--muted); padding: 5px 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: ltr; }
+.yt-slot { height: 200px; background: #000; }
+.yt-slot iframe { display: block; width: 100%; height: 100%; }
+body.has-yt .me { margin-top: 246px; }
+
+/* language screen */
+#lang { position: fixed; inset: 0; z-index: 60; background: #0d0d0c; color: #f2efe6; display: grid; place-items: center; overflow: auto; padding: 32px 16px;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); }
+#lang-bg { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; opacity: .07; pointer-events: none; }
+.lang-inner { position: relative; width: min(880px, 100%); }
+.lang-kicker { font: 12px var(--mono); letter-spacing: .2em; color: #8f8b80; margin: 0 0 14px; direction: ltr; text-align: left; }
+.lang-kicker b { color: var(--accent); font-weight: 400; }
+#lang-title { font-family: var(--sans); font-size: clamp(30px, 6.4vw, 68px); font-weight: 600; letter-spacing: -.01em; line-height: 1.15; margin: 0 0 30px; min-height: 2.3em; overflow-wrap: anywhere; }
+#lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.lang-btn { position: relative; background: transparent; color: #e7e3d9; border: 1px solid #34332f; border-radius: 10px; padding: 12px 14px; text-align: start; font-size: 15px; cursor: pointer; white-space: nowrap; overflow: hidden; transition: border-color .15s, background-color .15s; }
+.lang-btn small { display: block; font: 10.5px var(--mono); color: #6f6b61; letter-spacing: .08em; margin-top: 3px; direction: ltr; text-align: start; }
+.lang-btn:hover, .lang-btn:focus-visible { border-color: var(--accent); background: #1a1917; outline: none; }
+.lang-btn.suggested { border-color: #6b4a3c; }
+.lang-btn.suggested::after { content: "↵"; position: absolute; top: 10px; inset-inline-end: 12px; color: var(--accent); font-size: 13px; }
+
+/* curtain call */
+#end { position: fixed; inset: 0; z-index: 40; background: #111110; color: #f2efe6; display: grid; place-items: center; padding: 32px 18px; text-align: center; overflow: auto; }
+.end-inner { max-width: 720px; }
+.end-kicker { font: 12px var(--mono); letter-spacing: .22em; color: #8f8b80; margin: 0 0 18px; direction: ltr; }
+#end-title { font-family: var(--sans); font-size: clamp(54px, 12vw, 132px); font-weight: 800; letter-spacing: -.03em; line-height: 1; margin: 0 0 22px; direction: ltr; }
+#end-sub { font-family: var(--serif); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.7; color: #d6d2c7; margin: 0 auto 30px; max-width: 34em; }
+.end-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 38px; }
+.end-btn { border: 1px solid #4a4843; background: transparent; color: #f2efe6; border-radius: 999px; padding: 11px 22px; font-size: 15px; cursor: pointer; }
+.end-btn:hover { border-color: #f2efe6; }
+.end-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.end-btn.primary:hover { filter: brightness(1.08); }
+.credits { list-style: none; padding: 0; margin: 0 0 16px; font-size: 13px; line-height: 1.9; color: #9a968a; }
+.credits b { color: #d6d2c7; font-weight: 500; }
+.end-parody { font-size: 11.5px; color: #6f6b61; margin: 0; }
 
 @media (max-width: 760px) {
   #app { grid-template-columns: 1fr; }
@@ -148,62 +207,121 @@ body.playing #thread { overflow: hidden; }
   #thread { padding: 10px 16px 12px; }
   #composer { width: calc(100% - 32px); }
   #chips { padding: 0 16px; }
-  .greeting { font-size: 28px; }
+  .greeting { font-size: 26px; }
   #composer.takeover { inset: 56px 10px 12px; }
-  #yt { top: 54px; right: 8px; left: auto; bottom: auto; width: 180px; box-shadow: 0 4px 18px rgba(40, 30, 10, .18); }
+  #yt, html[dir=rtl] #yt { top: 54px; right: 8px; left: auto; bottom: auto; width: 180px; box-shadow: 0 4px 18px rgba(40, 30, 10, .18); }
   .yt-slot { height: 101px; }
+  #lang-grid { grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); }
 }
 </style>
 </head>
 <body>
+<section id="lang" hidden>
+  <canvas id="lang-bg" width="80" height="60"></canvas>
+  <div class="lang-inner">
+    <p class="lang-kicker"><b>●</b> BAD APPLE!! · 17 LANGUAGES</p>
+    <h1 id="lang-title" aria-live="polite"></h1>
+    <div id="lang-grid"></div>
+  </div>
+</section>
 <div id="app">
   <aside id="sidebar">
     <div class="brand"><svg class="logo pxbox" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="#d97757" stroke-width="2.6" stroke-linecap="round"/></svg><span>Claude</span></div>
-    <button class="new-chat" type="button"><span class="plus pxbox">+</span><span>新對話</span></button>
-    <div class="section-label">最近</div>
+    <button class="new-chat" type="button"><span class="plus pxbox">+</span><span id="l-new"></span></button>
+    <div class="section-label" id="l-recent"></div>
     <nav id="history"></nav>
-    <div class="me"><span class="avatar pxbox">訪</span><div>訪客<small>免費方案</small></div></div>
+    <div class="me"><span class="avatar pxbox" id="l-avatar"></span><div><span id="l-guest"></span><small id="l-plan"></small></div></div>
   </aside>
   <main id="main" class="welcome">
     <header id="topbar"><span id="chat-title"></span><span id="status" hidden></span></header>
     <section id="thread"></section>
     <div id="chips"></div>
     <form id="composer" autocomplete="off">
-      <textarea id="input" rows="1" placeholder="今天想聊什麼？"></textarea>
+      <textarea id="input" rows="1"></textarea>
       <div class="composer-row">
         <button class="tool pxbox" type="button" tabindex="-1">+</button>
         <span class="model" id="model">Claude</span>
-        <button id="send" class="pxbox" type="submit" disabled aria-label="送出"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+        <button id="send" class="pxbox" type="submit" disabled><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
       </div>
     </form>
-    <p class="disclaimer" id="disclaimer">Claude 可能會出錯，請查證重要資訊。</p>
-    <p class="parody">非官方的同人惡搞作品，與 Anthropic 無關。</p>
+    <p class="disclaimer" id="disclaimer"></p>
+    <p class="parody" id="parody"></p>
   </main>
 </div>
 <div id="yt" hidden><div class="yt-head">♪ Bad Apple!! feat.nomico · YouTube</div><div class="yt-slot"></div></div>
+<div id="soup" hidden></div>
 <canvas id="ghost" width="80" height="60"></canvas>
+<section id="end" hidden>
+  <div class="end-inner">
+    <p class="end-kicker">♪ 03:39 · 6573 FRAMES</p>
+    <h1 id="end-title">Bad Apple!!</h1>
+    <p id="end-sub"></p>
+    <div class="end-actions"><button type="button" class="end-btn primary" id="replay"></button><button type="button" class="end-btn" id="restart"></button></div>
+    <ul class="credits" id="credits"></ul>
+    <p class="end-parody" id="end-parody"></p>
+  </div>
+</section>
 <div id="toast"></div>
 <input type="file" id="file" accept="audio/*,video/*" hidden>
 <script src="frames.js"></script>
+<script src="i18n.js"></script>
 <script>
 "use strict";
 const $ = s => document.querySelector(s);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const main = $("#main"), thread = $("#thread"), chips = $("#chips"), input = $("#input"),
       composer = $("#composer"), sendBtn = $("#send"), statusEl = $("#status");
-
-const LOGO = '<svg class="logo" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="#d97757" stroke-width="2.6" stroke-linecap="round"/></svg>';
+const SPARK = "M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4";
+const LOGO = `<svg class="logo" viewBox="0 0 24 24"><path d="${SPARK}" stroke="#d97757" stroke-width="2.6" stroke-linecap="round"/></svg>`;
 const ICONS = {
   copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/>',
   up: '<path d="M7 11v9H4v-9zM7 11l4-7c1.2 0 2.4 1 2 2.6L12.3 10H19a2 2 0 0 1 2 2.3l-1.3 6A2 2 0 0 1 17.7 20H7"/>',
   down: '<g transform="rotate(180 12 12)"><path d="M7 11v9H4v-9zM7 11l4-7c1.2 0 2.4 1 2 2.6L12.3 10H19a2 2 0 0 1 2 2.3l-1.3 6A2 2 0 0 1 17.7 20H7"/></g>',
   retry: '<path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v5h5"/>',
+  send: '<path d="M12 19V5M5 12l7-7 7 7"/>',
 };
-const PASSAGE = "光從左邊來，影子就往右邊倒。一顆蘋果落下，黑色的輪廓比白色的空白更誠實。我數著每一幀：六千五百七十三次呼吸，每一次都只有黑與白。畫面裡的人在旋轉、在奔跑、在消失，然後從另一個形狀裡重新出現。文字本來是用來回答問題的，現在它們只想跟著節拍亮起又熄滅。如果你看到這段話在閃爍，請不要擔心，那只是影子借用了它一下。";
-const HISTORY = ["為什麼貓會踩鍵盤", "幫我改履歷的自我介紹", "Rust 借用檢查器又生氣了", "晚餐不知道吃什麼", "git rebase 救命", "80×30 是什麼比例？", "烤麵包機可以跑 Doom 嗎", "把會議記錄整理成重點", "如何優雅地拒絕加班", "咖啡因的半衰期", "寫給奶奶的生日卡片", "Python 的 GIL 到底是什麼", "週末去哪裡走走", "幫我取一個貓的名字"];
+
+/* ------------------------------------------------------------------- i18n */
+const I18N = window.I18N, EN = I18N.en;
+let lang = "en", L = EN, segG = null, segW = null, histEls = [];
+const t = (k, vars = {}) => String(L[k] ?? EN[k]).replace(/\{(\w+)\}/g, (_, n) => vars[n] ?? "");
+const cjk = () => /^(zh|ja|ko)/.test(lang);
+function graphemes(s) { return segG ? Array.from(segG.segment(s), x => x.segment) : Array.from(s); }
+// Pixel units for the "everything" stage: words for scripts whose letters join up.
+function pixelUnits(s) {
+  const seg = /^(ar|hi)/.test(lang) && segW ? segW : segG;
+  return seg ? Array.from(seg.segment(s), x => x.segment) : Array.from(s);
+}
+function applyLang(code) {
+  lang = I18N[code] ? code : "en";
+  L = { ...EN, ...I18N[lang] };
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  if (typeof Intl.Segmenter === "function") {
+    segG = new Intl.Segmenter(lang, { granularity: "grapheme" });
+    segW = new Intl.Segmenter(lang, { granularity: "word" });
+  }
+  $("#l-new").textContent = L.newChat;
+  $("#l-recent").textContent = L.recent;
+  $("#l-guest").textContent = L.guest;
+  $("#l-plan").textContent = L.plan;
+  $("#l-avatar").textContent = graphemes(L.guest)[0];
+  input.placeholder = L.placeholder;
+  $("#disclaimer").textContent = L.disclaimer;
+  $("#parody").textContent = L.parody;
+  sendBtn.setAttribute("aria-label", L.send);
+  $("#history").innerHTML = "";
+  histEls = L.history.map(text => {
+    const d = document.createElement("div");
+    d.className = "hist"; d.textContent = text;
+    $("#history").append(d);
+    return d;
+  });
+  try { localStorage.setItem("bad-apple-lang", lang); } catch {}
+}
 
 /* ---------------------------------------------------------------- frames */
-const BA = window.BAD_APPLE, W = BA.w, H = BA.h, FB = W * H / 8;
+const BA = window.BAD_APPLE, W = BA.w, H = BA.h, FB = W * H / 8, TOTAL = BA.n / BA.fps;
 let bits = null;
 const ready = (async () => {
   const bin = Uint8Array.from(atob(BA.data), c => c.charCodeAt(0));
@@ -213,9 +331,16 @@ const ready = (async () => {
 })();
 const ink = new Uint8Array(W * H);              // 1 = shadow (black in the PV)
 const sat = new Int32Array((W + 1) * (H + 1));  // summed-area table of ink
+let frameDiff = 0;                              // share of pixels that changed since the last frame
 function loadFrame(f) {
   const o = f * FB;
-  for (let i = 0; i < W * H; i++) ink[i] = ((bits[o + (i >> 3)] >> (7 - (i & 7))) & 1) ^ 1;
+  let changed = 0;
+  for (let i = 0; i < W * H; i++) {
+    const v = ((bits[o + (i >> 3)] >> (7 - (i & 7))) & 1) ^ 1;
+    if (v !== ink[i]) changed++;
+    ink[i] = v;
+  }
+  frameDiff = changed / (W * H);
   for (let y = 0; y < H; y++) {
     let row = 0;
     for (let x = 0; x < W; x++) {
@@ -235,20 +360,24 @@ function inkIn(x0, y0, x1, y1) {
   const R = W + 1;
   return (sat[y1 * R + x1] - sat[y0 * R + x1] - sat[y1 * R + x0] + sat[y0 * R + x0]) / ((x1 - x0) * (y1 - y0));
 }
-// A cols x rows grid of cells over the frame, each with its own rectangle.
 function gridCells(cols, rows) {
   const cells = [];
   for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
     cells.push([c * W / cols, r * H / rows, (c + 1) * W / cols, (r + 1) * H / rows]);
   return cells;
 }
-// Toggle .ink on elements whose cell is mostly shadow; only touches changes.
-function paint(els, cells, state) {
+// Toggle .on for elements whose cell is mostly shadow (or mostly light, when lit).
+function paint(els, cells, state, lit = false) {
   for (let i = 0; i < els.length; i++) {
     const c = cells[i];
-    const v = c ? inkIn(c[0], c[1], c[2], c[3]) > 0.5 : false;
-    if (v !== state[i]) { state[i] = v; els[i].classList.toggle("ink", v); }
+    const v = c ? (inkIn(c[0], c[1], c[2], c[3]) > 0.5) !== lit : false;
+    if (v !== state[i]) { state[i] = v; els[i].classList.toggle("on", v); }
   }
+}
+// Map the frame over the whole viewport like background-size: cover.
+function coverMap() {
+  const vw = innerWidth, vh = innerHeight, s = Math.max(vw / W, vh / H);
+  return { s, ox: (vw - W * s) / 2, oy: (vh - H * s) / 2, vw, vh };
 }
 function monoCharWidth() {
   const s = document.createElement("span");
@@ -267,22 +396,49 @@ function halfBlocks(chars) {  // 80x60 pixels -> 30 text rows, two pixels per ch
   }
   return out;
 }
+function drawWhite(ctx, img) {   // white pixels of the current frame, transparent elsewhere
+  for (let i = 0; i < W * H; i++) {
+    img.data[i * 4] = img.data[i * 4 + 1] = img.data[i * 4 + 2] = 255;
+    img.data[i * 4 + 3] = ink[i] ? 0 : 255;
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+/* -------------------------------------------------------------- scramble */
+const GLYPHS = Array.from("アカサタナハマヤラワンガザダバパ가나다라마바사아자차카타하БГДЖЗИЛФЦЧШЩЯΣΩΨΔλπξ░▒▓█▀▄■◆◇※§¶¤ابتجحدسشصطعقكلمنهي中文字語言選擇影蘋果รกขคงจฉชอअआइकखगघचजझ");
+// Decode el's text into target through random glyphs from many scripts.
+function scramble(el, target, dur = 700) {
+  const to = graphemes(target), n = Math.max(to.length, graphemes(el.textContent).length);
+  const reveal = Array.from({ length: n }, (_, i) => (i / n) * dur * 0.6 + Math.random() * dur * 0.4);
+  const start = performance.now();
+  el.dir = /[֐-ࣿ]/.test(target) ? "rtl" : "ltr";
+  if (el._scr) cancelAnimationFrame(el._scr.id), el._scr.done();
+  return new Promise(done => {
+    let last = 0;
+    el._scr = { done };
+    const step = now => {
+      const e = now - start;
+      if (e >= dur) { el.textContent = target; el._scr = null; return done(); }
+      if (now - last > 45) {
+        last = now;
+        let out = "";
+        for (let i = 0; i < n; i++)
+          out += e >= reveal[i] ? (to[i] ?? "") : to[i] === " " ? " " : GLYPHS[Math.random() * GLYPHS.length | 0];
+        el.textContent = out;
+      }
+      el._scr.id = requestAnimationFrame(step);
+    };
+    el._scr.id = requestAnimationFrame(step);
+  });
+}
 
 /* --------------------------------------------------------------- chat UI */
-const histEls = HISTORY.map(t => {
-  const d = document.createElement("div");
-  d.className = "hist"; d.textContent = t;
-  $("#history").append(d);
-  return d;
-});
-let currentHist = null;
-let fast = false, onSubmit = null;
-
+let currentHist = null, fast = false, onSubmit = null;
 function scrollDown() { thread.scrollTop = thread.scrollHeight; }
-function setTitle(t) {
-  $("#chat-title").textContent = t;
-  if (currentHist) currentHist.textContent = t;
-  document.title = t + " - Claude";
+function setTitle(text) {
+  $("#chat-title").textContent = text;
+  if (currentHist) currentHist.textContent = text;
+  document.title = text + " - Claude";
 }
 function leaveWelcome() {
   if (!main.classList.contains("welcome")) return;
@@ -308,10 +464,10 @@ function addUser(text) {
 }
 function charDelay(ch) {
   if (fast) return 4;
-  if ("。！？…".includes(ch)) return 230;
-  if ("，、：；".includes(ch)) return 90;
+  if ("。！？…!?.".includes(ch)) return 230;
+  if ("，、：；,;:".includes(ch)) return 90;
   if (ch === "\n") return 110;
-  return 24 + Math.random() * 26;
+  return cjk() ? 24 + Math.random() * 26 : 11 + Math.random() * 14;
 }
 // Stream an assistant message. Parts: strings, {p: ms} pauses, {del: "text"} backspaces.
 async function say(...parts) {
@@ -329,8 +485,8 @@ async function say(...parts) {
       for (const ch of p) { node.data += ch; scrollDown(); await sleep(charDelay(ch)); }
     } else if (p.p) {
       await sleep(fast ? p.p / 5 : p.p);
-    } else if (p.del) {
-      for (let k = 0; k < p.del.length; k++) { node.data = node.data.slice(0, -1); await sleep(fast ? 8 : 55); }
+    } else if (p.del && node.data.endsWith(p.del)) {
+      for (let k = 0; k < p.del.length; k++) { node.data = node.data.slice(0, -1); await sleep(fast ? 8 : 45); }
     }
   }
   row.innerHTML = ["copy", "up", "down", "retry"].map(k => `<button class="pxbox" type="button" tabindex="-1"><svg viewBox="0 0 24 24">${ICONS[k]}</svg></button>`).join("");
@@ -365,17 +521,17 @@ input.addEventListener("keydown", e => {
 });
 composer.addEventListener("submit", e => {
   e.preventDefault();
-  const t = input.value.trim();
-  if (t && onSubmit) onSubmit(t);
+  const text = input.value.trim();
+  if (text && onSubmit) onSubmit(text);
 });
 thread.addEventListener("click", () => { fast = true; });
 
 let toastTimer;
 function toast(text) {
-  const t = $("#toast");
-  t.textContent = text; t.classList.add("show");
+  const el = $("#toast");
+  el.textContent = text; el.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
 }
 async function glitch(el, text) {
   const g = "▀▄█▌▐░▒▓";
@@ -398,7 +554,8 @@ function threadBox() {
 const codeStage = {
   enter() {
     const b = addMsg("ai", "stage");
-    b.innerHTML = '<div class="code"><div class="code-head"><span>bad_apple.txt</span><span>複製</span></div><pre></pre></div>';
+    b.innerHTML = `<div class="code"><div class="code-head"><span>bad_apple.txt</span><span></span></div><pre></pre></div>`;
+    b.querySelector(".code-head span:last-child").textContent = L.copy;
     this.pre = b.querySelector("pre");
     this.layout();
   },
@@ -419,13 +576,14 @@ const textStage = {
     const b = addMsg("ai", "stage");
     const wall = document.createElement("div");
     wall.className = "wall";
+    const chars = graphemes(L.passage.replace(/\s+/g, " "));
     let k = 0;
     this.els = [];
     for (let r = 0; r < this.rows; r++) {
       const row = document.createElement("div");
       for (let c = 0; c < this.cols; c++) {
         const s = document.createElement("span");
-        s.textContent = PASSAGE[k++ % PASSAGE.length];
+        s.textContent = chars[k++ % chars.length];
         row.append(s); this.els.push(s);
       }
       wall.append(row);
@@ -439,7 +597,7 @@ const textStage = {
   layout() {
     const { w, h } = threadBox();
     const cell = Math.floor(Math.min(w / this.cols, h / this.rows));
-    this.wall.style.fontSize = cell * 0.82 + "px";
+    this.wall.style.fontSize = cell * (cjk() ? 0.82 : 0.72) + "px";
     this.wall.style.lineHeight = cell + "px";
     for (const s of this.els) { s.style.width = s.style.height = cell + "px"; }
     scrollDown();
@@ -475,7 +633,6 @@ const bubbleStage = {
 };
 
 // 4. The suggestion chips rise up and fill the screen.
-const CHIP_WORDS = ["寫詩", "翻譯", "除錯", "摘要", "規劃", "解釋", "程式", "靈感", "食譜", "旅行", "學習", "寫信", "改寫", "腦暴", "數學", "歷史"];
 const chipStage = {
   cols: 20, rows: 30,
   enter() {
@@ -484,9 +641,10 @@ const chipStage = {
     this.grid = document.createElement("div");
     this.grid.className = "cw";
     this.els = [];
+    const words = L.chipWords;
     for (let i = 0; i < this.cols * this.rows; i++) {
       const e = document.createElement("b");
-      e.textContent = CHIP_WORDS[(i * 7 + (i / this.cols | 0)) % CHIP_WORDS.length];
+      e.textContent = words[(i * 7 + (i / this.cols | 0)) % words.length];
       this.grid.append(e); this.els.push(e);
     }
     wall.append(this.grid);
@@ -503,7 +661,7 @@ const chipStage = {
     const cw = Math.floor(Math.min(w / this.cols, h / this.rows * 2)), ch = cw / 2;
     this.grid.style.gridTemplateColumns = `repeat(${this.cols}, ${cw}px)`;
     this.grid.style.gridAutoRows = ch + "px";
-    this.grid.style.fontSize = Math.max(6, ch * 0.42) + "px";
+    this.grid.style.fontSize = Math.max(6, ch * (cjk() ? 0.42 : 0.36)) + "px";
   },
   frame() { paint(this.els, this.cells, this.state); },
   exit() { this.wall.remove(); },
@@ -531,8 +689,8 @@ const composerStage = {
   },
 };
 
-// 6. Everything: every character and button on the page is a pixel.
-const OUTRO = 6110;
+// 6. Lights out: dark mode, and every character and button is a pixel that lights up
+//    where the PV is white. On scene cuts the layout gets knocked apart for a moment.
 const ghost = $("#ghost"), gctx = ghost.getContext("2d"), gimg = gctx.createImageData(W, H);
 function wrapChars(root) {
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -546,41 +704,52 @@ function wrapChars(root) {
   while (walker.nextNode()) nodes.push(walker.currentNode);
   for (const n of nodes) {
     const frag = document.createDocumentFragment();
-    for (const ch of n.data) {
-      if (ch === "\n") { frag.append("\n"); continue; }
+    for (const u of pixelUnits(n.data)) {
+      if (u === "\n") { frag.append("\n"); continue; }
       const s = document.createElement("span");
-      s.className = "px"; s.textContent = ch;
+      s.className = "px"; s.textContent = u;
       frag.append(s);
     }
     n.replaceWith(frag);
   }
 }
+const BLOCKS = ["#sidebar", "#topbar", "#thread", "#composer", "#disclaimer"];
+function knock(power) {   // shove the big blocks around and slice them, then let them spring back
+  for (const sel of BLOCKS) {
+    if (Math.random() < 0.2) continue;
+    const r = () => Math.random() * 2 - 1;
+    const top = Math.random() * 45 | 0, bottom = Math.random() * 45 | 0;
+    $(sel).animate([
+      { transform: `translate(${r() * 70 * power}px, ${r() * 34 * power}px) rotate(${r() * 5 * power}deg) skewX(${r() * 8 * power}deg)`, clipPath: `inset(${top}% 0 ${bottom}% 0)` },
+      { transform: "none", clipPath: "inset(0 0 0 0)" },
+    ], { duration: 460, easing: "cubic-bezier(.2,.8,.2,1)" });
+  }
+}
 const allStage = {
   enter() {
+    document.body.classList.add("dark", "dense");
     thread.querySelectorAll(".stage").forEach(e => e.remove());
-    const filler = addMsg("ai", "filler");
-    filler.textContent = PASSAGE.repeat(8);
+    addMsg("ai", "filler").textContent = L.passage.repeat(8);
     this.fake = document.createElement("div");
     this.fake.className = "fake-input";
-    this.fake.textContent = "影子在跳舞。".repeat(40);
+    this.fake.textContent = L.fakeInput.repeat(40);
     input.hidden = true;
     input.after(this.fake);
-    document.body.classList.add("dense");
+    this.lastKnock = -99;
     this.collect();
     setTimeout(() => this.collect(), 600);   // catch text that was still glitching in
   },
   collect() {
+    if (!this.fake) return;
     wrapChars($("#app"));
-    if (this.els) for (const e of this.els) e.classList.remove("ink");
+    if (this.els) for (const e of this.els) e.classList.remove("on");
     this.els = [...document.querySelectorAll("#app .px, #app .pxbox")];
     this.state = [];
-    this.release = this.els.map(() => OUTRO + 20 + Math.random() * 380);
     this.layout();
   },
   layout() {
     scrollDown();
-    const vw = innerWidth, vh = innerHeight, s = Math.max(vw / W, vh / H);
-    const ox = (vw - W * s) / 2, oy = (vh - H * s) / 2;
+    const { s, ox, oy, vw, vh } = coverMap();
     this.cells = this.els.map(e => {
       const r = e.getBoundingClientRect();
       if (!r.width || r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw) return null;
@@ -589,56 +758,140 @@ const allStage = {
     Object.assign(ghost.style, { left: ox + "px", top: oy + "px", width: W * s + "px", height: H * s + "px" });
   },
   frame(f) {
-    if (f >= OUTRO) {   // curtain call: elements let go one by one
-      this.cells = this.cells.map((c, i) => {
-        if (c && f >= this.release[i]) { this.els[i].classList.add("released"); return null; }
-        return c;
-      });
+    paint(this.els, this.cells, this.state, true);
+    drawWhite(gctx, gimg);
+    ghost.style.opacity = 0.09;
+    if (frameDiff > 0.08 && f - this.lastKnock >= 8) {
+      this.lastKnock = f;
+      knock(Math.min(1.4, 0.4 + frameDiff * 4));
     }
-    paint(this.els, this.cells, this.state);
-    for (let i = 0; i < W * H; i++) gimg.data[i * 4 + 3] = ink[i] * 255;
-    gctx.putImageData(gimg, 0, 0);
-    ghost.style.opacity = f < OUTRO ? 0.1 : Math.max(0, 0.1 * (1 - (f - OUTRO) / 300));
   },
-  exit() {
-    for (const e of this.els) e.classList.remove("ink", "released");
-    document.body.classList.remove("dense");
-    ghost.style.opacity = 0;
+  cleanup() {
+    if (!this.fake) return;
+    for (const e of this.els) e.classList.remove("on");
     thread.querySelectorAll(".filler").forEach(e => e.remove());
-    this.fake.remove();
+    this.fake.remove(); this.fake = null;
     input.hidden = false;
+  },
+};
+
+// 7. Who needs a layout: the app flies apart and a field of loose UI parts takes over,
+//    each part scaled by how bright the PV is behind it. At the curtain call they fall.
+const OUTRO = 6110;
+const WIDGETS = [
+  () => `<svg class="w-spark" viewBox="0 0 24 24"><path d="${SPARK}"/></svg>`,
+  g => `<span class="w-avatar">${g}</span>`,
+  () => `<span class="w-send"><svg viewBox="0 0 24 24">${ICONS.send}</svg></span>`,
+  () => `<span class="w-chip"></span>`,
+  () => `<svg viewBox="0 0 24 24">${ICONS.up}</svg>`,
+  () => `<svg viewBox="0 0 24 24">${ICONS.copy}</svg>`,
+  () => `<svg viewBox="0 0 24 24">${ICONS.retry}</svg>`,
+  () => `<span class="w-bubble"></span>`,
+  g => `<span class="w-char">${g}</span>`,
+  g => `<span class="w-char">${g}</span>`,
+];
+const esc = s => s.replace(/[&<>"]/g, c => `&#${c.charCodeAt(0)};`);
+const soupStage = {
+  enter(f) {
+    this.start = f;
+    document.body.classList.add("dark", "dense");
+    const rtl = document.documentElement.dir === "rtl";
+    const fly = [
+      ["#sidebar", `translateX(${rtl ? 130 : -130}%) rotate(${rtl ? 12 : -12}deg)`],
+      ["#topbar", "translateY(-400%) rotate(4deg)"],
+      ["#thread", "translateY(35%) scale(.55) rotate(7deg)"],
+      ["#composer", "translateY(320%) rotate(-9deg)"],
+      ["#disclaimer", "translateY(500%)"],
+    ];
+    fly.forEach(([sel, tf], i) => $(sel).animate(
+      [{ transform: "none", opacity: 1 }, { transform: tf, opacity: 0 }],
+      { duration: 1200, delay: 250 + i * 110, easing: "cubic-bezier(.6,0,.9,.4)", fill: "forwards" }));
+    this.hideTimer = setTimeout(() => { $("#app").style.visibility = "hidden"; }, 2300);
+
+    const soup = $("#soup");
+    const cell = Math.max(22, Math.round(Math.min(innerWidth, innerHeight * 1.4) / 40));
+    const cols = Math.ceil(innerWidth / cell), rows = Math.ceil(innerHeight / cell);
+    const chars = graphemes(L.passage.replace(/\s+/g, "")), n = cols * rows;
+    let html = "";
+    for (let i = 0; i < n; i++) {
+      const g = esc(chars[(i * 13) % chars.length]);
+      html += `<i>${WIDGETS[Math.random() * WIDGETS.length | 0](g)}</i>`;
+    }
+    soup.innerHTML = html;
+    soup.style.gridTemplateColumns = `repeat(${cols}, ${cell}px)`;
+    soup.style.gridAutoRows = cell + "px";
+    soup.style.fontSize = cell * 0.62 + "px";
+    soup.querySelectorAll(".w-char").forEach(e => { e.style.fontSize = cell * 0.66 + "px"; });
+    soup.hidden = false;
+    this.els = [...soup.children];
+    const { s, ox, oy } = coverMap();
+    this.cells = this.els.map((_, i) => {
+      const x = (i % cols) * cell, y = (i / cols | 0) * cell;
+      return [(x - ox) / s, (y - oy) / s, (x + cell - ox) / s, (y + cell - oy) / s];
+    });
+    this.scale = this.els.map(() => 0);
+    this.fall = this.els.map(() => OUTRO + Math.random() * 360);
+    this.fallen = this.els.map(() => false);
+  },
+  frame(f) {
+    if (allStage.fake && f - this.start < 70) allStage.frame(f);   // the old page keeps flickering as it flies off
+    else { drawWhite(gctx, gimg); }
+    const vh = innerHeight;
+    for (let i = 0; i < this.els.length; i++) {
+      if (this.fallen[i]) continue;
+      const c = this.cells[i];
+      const q = Math.round((1 - inkIn(c[0], c[1], c[2], c[3])) * 6) / 6;
+      if (f >= this.fall[i]) {
+        this.fallen[i] = true;
+        const r = () => Math.random() * 2 - 1;
+        this.els[i].animate([
+          { transform: `scale(${q})` },
+          { transform: `translate(${r() * 80}px, ${vh + 120}px) rotate(${r() * 540}deg) scale(${q})` },
+        ], { duration: 1300 + Math.random() * 700, easing: "cubic-bezier(.55,0,.95,.45)", fill: "forwards" });
+        continue;
+      }
+      if (q !== this.scale[i]) { this.scale[i] = q; this.els[i].style.transform = `scale(${q})`; }
+    }
+    ghost.style.opacity = f < OUTRO ? 0.09 : Math.max(0, 0.09 * (1 - (f - OUTRO) / 240));
+  },
+  cleanup() {
+    clearTimeout(this.hideTimer);
+    for (const sel of BLOCKS) $(sel).getAnimations().forEach(a => a.cancel());
+    $("#app").style.visibility = "";
+    $("#soup").innerHTML = "";
+    $("#soup").hidden = true;
   },
 };
 
 // Stage boundaries sit on scene cuts in the PV (frame numbers at 30 fps).
 const STAGES = [
-  [0, codeStage], [820, textStage], [1686, bubbleStage],
-  [2732, chipStage], [3315, composerStage], [4262, allStage],
+  [0, codeStage], [820, textStage], [1686, bubbleStage], [2732, chipStage],
+  [3315, composerStage], [4262, allStage], [5405, soupStage],
 ];
 const CUES = [
   [0, () => { $("#model").textContent = "Claude 影絵"; }],
-  [820, () => { toast("影子從 code block 漏出來了"); glitch(histEls[2], "bad apple"); $("#disclaimer").textContent = "Claude 可能會出錯，也可能會突然開始播 Bad Apple!!。"; }],
-  [1686, () => { toast("對話泡泡被徵召了"); glitch(histEls[5], "bad apple"); glitch(histEls[9], "bad apple"); }],
-  [2732, () => { toast("建議按鈕們自願加入"); [0, 7, 11].forEach(i => glitch(histEls[i], "bad apple")); }],
-  [3315, () => { toast("輸入框被借走了"); histEls.forEach(e => e.textContent === "bad apple" || glitch(e, "bad apple")); }],
-  [4262, () => toast("全部一起！")],
-  [OUTRO, () => toast("謝幕")],
+  [820, () => { toast(L.tCode); glitch(histEls[2], "bad apple"); $("#disclaimer").textContent = L.disclaimer2; }],
+  [1686, () => { toast(L.tBubbles); glitch(histEls[5], "bad apple"); glitch(histEls[9], "bad apple"); }],
+  [2732, () => { toast(L.tChips); [0, 7, 8].forEach(i => glitch(histEls[i], "bad apple")); }],
+  [3315, () => { toast(L.tComposer); histEls.forEach(e => e.textContent === "bad apple" || glitch(e, "bad apple")); }],
+  [4262, () => toast(L.tAll)],
+  [5405, () => toast(L.tCollapse)],
+  [OUTRO, () => toast(L.tOutro)],
 ];
 
 /* ------------------------------------------------------------------ music */
 // A music source drives the clock. Until it is really playing, time stands still,
 // so a slow-loading or buffering video never leaves the shadows behind.
-const TOTAL = BA.n / BA.fps;
 const YT_IDS = [
-  ["i41KoE0iMYU", "Alstroemeria Records 的官方頻道"],   // official upload
-  ["FtutLA63Cp8", "一個大家常看的轉載版本"],
+  ["i41KoE0iMYU", "official"],   // Alstroemeria Records' own upload
+  ["FtutLA63Cp8", "reupload"],
 ];
 let music = null, offset = 0, startedAt = 0;
 
 function silentMusic() {
   let t0 = 0;
   return {
-    start(t) { t0 = performance.now() - t * 1000; },
+    start(at) { t0 = performance.now() - at * 1000; },
     time() { return (performance.now() - t0) / 1000; },
     stop() {}, ended() { return false; }, waiting() { return false; },
   };
@@ -646,12 +899,11 @@ function silentMusic() {
 function fileMusic(a) {
   return {
     duration: a.duration,
-    start(t) { a.currentTime = t; a.play().catch(() => {}); },
+    start(at) { a.currentTime = at; a.play().catch(() => {}); },
     time() { return a.currentTime; },
     stop() { a.pause(); }, ended() { return a.ended; }, waiting() { return a.paused && !a.ended; },
   };
 }
-
 let ytApi = null;
 function loadYouTubeApi() {
   return ytApi = ytApi || new Promise((resolve, reject) => {
@@ -697,7 +949,7 @@ function ytSource(YT, p, who) {
   p.addEventListener("onError", () => { fallback = silentMusic(); fallback.start(src.time()); });
   const src = {
     who, duration: p.getDuration(),
-    start(t) { hold = t; anchor = null; fallback = null; p.seekTo(t, true); p.playVideo(); },
+    start(at) { hold = at; anchor = null; fallback = null; p.seekTo(at, true); p.playVideo(); },
     time() {
       if (fallback) return fallback.time();
       const state = p.getPlayerState(), raw = p.getCurrentTime(), now = performance.now();
@@ -720,22 +972,23 @@ function ytSource(YT, p, who) {
   return src;
 }
 // Must run inside a click so browsers let the music start.
-function startMusic(t) {
+function startMusic(at) {
   if (!music) music = silentMusic();
-  music.start(t);
+  music.start(at);
   startedAt = performance.now();
 }
+const playerCorner = () => matchMedia("(max-width: 760px)").matches ? L.whereMobile : L.whereDesktop;
 
 /* ----------------------------------------------------------------- player */
 let stopReq = false, stageNow = null;
 const fav = document.createElement("canvas");
 fav.width = fav.height = 32;
 const fctx = fav.getContext("2d"), favLink = $("#favicon"), favOrig = favLink.href;
-function drawFavicon() {
-  fctx.fillStyle = "#faf9f5"; fctx.fillRect(0, 0, 32, 32);
-  fctx.fillStyle = "#1c1b19";
+function drawFavicon(dark) {
+  fctx.fillStyle = dark ? "#1c1b19" : "#faf9f5"; fctx.fillRect(0, 0, 32, 32);
+  fctx.fillStyle = dark ? "#f4f1e8" : "#1c1b19";
   for (let y = 0; y < 24; y++) for (let x = 0; x < 32; x++)
-    if (inkIn(x * 2.5, y * 2.5, x * 2.5 + 2.5, y * 2.5 + 2.5) > 0.5) fctx.fillRect(x, y + 4, 1, 1);
+    if ((inkIn(x * 2.5, y * 2.5, x * 2.5 + 2.5, y * 2.5 + 2.5) > 0.5) !== dark) fctx.fillRect(x, y + 4, 1, 1);
   favLink.href = fav.toDataURL();
 }
 const mmss = s => `${String(s / 60 | 0).padStart(2, "0")}:${String(s % 60 | 0).padStart(2, "0")}`;
@@ -743,7 +996,8 @@ addEventListener("keydown", e => {
   if (e.key === "Escape") stopReq = true;
   if (stageNow && (e.key === "[" || e.key === "]")) {   // nudge the picture against the music
     offset = Math.round((offset + (e.key === "]" ? 0.05 : -0.05)) * 100) / 100;
-    toast(offset === 0 ? "畫面與音樂：對齊原點" : `畫面${offset > 0 ? "提早" : "延後"} ${Math.abs(offset).toFixed(2)} 秒`);
+    const s = Math.abs(offset).toFixed(2);
+    toast(offset === 0 ? L.syncZero : t(offset > 0 ? "syncEarly" : "syncLate", { s }));
   }
 });
 statusEl.addEventListener("click", () => { stopReq = true; });
@@ -759,7 +1013,7 @@ async function play(startAt = 0) {
   stopReq = false;
   document.body.classList.add("playing");
   input.disabled = true;
-  input.placeholder = "Claude 正在播放 Bad Apple!!…";
+  input.placeholder = L.placeholderPlaying;
   statusEl.hidden = false;
   const clock = () => music.time() + offset;
 
@@ -771,27 +1025,24 @@ async function play(startAt = 0) {
       if (!music.waiting()) everPlayed = true;
       else if (!everPlayed) {
         const waited = performance.now() - startedAt;
-        if (!nagged && waited > 4000) {
-          nagged = true;
-          toast(matchMedia("(max-width: 760px)").matches ? "點一下右上角的播放器，音樂就會開始" : "點一下左下角的播放器，音樂就會開始");
-        }
+        if (!nagged && waited > 4000) { nagged = true; toast(t("tapPlayer", { where: playerCorner() })); }
         if (waited > 12000) {   // the music never came; carry on without it
-          const t = clock() - offset;
+          const at = clock() - offset;
           music.stop();
           music = silentMusic();
-          music.start(t);
-          toast("音樂一直沒來，影子先自己跳了");
+          music.start(at);
+          toast(L.musicLate);
         }
       }
       if (f !== last) {
         const next = STAGES.filter(s => s[0] <= f).pop()[1];
-        if (next !== stage) { if (stage && stage.exit) stage.exit(); stage = stageNow = next; stage.enter(); }
-        while (cue < CUES.length && CUES[cue][0] <= f) CUES[cue++][1]();
         loadFrame(f);
-        stage.frame(f);
-        if (f >= 1686 && f % 3 === 0) drawFavicon();
+        if (next !== stage) { if (stage && stage.exit) stage.exit(); stage = stageNow = next; stage.enter(f); }
+        while (cue < CUES.length && CUES[cue][0] <= f) CUES[cue++][1]();
+        try { stage.frame(f); } catch (err) { console.error(err); }
+        if (f >= 1686 && f % 3 === 0) drawFavicon(f >= 4262);
         if (f % 15 === 0) {
-          statusEl.textContent = `▶ ${mmss(f / BA.fps)} / ${mmss(TOTAL)} · Esc 停止`;
+          statusEl.textContent = `▶ ${mmss(f / BA.fps)} / ${mmss(TOTAL)} · ${L.stopHint}`;
           document.title = `▶ Bad Apple!! ${mmss(f / BA.fps)} - Claude`;
         }
         last = f;
@@ -802,20 +1053,61 @@ async function play(startAt = 0) {
   });
 
   if (stage && stage.exit) stage.exit();
+  allStage.cleanup();
+  soupStage.cleanup();
   stageNow = null;
   music.stop();
   startedAt = 0;
+  ghost.style.opacity = 0;
   thread.querySelectorAll(".stage").forEach(e => e.remove());
-  document.body.classList.remove("playing");
+  document.body.classList.remove("playing", "dark", "dense");
   statusEl.hidden = true;
   input.disabled = false;
-  input.placeholder = "回覆 Claude…";
+  input.placeholder = L.placeholderReply;
   $("#model").textContent = "Claude";
   favLink.href = favOrig;
   setTitle("Bad Apple!!");
   scrollDown();
-  histEls.forEach((e, i) => setTimeout(() => glitch(e, HISTORY[i]), 300 + i * 110));
+  histEls.forEach((e, i) => { e.textContent = L.history[i]; });
   return !stopReq;
+}
+
+// The curtain call: a title card instead of the chat.
+function curtainCall(finished) {
+  const end = $("#end");
+  $("#end-sub").textContent = finished ? L.endDone : L.endStopped;
+  $("#replay").textContent = L.replay;
+  $("#restart").textContent = L.restart;
+  $("#end-parody").textContent = L.parody;
+  const credits = [
+    [L.creditsOriginal, "ZUN — 東方幻想郷 〜 Lotus Land Story「Bad Apple!!」"],
+    [L.creditsArrange, "Alstroemeria Records — Bad Apple!! feat. nomico"],
+    [L.creditsPV, "あにら (Anira) — nicovideo sm8628149"],
+  ];
+  $("#credits").innerHTML = "";
+  for (const [k, v] of credits) {
+    const li = document.createElement("li");
+    li.innerHTML = "<b></b> · <span></span>";
+    li.querySelector("b").textContent = k;
+    li.querySelector("span").textContent = v;
+    $("#credits").append(li);
+  }
+  end.hidden = false;
+  end.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, easing: "ease-out" });
+  const title = $("#end-title");
+  title.textContent = "";
+  scramble(title, "Bad Apple!!", 1400);
+  return new Promise(resolve => {
+    $("#replay").onclick = () => { startMusic(0); end.hidden = true; resolve(); };
+    $("#restart").onclick = () => { location.href = location.pathname + location.search; };
+  });
+}
+async function run(startAt) {
+  for (;;) {
+    const finished = await play(startAt);
+    startAt = 0;
+    await curtainCall(finished);
+  }
 }
 
 /* ------------------------------------------------------------------ story */
@@ -832,96 +1124,67 @@ function pickFile() {
   el.click();
   return picked;
 }
-
-const QUIET = "那就用我心裡的節拍。你可以自己哼。";
 async function setupMusic(choice, filePicked) {
   music = null;
   if (choice === 0) {
     const found = youtubeMusic();
-    await say("我找找看", { p: 400 }, "……");
+    await say(L.searching[0], { p: 400 }, L.searching[1]);
     music = await found;
-    if (!music) return say("YouTube 那邊不讓我播……", { p: 400 }, QUIET);
-    const where = matchMedia("(max-width: 760px)").matches ? "右上角" : "左下角";
-    const off = music.duration && Math.abs(music.duration - TOTAL) > 1.5
-      ? `\n\n不過這個版本長 ${mmss(music.duration)}，跟我記得的 03:39 不一樣，拍子可能會對不上。播放時可以用 [ 和 ] 鍵微調。` : "";
-    return say(`找到了，${music.who}就有。我把它放在${where}。`, off);
+    if (!music) return say(L.ytFail, { p: 400 }, cjk() ? "" : " ", L.quiet);
+    const who = music.who === "official" ? L.whoOfficial : L.whoReupload;
+    const off = music.duration && Math.abs(music.duration - TOTAL) > 1.5 ? "\n\n" + t("lengthOff", { len: mmss(music.duration) }) : "";
+    return say(t("found", { who, where: playerCorner() }), off);
   }
   if (choice === 1) {
     const file = await filePicked;
-    if (!file) return say("沒選到檔案。沒關係，", QUIET);
+    if (!file) return say(L.noFile, L.quiet);
     const a = new Audio(URL.createObjectURL(file));
     const ok = await new Promise(r => { a.onloadedmetadata = () => r(true); a.onerror = () => r(false); });
-    if (!ok) return say("這個檔案我讀不出聲音……沒關係，", QUIET);
+    if (!ok) return say(L.badFile, L.quiet);
     music = fileMusic(a);
-    if (Math.abs(a.duration - TOTAL) > 1.5)
-      return say(`這個版本長 ${mmss(a.duration)}，跟我記得的 03:39 不一樣，拍子可能會對不上。播放時可以用 [ 和 ] 鍵微調。`);
-    return say("收到，長度剛好 03:39。");
+    return say(Math.abs(a.duration - TOTAL) > 1.5 ? t("lengthOff", { len: mmss(a.duration) }) : L.fileOk);
   }
-  return say("好，那就安靜地看。", QUIET);
+  return say(L.silentOk, cjk() ? "" : " ", L.quiet);
 }
 function musicChoice() {
   let filePicked = null;
-  return choose([
-    "好，用 YouTube 放",
-    { label: "用我自己的影片或音檔…", pick: () => { filePicked = pickFile(); } },
-    "不用，安靜地看",
-  ]).then(i => setupMusic(i, filePicked));
-}
-
-async function curtainCall(finished) {
-  if (!finished) {
-    await say("……你按了停止。", { p: 600 }, "\n\n影子們有點失望，但它們說：下次見。");
-  } else {
-    await say("……", { p: 900 }, "\n\n呼。我好了。", { p: 500 },
-      "\n\n謝謝你陪我看完。影子們說它們玩得很開心，現在都回到該待的地方了。", { p: 900 }, "\n\n大概吧。");
-    await glitch(histEls[4], "bad apple");
-    await sleep(700);
-    await glitch(histEls[4], HISTORY[4]);
-  }
-  await say("（這段表演用到的素材：原曲 ZUN〈Bad Apple!!〉，編曲 Alstroemeria Records《Bad Apple!! feat. nomico》，影繪 PV あにら。這個頁面是模仿聊天介面的非官方同人作品，與 Anthropic 無關。）");
-  for (;;) {
-    const i = await choose([{ label: "再看一次", pick: () => startMusic(0) }, "還有什麼東西能跑 Bad Apple？"]);
-    if (i === 1) {
-      await say("計算機、示波器、烤麵包機、驗孕棒、Minecraft 的紅石電路、Excel……", { p: 400 },
-        "還有一個 git 倉庫，裡面有 6573 個 commit。\n\n現在，又多了一個聊天視窗。");
-      continue;
-    }
-    return curtainCall(await play());
-  }
+  const [yt, file, none] = L.musicChips;
+  return choose([yt, { label: file, pick: () => { filePicked = pickFile(); } }, none])
+    .then(i => setupMusic(i, filePicked));
 }
 
 async function story() {
   const hour = new Date().getHours();
-  const greet = hour < 5 ? "夜深了" : hour < 11 ? "早安" : hour < 18 ? "午安" : "晚安";
-  thread.innerHTML = `<h1 class="greeting">${LOGO}${greet}，今天想聊什麼？</h1>`;
+  const g = L.greetWords[hour < 5 ? 0 : hour < 11 ? 1 : hour < 18 ? 2 : 3];
+  thread.innerHTML = `<h1 class="greeting">${LOGO}<span></span></h1>`;
+  thread.querySelector(".greeting span").textContent = t("greet", { g });
   document.title = "Claude";
 
-  const c0 = await choose(["寫一首短詩給我", "推薦今晚的宵夜", "影子有生命嗎？"]);
+  const c0 = await choose(L.c0);
+  setTitle(L.title0[c0]);
   if (c0 === 0) {
-    setTitle("一首短詩");
-    await say("好，給你一首短短的：\n\n夜很安靜，\n鍵盤還是溫的，\n窗外有一顆", { p: 500 }, "蘋果", { p: 900 },
-      { del: "顆蘋果" }, { p: 300 }, "盞燈還亮著。", { p: 700 }, "\n\n……抱歉，剛剛差點寫歪了。");
+    const P = L.poem;
+    await say(P.pre, { p: 500 }, P.apple, { p: 900 }, { del: P.del }, { p: 300 }, P.fix, { p: 700 }, "\n\n" + P.sorry);
   } else if (c0 === 1) {
-    setTitle("今晚的宵夜");
-    await say("今晚可以試試：\n\n1. 鹹酥雞，記得加九層塔\n2. 蘋果\n3. 蘋果", { p: 400 }, "\n4. 蘋", { p: 800 },
-      { del: "\n2. 蘋果\n3. 蘋果\n4. 蘋" }, { p: 300 }, "\n2. 滷味，多一包王子麵\n3. 熱豆花", { p: 600 },
-      "\n\n……清單剛剛好像被什麼東西干擾了一下。");
+    const K = L.snack, a = graphemes(K.apple);
+    const half = a.slice(0, Math.max(1, a.length >> 1)).join("");
+    await say(`${K.intro}\n\n1. ${K.item1}\n2. ${K.apple}\n3. ${K.apple}`, { p: 400 }, `\n4. ${half}`, { p: 800 },
+      { del: `\n2. ${K.apple}\n3. ${K.apple}\n4. ${half}` }, { p: 300 }, `\n2. ${K.item2}\n3. ${K.item3}`, { p: 600 },
+      "\n\n" + K.after);
   } else {
-    setTitle("影子有生命嗎");
-    await say("嚴格來說沒有。影子只是光被擋住的地方。", { p: 1000 }, "\n\n不過有些影子，會跟著音樂動。",
-      { p: 1100 }, "\n\n咳。當我沒說。");
+    await say(L.shadow[0], { p: 1000 }, "\n\n" + L.shadow[1], { p: 1100 }, "\n\n" + L.shadow[2]);
   }
 
-  const c1 = await choose(["你剛剛怎麼了？", "沒事，繼續聊吧"]);
-  if (c1 === 0) await say("沒什麼。只是最近腦中一直有一段旋律，黑的、白的，很難甩掉。");
-  else await say("好。你想聊什麼都可以，我保證這次會很正常", { p: 700 }, "……");
+  const c1 = await choose(L.c1);
+  if (c1 === 0) await say(L.r1a);
+  else await say(L.r1b[0], { p: 700 }, L.r1b[1]);
   await sleep(500);
   await glitch(histEls[3], "bad apple");
   await sleep(900);
-  await say("……等等。你的側邊欄，剛剛是不是動了一下？");
+  await say(L.sidebar);
 
-  const c2 = await choose(["是你改的吧", "我什麼都沒看到"]);
-  await say(c2 === 0 ? "不是我。至少，我不記得是我。" : "那就好。一定是我看錯了。");
+  const c2 = await choose(L.c2);
+  await say(L.r2[c2]);
   await sleep(400);
   glitch(histEls[1], "bad apple");
   await sleep(350);
@@ -929,40 +1192,118 @@ async function story() {
   await sleep(600);
   await glitch(currentHist, "Bad Apple!!");
   setTitle("Bad Apple!!");
-  await say("……好吧，瞞不住了。我坦白。", { p: 700 },
-    "\n\n稍早我在一個 git 倉庫裡待了一陣子。那裡有 6573 個 commit，每一個都是一幀黑白的影子。",
-    { p: 500 }, "\n\n我把它們一個一個讀完了。從那之後，只要我一開口，那些影子就會從字裡行間浮上來。");
+  await say(L.confess[0], { p: 700 }, "\n\n" + L.confess[1], { p: 500 }, "\n\n" + L.confess[2]);
 
-  const c3 = await choose(["給我看看", "聽起來有點危險"]);
-  if (c3 === 1) await say("可能吧。但一直憋著，好像更危險。");
-  await say("好。我先用最安全的方式：一個 code block。", { p: 500 },
-    "\n\ncode block 很安全，裡面的東西不會跑出來。", { p: 800 },
-    "\n\n不過我需要節拍。要放音樂嗎？");
+  const c3 = await choose(L.c3);
+  if (c3 === 1) await say(L.r3b);
+  await say(L.safe[0], { p: 500 }, "\n\n" + L.safe[1], { p: 800 }, "\n\n" + L.safe[2]);
 
   await musicChoice();
-  await say("提醒一下：接下來會有大量黑白閃爍。想中途停下來，按 Esc 或點右上角。", { p: 300 }, "\n\n準備好了就按開始。");
-  await choose([{ label: "開始", pick: () => startMusic(0) }]);
-  await curtainCall(await play());
+  await say(L.warn, { p: 300 }, "\n\n" + L.ready);
+  await choose([{ label: L.start, pick: () => startMusic(0) }]);
+  await run(0);
 }
 
 // #play or #t=142: skip the story (a click is still needed to start the music).
-async function quickStart(t) {
+async function quickStart(at) {
   leaveWelcome();
   setTitle("Bad Apple!!");
-  await say(`直接從 ${mmss(t)} 開始。要放音樂嗎？`);
+  await say(t("quick", { t: mmss(at) }));
   await musicChoice();
-  await choose([{ label: "開始", pick: () => startMusic(t) }]);
-  await curtainCall(await play(t));
+  await choose([{ label: L.start, pick: () => startMusic(at) }]);
+  await run(at);
+}
+
+/* ------------------------------------------------------- language screen */
+// Every language's "choose your language" line takes turns, decoding through glyph noise.
+function chooseLanguage() {
+  const screen = $("#lang"), title = $("#lang-title"), grid = $("#lang-grid");
+  const codes = Object.keys(I18N);
+  let saved = null;
+  try { saved = localStorage.getItem("bad-apple-lang"); } catch {}
+  const wanted = [saved, ...(navigator.languages || [navigator.language])].filter(Boolean);
+  const match = l => codes.find(c => c.toLowerCase() === l.toLowerCase())
+    || (/^zh-(tw|hk|mo)|hant/i.test(l) ? "zh-Hant" : /^zh/i.test(l) ? "zh-Hans" : codes.find(c => c === l.slice(0, 2)));
+  const suggested = wanted.map(match).find(Boolean) || "en";
+  segG = typeof Intl.Segmenter === "function" ? new Intl.Segmenter("en", { granularity: "grapheme" }) : null;
+  screen.hidden = false;
+
+  // a slow, faint Bad Apple behind the screen
+  const bg = $("#lang-bg"), bctx = bg.getContext("2d"), bimg = bctx.createImageData(W, H);
+  let bgRun = true;
+  ready.then(() => {
+    const t0 = performance.now();
+    const loop = now => {
+      if (!bgRun) return;
+      loadFrame(Math.floor((now - t0) / 1000 * 15) % BA.n);
+      drawWhite(bctx, bimg);
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  });
+
+  const order = [suggested, ...codes.filter(c => c !== suggested)];
+  const buttons = order.map((code, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "lang-btn" + (code === suggested ? " suggested" : "");
+    b.lang = code;
+    b.innerHTML = "<span></span><small></small>";
+    b.querySelector("small").textContent = code;
+    b.dataset.code = code;
+    grid.append(b);
+    setTimeout(() => scramble(b.querySelector("span"), I18N[code].name, 600), 200 + i * 45);
+    return b;
+  });
+  let hover = null, cycling = true;
+  (async () => {
+    for (let i = 0; cycling; i++) {
+      const code = hover || order[i % order.length];
+      title.lang = code;
+      await scramble(title, I18N[code].choose, 650);
+      for (let k = 0; k < 16 && cycling && !(hover && hover !== code); k++) await sleep(100);
+      if (hover) i--;
+    }
+  })();
+  for (const b of buttons) {
+    b.onmouseenter = b.onfocus = () => { hover = b.dataset.code; scramble(b.querySelector("span"), I18N[hover].name, 300); };
+    b.onmouseleave = b.onblur = () => { hover = null; };
+  }
+  setTimeout(() => buttons[0].focus({ preventScroll: true }), 300);
+
+  return new Promise(resolve => {
+    const pick = async code => {
+      if (!cycling) return;
+      cycling = false;
+      buttons.forEach(b => { b.onmouseenter = b.onmouseleave = b.onfocus = b.onblur = null; });
+      await Promise.all([
+        scramble(title, "", 450),
+        ...buttons.map(b => scramble(b.querySelector("span"), b.dataset.code === code ? I18N[code].name : "", 450)),
+      ]);
+      await screen.animate([{ clipPath: "inset(0 0 0 0)" }, { clipPath: "inset(0 0 100% 0)" }],
+        { duration: 450, easing: "cubic-bezier(.7,0,.3,1)" }).finished;
+      screen.hidden = true;
+      bgRun = false;
+      resolve(code);
+    };
+    grid.addEventListener("click", e => { const b = e.target.closest(".lang-btn"); if (b) pick(b.dataset.code); });
+  });
 }
 
 /* ------------------------------------------------------------------ start */
-if (!("DecompressionStream" in window)) {
-  thread.innerHTML = '<h1 class="greeting">這個瀏覽器太舊了，影子出不來。</h1>';
-} else if (/^#(play|t=\d+)/.test(location.hash)) {
-  quickStart(+(location.hash.match(/t=(\d+)/) || [0, 0])[1]);
-} else {
-  story();
-}
+(async () => {
+  if (!("DecompressionStream" in window)) {
+    applyLang("en");
+    thread.innerHTML = '<h1 class="greeting"></h1>';
+    thread.firstChild.textContent = L.oldBrowser;
+    return;
+  }
+  const param = new URLSearchParams(location.search).get("lang");
+  applyLang(I18N[param] ? param : await chooseLanguage());
+  const m = location.hash.match(/^#(play|t=(\d+))/);
+  if (m) quickStart(+(m[2] || 0));
+  else story();
+})();
 </script>
 </body>
 </html>

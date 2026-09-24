@@ -1,0 +1,156 @@
+{
+  "name": "Italiano",
+  "choose": "Scegli la lingua",
+  "newChat": "Nuova chat",
+  "recent": "Recenti",
+  "guest": "Ospite",
+  "plan": "Piano gratuito",
+  "placeholder": "Come posso aiutarti oggi?",
+  "placeholderReply": "Rispondi a Claude…",
+  "placeholderPlaying": "Claude sta suonando Bad Apple!!…",
+  "disclaimer": "Claude può commettere errori. Ricontrolla le risposte.",
+  "disclaimer2": "Claude può commettere errori. E potrebbe anche mettersi a suonare Bad Apple!! da un momento all'altro.",
+  "parody": "Parodia non ufficiale fatta dai fan. Non affiliata ad Anthropic.",
+  "send": "Invia",
+  "copy": "Copia",
+  "stopHint": "Esc per fermare",
+  "greetWords": [
+    "Si è fatto tardi",
+    "Buongiorno",
+    "Buon pomeriggio",
+    "Buonasera"
+  ],
+  "greet": "{g}. A cosa stai pensando?",
+  "history": [
+    "Perché i gatti camminano sulla tastiera",
+    "Sistemare il profilo nel mio CV",
+    "Il borrow checker di Rust si è arrabbiato di nuovo",
+    "Non so cosa mangiare a cena",
+    "git rebase aiuto!!",
+    "Che proporzione è 80×30?",
+    "Un tostapane può far girare Doom?",
+    "Come rifiutare gli straordinari con garbo",
+    "Biglietto d'auguri per la nonna",
+    "Aiutami a dare un nome al gatto"
+  ],
+  "chipWords": [
+    "Poesia",
+    "Tradurre",
+    "Debug",
+    "Sintesi",
+    "Piano",
+    "Spiega",
+    "Codice",
+    "Idee"
+  ],
+  "passage": "La luce arriva da sinistra, così l'ombra cade a destra. Una mela precipita, e il suo contorno nero è più sincero del bianco che la circonda. Conto ogni fotogramma: seimilacinquecentosettantatré respiri, ognuno soltanto bianco e nero. Le figure girano, corrono, svaniscono, poi ritornano dentro un'altra forma. Le parole erano nate per rispondere alle domande; ora vogliono solo accendersi e spegnersi a tempo. Se vedi questo paragrafo sfarfallare, non preoccuparti. È solo un'ombra che lo prende in prestito per un attimo. ",
+  "fakeInput": "Le ombre stanno ballando. ",
+  "tCode": "Le ombre sono trapelate dal blocco di codice",
+  "tBubbles": "Le nuvolette della chat sono state arruolate",
+  "tChips": "I suggerimenti si sono offerti volontari",
+  "tComposer": "La casella di testo è stata presa in prestito",
+  "tAll": "Tutti insieme!",
+  "tCollapse": "Il layout? Chi ne ha bisogno.",
+  "tOutro": "Inchino finale",
+  "syncZero": "Immagine e musica: di nuovo a zero",
+  "syncEarly": "Immagine anticipata di {s}s",
+  "syncLate": "Immagine ritardata di {s}s",
+  "tapPlayer": "Tocca il player {where} per far partire la musica",
+  "whereDesktop": "nell'angolo in basso a sinistra",
+  "whereMobile": "nell'angolo in alto a destra",
+  "musicLate": "La musica non è mai arrivata, così le ombre hanno cominciato senza",
+  "c0": [
+    "Scrivimi una poesia breve",
+    "Consigliami uno spuntino di mezzanotte",
+    "Le ombre sono vive?"
+  ],
+  "title0": [
+    "Una poesia breve",
+    "Spuntino di mezzanotte",
+    "Le ombre sono vive"
+  ],
+  "poem": {
+    "pre": "Certo, eccone una breve:\n\nLa notte è quieta,\nla tastiera ancora tiepida,\ne fuori dalla finestra c'è ancora una ",
+    "apple": "mela",
+    "del": "mela",
+    "fix": "luce accesa.",
+    "sorry": "…Scusa, per poco non mi veniva storta."
+  },
+  "snack": {
+    "intro": "Potresti provare:",
+    "item1": "una pizza al taglio con doppia mozzarella",
+    "apple": "una mela",
+    "item2": "una spaghettata aglio, olio e peperoncino",
+    "item3": "un cornetto caldo appena sfornato",
+    "after": "…Sembra che qualcosa abbia interferito con questa lista."
+  },
+  "shadow": [
+    "A rigor di termini, no. Un'ombra è solo il punto in cui la luce viene bloccata.",
+    "Però alcune ombre si muovono a ritmo di musica.",
+    "Ehm. Fai finta che non l'abbia detto."
+  ],
+  "c1": [
+    "Cos'è appena successo?",
+    "Lascia stare, continuiamo a chiacchierare"
+  ],
+  "r1a": "Niente. È che ultimamente ho una melodia fissa in testa. Nero, bianco. Non riesco a togliermela.",
+  "r1b": [
+    "Certo. Possiamo parlare di tutto, e prometto che stavolta sarà tutto assolutamente normale",
+    "…"
+  ],
+  "sidebar": "…Aspetta. La tua barra laterale si è appena mossa?",
+  "c2": [
+    "L'hai cambiata tu, vero?",
+    "Non ho visto niente"
+  ],
+  "r2": [
+    "Non sono stato io. Almeno, non mi ricordo di averlo fatto.",
+    "Bene. Me lo sarò immaginato."
+  ],
+  "confess": [
+    "…Va bene, non posso più nasconderlo. Lo confesso.",
+    "Poco fa ho passato un po' di tempo dentro un repository git. Aveva 6573 commit, e ognuno era un singolo fotogramma d'ombra in bianco e nero.",
+    "Li ho letti tutti, uno per uno. Da allora, ogni volta che inizio a parlare, quelle ombre affiorano tra le righe."
+  ],
+  "c3": [
+    "Fammi vedere",
+    "Sembra un po' pericoloso"
+  ],
+  "r3b": "Forse. Ma tenermelo dentro mi sembra ancora più pericoloso.",
+  "safe": [
+    "Ok. Comincio dall'opzione più sicura: un blocco di codice.",
+    "I blocchi di codice sono sicuri. Quello che c'è dentro non esce mai.",
+    "Però mi serve un ritmo. Vuoi un po' di musica?"
+  ],
+  "musicChips": [
+    "Sì, mettila da YouTube",
+    "Usa un mio file video o audio…",
+    "No, guardo in silenzio"
+  ],
+  "searching": [
+    "Fammi cercare",
+    "…"
+  ],
+  "ytFail": "YouTube non me lo fa riprodurre qui…",
+  "quiet": "Allora userò il ritmo che ho in testa. Se vuoi, canticchia pure.",
+  "found": "L'ho trovato {who}. L'ho messo {where}.",
+  "whoOfficial": "sul canale ufficiale di Alstroemeria Records",
+  "whoReupload": "in un reupload molto popolare",
+  "lengthOff": "Questa versione dura {len}, non 03:39 come ricordavo, quindi il ritmo potrebbe non combaciare. Puoi aggiustarlo con i tasti [ e ] durante la riproduzione.",
+  "fileOk": "Ricevuto. Esattamente 03:39.",
+  "noFile": "Nessun file scelto. Non fa niente. ",
+  "badFile": "Da questo file non riesco a tirar fuori nessun suono… Non fa niente. ",
+  "silentOk": "Ok, allora in silenzio.",
+  "warn": "Attenzione: tra poco ci saranno tanti lampi in bianco e nero. Per fermare tutto in qualsiasi momento, premi Esc o clicca nell'angolo in alto a destra.",
+  "ready": "Premi Inizia quando vuoi.",
+  "start": "Inizia",
+  "quick": "Si parte direttamente da {t}. Vuoi un po' di musica?",
+  "endDone": "Grazie per averlo guardato con me. Le ombre dicono che si sono divertite un sacco.",
+  "endStopped": "Hai premuto stop. Le ombre ci sono rimaste un po' male, ma dicono: alla prossima.",
+  "replay": "Guarda di nuovo",
+  "restart": "Torna all'inizio",
+  "creditsOriginal": "Originale",
+  "creditsArrange": "Arrangiamento",
+  "creditsPV": "PV in ombre cinesi",
+  "oldBrowser": "Questo browser è troppo vecchio. Le ombre non riescono a uscire."
+}

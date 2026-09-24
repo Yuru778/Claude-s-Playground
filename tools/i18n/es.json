@@ -1,0 +1,156 @@
+{
+  "name": "Español",
+  "choose": "Elige tu idioma",
+  "newChat": "Nuevo chat",
+  "recent": "Recientes",
+  "guest": "Invitado",
+  "plan": "Plan gratuito",
+  "placeholder": "¿En qué te puedo ayudar hoy?",
+  "placeholderReply": "Responde a Claude…",
+  "placeholderPlaying": "Claude está reproduciendo Bad Apple!!…",
+  "disclaimer": "Claude puede cometer errores. Verifica las respuestas.",
+  "disclaimer2": "Claude puede cometer errores. También podría ponerse a reproducir Bad Apple!! en cualquier momento.",
+  "parody": "Parodia no oficial hecha por fans. Sin relación con Anthropic.",
+  "send": "Enviar",
+  "copy": "Copiar",
+  "stopHint": "Esc para detener",
+  "greetWords": [
+    "Noche larga",
+    "Buenos días",
+    "Buenas tardes",
+    "Buenas noches"
+  ],
+  "greet": "{g}. ¿Qué te ronda la cabeza?",
+  "history": [
+    "Por qué los gatos pisan el teclado",
+    "Mejorar el resumen de mi CV",
+    "El borrow checker de Rust se enfadó otra vez",
+    "No sé qué cenar",
+    "¡¡Ayuda con git rebase!!",
+    "¿Qué proporción es 80×30?",
+    "¿Puede una tostadora ejecutar Doom?",
+    "Cómo decir que no a las horas extra",
+    "Tarjeta de cumpleaños para la abuela",
+    "Ayúdame a ponerle nombre a mi gato"
+  ],
+  "chipWords": [
+    "Poema",
+    "Traducir",
+    "Depurar",
+    "Resumen",
+    "Plan",
+    "Explicar",
+    "Código",
+    "Ideas"
+  ],
+  "passage": "La luz viene de la izquierda, así que la sombra cae hacia la derecha. Una manzana cae, y su contorno negro es más sincero que el blanco que la rodea. Cuento cada fotograma: seis mil quinientas setenta y tres respiraciones, cada una solo en blanco y negro. Las figuras giran, corren, desaparecen y luego vuelven dentro de otra forma. Las palabras nacieron para responder preguntas; ahora solo quieren encenderse y apagarse al ritmo. Si ves este párrafo parpadear, no te preocupes. Es solo una sombra que lo toma prestado un momento. ",
+  "fakeInput": "Las sombras están bailando. ",
+  "tCode": "Las sombras se escaparon del code block",
+  "tBubbles": "Las burbujas del chat han sido reclutadas",
+  "tChips": "Los botones de sugerencias se ofrecieron voluntarios",
+  "tComposer": "Nos han tomado prestado el cuadro de texto",
+  "tAll": "¡Todos juntos!",
+  "tCollapse": "¿Diseño? ¿Quién necesita diseño?",
+  "tOutro": "Telón",
+  "syncZero": "Imagen y música: de vuelta a cero",
+  "syncEarly": "Imagen {s} s antes",
+  "syncLate": "Imagen {s} s después",
+  "tapPlayer": "Toca el reproductor de la {where} para que empiece la música",
+  "whereDesktop": "esquina inferior izquierda",
+  "whereMobile": "esquina superior derecha",
+  "musicLate": "La música nunca llegó, así que las sombras empezaron sin ella",
+  "c0": [
+    "Escríbeme un poema corto",
+    "Recomiéndame algo para picar de noche",
+    "¿Las sombras están vivas?"
+  ],
+  "title0": [
+    "Un poema corto",
+    "Algo para picar de noche",
+    "¿Las sombras están vivas?"
+  ],
+  "poem": {
+    "pre": "Claro, aquí tienes uno cortito:\n\nLa noche está en calma,\nel teclado aún tibio,\ny al otro lado de la ventana, una ",
+    "apple": "manzana",
+    "del": "una manzana",
+    "fix": "una lámpara sigue encendida.",
+    "sorry": "…Perdón, eso casi se me va de las manos."
+  },
+  "snack": {
+    "intro": "Podrías probar:",
+    "item1": "unos tacos al pastor con extra de piña",
+    "apple": "una manzana",
+    "item2": "un bocadillo de tortilla de patatas",
+    "item3": "churros con chocolate calentito",
+    "after": "…Algo parece haberse colado en esa lista."
+  },
+  "shadow": [
+    "En sentido estricto, no. Una sombra es solo el sitio donde la luz se bloquea.",
+    "Aunque algunas sombras se mueven al ritmo de la música.",
+    "Ejem. Olvida lo que dije."
+  ],
+  "c1": [
+    "¿Qué acaba de pasar?",
+    "Da igual, sigamos hablando"
+  ],
+  "r1a": "Nada. Es que últimamente tengo una melodía metida en la cabeza. Negro, blanco. Cuesta quitársela de encima.",
+  "r1b": [
+    "Claro. Podemos hablar de lo que quieras, y te prometo que esta vez será todo completamente normal",
+    "…"
+  ],
+  "sidebar": "…Espera. ¿Tu barra lateral se acaba de mover?",
+  "c2": [
+    "La cambiaste tú, ¿verdad?",
+    "Yo no vi nada"
+  ],
+  "r2": [
+    "Yo no fui. Al menos, no recuerdo haberlo hecho.",
+    "Bien. Me lo habré imaginado."
+  ],
+  "confess": [
+    "…Vale, ya no puedo ocultarlo. Te lo confieso.",
+    "Hace un rato pasé un tiempo dentro de un repositorio git. Tenía 6573 commits, y cada uno era un único fotograma de sombra en blanco y negro.",
+    "Los leí todos, uno por uno. Desde entonces, cada vez que empiezo a hablar, esas sombras asoman entre líneas."
+  ],
+  "c3": [
+    "Enséñamelo",
+    "Suena un poco peligroso"
+  ],
+  "r3b": "Puede ser. Pero guardármelo me parece todavía más peligroso.",
+  "safe": [
+    "Vale. Empezaré por lo más seguro: un code block.",
+    "Los code blocks son seguros. Nada de lo que hay dentro sale nunca.",
+    "Pero necesito un ritmo. ¿Pongo música?"
+  ],
+  "musicChips": [
+    "Sí, ponla desde YouTube",
+    "Usar mi propio archivo de vídeo o audio…",
+    "No, verlo en silencio"
+  ],
+  "searching": [
+    "Déjame buscar",
+    "…"
+  ],
+  "ytFail": "YouTube no me deja reproducirlo aquí…",
+  "quiet": "Entonces usaré el ritmo que tengo en la cabeza. Puedes tararear si quieres.",
+  "found": "Lo encontré en {who}. Te lo he dejado en la {where}.",
+  "whoOfficial": "el canal oficial de Alstroemeria Records",
+  "whoReupload": "una resubida muy vista",
+  "lengthOff": "Esta versión dura {len}, no los 03:39 que yo recuerdo, así que puede que el ritmo no cuadre. Puedes ajustarlo con las teclas [ y ] mientras suena.",
+  "fileOk": "Recibido. Justo 03:39.",
+  "noFile": "No elegiste ningún archivo. No pasa nada. ",
+  "badFile": "No consigo sacarle sonido a ese archivo… No pasa nada. ",
+  "silentOk": "Vale, en silencio entonces.",
+  "warn": "Aviso: se vienen muchos destellos en blanco y negro. Para detenerlo en cualquier momento, pulsa Esc o haz clic en la esquina superior derecha.",
+  "ready": "Pulsa empezar cuando estés listo.",
+  "start": "Empezar",
+  "quick": "Empezamos directamente desde {t}. ¿Pongo música?",
+  "endDone": "Gracias por verlo conmigo. Las sombras dicen que se lo pasaron genial.",
+  "endStopped": "Le diste a detener. Las sombras están un poco decepcionadas, pero dicen: hasta la próxima.",
+  "replay": "Volver a ver",
+  "restart": "Volver al principio",
+  "creditsOriginal": "Original",
+  "creditsArrange": "Arreglo",
+  "creditsPV": "PV de sombras",
+  "oldBrowser": "Este navegador es demasiado antiguo. Las sombras no pueden salir."
+}

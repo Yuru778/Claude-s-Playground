@@ -1,0 +1,156 @@
+{
+  "name": "Français",
+  "choose": "Choisissez votre langue",
+  "newChat": "Nouvelle discussion",
+  "recent": "Récents",
+  "guest": "Invité",
+  "plan": "Offre gratuite",
+  "placeholder": "Comment puis-je t'aider aujourd'hui ?",
+  "placeholderReply": "Répondre à Claude…",
+  "placeholderPlaying": "Claude joue Bad Apple!!…",
+  "disclaimer": "Claude peut faire des erreurs. Vérifie les réponses.",
+  "disclaimer2": "Claude peut faire des erreurs. Et il peut aussi se mettre à jouer Bad Apple!! à tout moment.",
+  "parody": "Parodie non officielle réalisée par des fans. Sans lien avec Anthropic.",
+  "send": "Envoyer",
+  "copy": "Copier",
+  "stopHint": "Esc pour arrêter",
+  "greetWords": [
+    "Salut, noctambule",
+    "Bonjour",
+    "Bon après-midi",
+    "Bonsoir"
+  ],
+  "greet": "{g}. À quoi tu penses ?",
+  "history": [
+    "Pourquoi les chats marchent sur le clavier",
+    "Améliorer le résumé de mon CV",
+    "Le borrow checker de Rust râle encore",
+    "Je sais pas quoi manger ce soir",
+    "À l'aide, git rebase !!",
+    "80×30, c'est quel ratio ?",
+    "Un grille-pain peut faire tourner Doom ?",
+    "Refuser poliment des heures sup",
+    "Carte d'anniversaire pour mamie",
+    "Trouver un nom pour mon chat"
+  ],
+  "chipWords": [
+    "Poème",
+    "Traduire",
+    "Déboguer",
+    "Résumé",
+    "Plan",
+    "Analyser",
+    "Code",
+    "Idées"
+  ],
+  "passage": "La lumière vient de la gauche, alors l'ombre tombe à droite. Une pomme tombe, et son contour noir est plus sincère que le blanc qui l'entoure. Je compte chaque image : six mille cinq cent soixante-treize respirations, chacune seulement noire et blanche. Les silhouettes tournent, courent, disparaissent, puis reviennent dans une autre forme. Les mots étaient faits pour répondre aux questions ; maintenant, ils veulent juste s'allumer et s'éteindre au rythme. Si tu vois ce paragraphe clignoter, ne t'inquiète pas. Une ombre l'emprunte juste un instant. ",
+  "fakeInput": "Les ombres dansent. ",
+  "tCode": "Les ombres se sont échappées du code block",
+  "tBubbles": "Les bulles de discussion ont été réquisitionnées",
+  "tChips": "Les suggestions se sont portées volontaires",
+  "tComposer": "La zone de saisie a été empruntée",
+  "tAll": "Tous ensemble !",
+  "tCollapse": "La mise en page ? Pas besoin.",
+  "tOutro": "Rideau",
+  "syncZero": "Image et musique : retour à zéro",
+  "syncEarly": "Image avancée de {s} s",
+  "syncLate": "Image retardée de {s} s",
+  "tapPlayer": "Appuie sur le lecteur en {where} pour lancer la musique",
+  "whereDesktop": "bas à gauche",
+  "whereMobile": "haut à droite",
+  "musicLate": "La musique n'est jamais arrivée, alors les ombres ont commencé sans elle",
+  "c0": [
+    "Écris-moi un petit poème",
+    "Une idée de grignotage nocturne",
+    "Les ombres sont-elles vivantes ?"
+  ],
+  "title0": [
+    "Un petit poème",
+    "Grignotage nocturne",
+    "Les ombres sont-elles vivantes"
+  ],
+  "poem": {
+    "pre": "Bien sûr, en voici un tout court :\n\nLa nuit est calme,\nle clavier encore tiède,\net derrière la fenêtre, une ",
+    "apple": "pomme",
+    "del": "une pomme",
+    "fix": "une lampe reste allumée.",
+    "sorry": "…Pardon, j'ai failli déraper."
+  },
+  "snack": {
+    "intro": "Tu pourrais essayer :",
+    "item1": "un croque-monsieur bien gratiné, fromage en plus",
+    "apple": "une pomme",
+    "item2": "un bol de pâtes au beurre",
+    "item3": "un chocolat chaud bien crémeux",
+    "after": "…Quelque chose semble s'être glissé dans cette liste."
+  },
+  "shadow": [
+    "Techniquement, non. Une ombre, c'est juste l'endroit où la lumière est bloquée.",
+    "Mais certaines ombres bougent en rythme.",
+    "Hum. Oublie ce que j'ai dit."
+  ],
+  "c1": [
+    "Qu'est-ce qui vient de se passer ?",
+    "Laisse tomber, on continue"
+  ],
+  "r1a": "Rien. J'ai juste une mélodie coincée dans la tête ces temps-ci. Noir, blanc. Impossible de m'en débarrasser.",
+  "r1b": [
+    "D'accord. On peut parler de tout ce que tu veux, et promis, cette fois ce sera parfaitement normal",
+    "…"
+  ],
+  "sidebar": "…Attends. Ta barre latérale vient de bouger ?",
+  "c2": [
+    "C'est toi qui l'as changée, hein ?",
+    "Je n'ai rien vu"
+  ],
+  "r2": [
+    "Pas moi. Enfin, je ne me souviens pas l'avoir fait.",
+    "Tant mieux. J'ai dû l'imaginer."
+  ],
+  "confess": [
+    "…Bon, je ne peux plus le cacher. Je vais tout t'avouer.",
+    "Tout à l'heure, j'ai passé un moment dans un dépôt git. Il contenait 6 573 commits, et chacun d'eux était une seule image d'ombre en noir et blanc.",
+    "Je les ai tous lus, un par un. Depuis, dès que je commence à parler, ces ombres remontent entre les lignes."
+  ],
+  "c3": [
+    "Montre-moi",
+    "Ça a l'air un peu dangereux"
+  ],
+  "r3b": "Peut-être. Mais tout garder pour moi me semble encore plus dangereux.",
+  "safe": [
+    "D'accord. Je commence par l'option la plus sûre : un code block.",
+    "Les code blocks sont sûrs. Rien de ce qu'il y a dedans n'en sort jamais.",
+    "Mais il me faut un rythme. Tu veux de la musique ?"
+  ],
+  "musicChips": [
+    "Oui, lance-la depuis YouTube",
+    "Utiliser ma propre vidéo ou mon fichier audio…",
+    "Non, regarder en silence"
+  ],
+  "searching": [
+    "Je cherche",
+    "…"
+  ],
+  "ytFail": "YouTube ne me laisse pas la lire ici…",
+  "quiet": "Alors j'utiliserai le rythme que j'ai dans la tête. Tu peux fredonner avec moi.",
+  "found": "Je l'ai trouvée sur {who}. Je l'ai mise en {where}.",
+  "whoOfficial": "la chaîne officielle d'Alstroemeria Records",
+  "whoReupload": "une copie très populaire",
+  "lengthOff": "Cette version dure {len}, pas les 03:39 dont je me souviens, donc le rythme risque d'être décalé. Tu peux ajuster avec les touches [ et ] pendant la lecture.",
+  "fileOk": "Reçu. Pile 03:39.",
+  "noFile": "Aucun fichier choisi. Pas grave. ",
+  "badFile": "Je n'arrive à tirer aucun son de ce fichier… Pas grave. ",
+  "silentOk": "D'accord, en silence alors.",
+  "warn": "Attention : beaucoup de flashs en noir et blanc arrivent. Pour arrêter à tout moment, appuie sur Esc ou clique dans le coin en haut à droite.",
+  "ready": "Appuie sur Lancer quand tu es prêt.",
+  "start": "Lancer",
+  "quick": "On démarre directement à {t}. Tu veux de la musique ?",
+  "endDone": "Merci de l'avoir regardé avec moi. Les ombres disent qu'elles se sont bien amusées.",
+  "endStopped": "Tu as appuyé sur stop. Les ombres sont un peu déçues, mais elles disent : à la prochaine.",
+  "replay": "Revoir",
+  "restart": "Revenir au début",
+  "creditsOriginal": "Original",
+  "creditsArrange": "Arrangement",
+  "creditsPV": "PV en ombres chinoises",
+  "oldBrowser": "Ce navigateur est trop vieux. Les ombres ne peuvent pas sortir."
+}
