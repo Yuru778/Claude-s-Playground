@@ -162,7 +162,9 @@ body.dense #sidebar .pxbox.on { opacity: 1; filter: brightness(1.6); }
 #soup .w-char { width: auto; height: auto; color: var(--lit); font-family: var(--serif); font-weight: 700; font-size: 20px; line-height: 1; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-body.playing #thread { overflow: hidden; }
+body.playing #thread { overflow: hidden; display: flex; flex-direction: column; }
+body.playing #thread > .msg:not(.stage):not(.filler) { display: none; }   /* only the current stage is on screen */
+body.playing #thread > .msg.stage { margin: auto; }
 #toast { position: fixed; top: 14px; left: 50%; transform: translate(-50%, -8px); background: var(--ink); color: #f5f3ec; font-size: 13px; padding: 8px 15px; border-radius: 999px; opacity: 0; transition: opacity .3s, transform .3s; z-index: 30; pointer-events: none; white-space: nowrap; }
 body.dark #toast { background: var(--lit); color: #1c1b19; }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -494,6 +496,11 @@ function leaveWelcome() {
   currentHist.className = "hist active";
   $("#history").prepend(currentHist);
 }
+// A message that holds one stage of the show; it replaces whatever stage came before.
+function stageMsg() {
+  thread.querySelectorAll(".stage").forEach(e => e.remove());
+  return addMsg("ai", "stage");
+}
 function addMsg(role, cls = "") {
   const m = document.createElement("div");
   m.className = `msg ${role} ${cls}`;
@@ -599,7 +606,7 @@ function threadBox() {
 // 1. A code block inside a reply. "Code blocks are safe; nothing gets out."
 const codeStage = {
   enter() {
-    const b = addMsg("ai", "stage");
+    const b = stageMsg();
     b.innerHTML = `<div class="code"><div class="code-head"><span>bad_apple.txt</span><span></span></div><pre></pre></div>`;
     b.querySelector(".code-head span:last-child").textContent = L.copy;
     this.pre = b.querySelector("pre");
@@ -619,7 +626,7 @@ const codeStage = {
 const textStage = {
   cols: 48, rows: 36,
   enter() {
-    const b = addMsg("ai", "stage");
+    const b = stageMsg();
     const wall = document.createElement("div");
     wall.className = "wall";
     const chars = graphemes(L.passage.replace(/\s+/g, " "));
@@ -655,7 +662,7 @@ const textStage = {
 const bubbleStage = {
   cols: 32, rows: 24,
   enter() {
-    const b = addMsg("ai", "stage");
+    const b = stageMsg();
     this.grid = document.createElement("div");
     this.grid.className = "bubbles";
     this.els = [];
