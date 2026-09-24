@@ -6,15 +6,18 @@
 en.json is the reference: every language must have the same keys, array
 lengths and {placeholders}, and poem.del must be a suffix of
 poem.pre + poem.apple (the page types the apple, then backspaces del).
-The language screen lists languages in ORDER.
+The language prompt lists languages in ORDER. Also stamps index.html's
+script tags with content hashes (see stamp_versions).
 """
+import hashlib
 import json
 import os
 import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "i18n")
-OUT = os.path.join(HERE, "..", "web", "i18n.js")
+WEB = os.path.join(HERE, "..", "web")
+OUT = os.path.join(WEB, "i18n.js")
 ORDER = ["zh-Hant", "zh-Hans", "en", "ja", "ko", "es", "fr", "de", "pt",
          "it", "ru", "vi", "th", "id", "tr", "ar", "hi"]
 
@@ -46,6 +49,18 @@ def main():
         json.dump(langs, f, ensure_ascii=False, separators=(",", ":"))
         f.write(";\n")
     print(f"{len(langs)} languages -> {os.path.normpath(OUT)}")
+    stamp_versions()
+
+
+def stamp_versions():
+    """Point index.html at ?v=<content hash> of each script, so browsers never
+    pair a new page with a stale cached script."""
+    page = os.path.join(WEB, "index.html")
+    html = open(page, encoding="utf-8").read()
+    for name in ("frames.js", "i18n.js"):
+        digest = hashlib.sha1(open(os.path.join(WEB, name), "rb").read()).hexdigest()[:10]
+        html = re.sub(rf'src="{re.escape(name)}(\?v=\w+)?"', f'src="{name}?v={digest}"', html)
+    open(page, "w", encoding="utf-8").write(html)
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@
 """Pack the Bad Apple!! PV into web/frames.js for the web version.
 
     python3 tools/build_web.py badapple.mp4
+    python3 tools/build_i18n.py          # re-stamps the script versions in index.html
 
 Frames are 80x60 black-and-white bitmaps (1 = white), packed 8 pixels per
 byte, XORed with the previous frame so still areas become zeros, then

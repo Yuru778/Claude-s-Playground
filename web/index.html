@@ -310,8 +310,8 @@ body.unstable #thread .msg:last-of-type .body { text-shadow: 1px 0 rgba(255, 0, 
   <div class="gate-card"><h2 id="gate-title"></h2><p id="gate-body"></p><button type="button" class="end-btn primary" id="gate-go"></button></div>
 </div>
 <div id="toast"></div>
-<script src="frames.js"></script>
-<script src="i18n.js"></script>
+<script src="frames.js?v=2edde4c864"></script>
+<script src="i18n.js?v=d9a88410a8"></script>
 <script>
 "use strict";
 const $ = s => document.querySelector(s);
@@ -1251,7 +1251,7 @@ async function malfunction() {
   document.body.classList.remove("unstable");
   const err = addMsg("ai", "error");
   err.innerHTML = '<span class="err-ic">!</span><span></span>';
-  err.lastChild.textContent = L.errMsg;
+  err.lastChild.textContent = L.errMsg || "Claude ran into an error while responding.";
   scrollDown();
   await sleep(1100);
 }
@@ -1259,11 +1259,11 @@ async function malfunction() {
 // "Repair Claude automatically?" The button that starts the show; cancel won't let you off.
 function repairPrompt(at) {
   const dlg = $("#repair"), card = dlg.querySelector(".rp-card"), go = $("#rp-go"), cancel = $("#rp-cancel");
-  $("#rp-title").textContent = L.repairTitle;
-  $("#rp-body").textContent = L.repairBody;
-  $("#rp-warn").textContent = L.repairWarn;
-  go.textContent = L.repairGo;
-  cancel.textContent = L.repairCancel;
+  $("#rp-title").textContent = L.repairTitle || "Something's wrong with Claude";
+  $("#rp-body").textContent = L.repairBody || "Unrecognized output detected. Automatically repair Claude?";
+  $("#rp-warn").textContent = L.repairWarn || "The repair may involve intense flashing images.";
+  go.textContent = L.repairGo || "Repair";
+  cancel.textContent = L.repairCancel || "Cancel";
   go.disabled = cancel.disabled = false;
   cancel.className = "rp-btn";
   dlg.hidden = false;
