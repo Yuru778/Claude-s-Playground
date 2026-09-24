@@ -1,6 +1,5 @@
 {
   "name": "Türkçe",
-  "choose": "Dilini seç",
   "newChat": "Yeni sohbet",
   "recent": "Son sohbetler",
   "guest": "Misafir",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Orijinal",
   "creditsArrange": "Aranjman",
   "creditsPV": "Gölge sanatı PV",
-  "oldBrowser": "Bu tarayıcı çok eski. Gölgeler dışarı çıkamıyor."
+  "oldBrowser": "Bu tarayıcı çok eski. Gölgeler dışarı çıkamıyor.",
+  "adTitle": "Başlamadan önce",
+  "adBody": "Oynatıcıda reklam varsa önce onu geç (varsa).",
+  "adReady": "Hazırım, başla"
 }

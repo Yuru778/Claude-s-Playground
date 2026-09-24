@@ -9,13 +9,13 @@
 <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4' stroke='%23d97757' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <!--
   Bad Apple!! in a chat window.
-  A fan-made parody of a chat UI (not affiliated with Anthropic). Pick a
-  language, chat for a bit, and then every element on the page plays the
+  A fan-made parody of a chat UI (not affiliated with Anthropic). Chat for
+  a bit (in the browser's language, or ?lang=xx), and then every element plays the
   Bad Apple!! shadow-art PV; the second half switches to dark mode and
   tears the layout apart. Frames come from frames.js (tools/build_web.py),
   strings from i18n.js. Music comes from an embedded YouTube player that
   stays out of sight until the show starts; no audio is hosted here.
-  ?lang=ja skips the language screen; #play skips the story; #t=142 jumps
+  ?lang=ja picks a language; #play skips the story; #t=142 jumps
   to a time in seconds.
 -->
 <style>
@@ -176,19 +176,16 @@ html[dir=rtl] #yt { left: auto; right: 10px; }
 .yt-slot iframe { display: block; width: 100%; height: 100%; }
 body.has-yt .me { margin-top: 246px; }
 
-/* language screen */
-#lang { position: fixed; inset: 0; z-index: 60; background: #0d0d0c; color: #f2efe6; display: grid; place-items: center; overflow: auto; padding: 32px 16px;
-  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); }
-.lang-inner { position: relative; width: min(880px, 100%); }
-.lang-kicker { font: 12px var(--mono); letter-spacing: .2em; color: #8f8b80; margin: 0 0 14px; direction: ltr; text-align: left; }
-.lang-kicker b { color: var(--accent); font-weight: 400; }
-#lang-title { font-family: var(--sans); font-size: clamp(30px, 6.4vw, 68px); font-weight: 600; letter-spacing: -.01em; line-height: 1.15; margin: 0 0 30px; min-height: 2.3em; overflow-wrap: anywhere; }
-#lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
-.lang-btn { position: relative; background: transparent; color: #e7e3d9; border: 1px solid #34332f; border-radius: 10px; padding: 12px 14px; text-align: start; font-size: 15px; cursor: pointer; white-space: nowrap; overflow: hidden; transition: border-color .15s, background-color .15s; }
-.lang-btn small { display: block; font: 10.5px var(--mono); color: #6f6b61; letter-spacing: .08em; margin-top: 3px; direction: ltr; text-align: start; }
-.lang-btn:hover, .lang-btn:focus-visible { border-color: var(--accent); background: #1a1917; outline: none; }
-.lang-btn.suggested { border-color: #6b4a3c; }
-.lang-btn.suggested::after { content: "↵"; position: absolute; top: 10px; inset-inline-end: 12px; color: var(--accent); font-size: 13px; }
+/* before the show: cover the page, point at the player, let people skip an ad */
+#gate { position: fixed; inset: 0; z-index: 24; background: rgba(18, 17, 15, .84); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 24px; animation: fade .35s ease-out; }
+@keyframes fade { from { opacity: 0; } }
+.gate-card { max-width: 420px; text-align: center; color: #f2efe6; }
+#gate-title { font-family: var(--serif); font-weight: 400; font-size: 28px; margin: 0 0 12px; }
+#gate-body { font-size: 15.5px; line-height: 1.7; color: #d6d2c7; margin: 0 0 24px; }
+#gate-arrow { position: fixed; width: 120px; height: 60px; transform-origin: 50% 50%; pointer-events: none; }
+#gate-arrow svg { width: 100%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; animation: nudge .8s ease-in-out infinite alternate; }
+@keyframes nudge { to { transform: translateX(-12px); } }
+body.gated #yt { z-index: 26; box-shadow: 0 0 0 3px var(--accent), 0 8px 40px rgba(217, 119, 87, .35); }
 
 /* curtain call */
 #end { position: fixed; inset: 0; z-index: 40; background: #111110; color: #f2efe6; display: grid; place-items: center; padding: 32px 18px; text-align: center; overflow: auto; }
@@ -215,18 +212,10 @@ body.has-yt .me { margin-top: 246px; }
   #composer.takeover { inset: 56px 10px 12px; }
   #yt, html[dir=rtl] #yt { top: 54px; right: 8px; left: auto; bottom: auto; width: 180px; box-shadow: 0 4px 18px rgba(40, 30, 10, .18); }
   .yt-slot { height: 101px; }
-  #lang-grid { grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); }
 }
 </style>
 </head>
 <body>
-<section id="lang" hidden>
-  <div class="lang-inner">
-    <p class="lang-kicker"><b>●</b> 17 LANGUAGES</p>
-    <h1 id="lang-title" aria-live="polite"></h1>
-    <div id="lang-grid"></div>
-  </div>
-</section>
 <div id="app">
   <aside id="sidebar">
     <div class="brand"><svg class="logo pxbox" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="#d97757" stroke-width="2.6" stroke-linecap="round"/></svg><span>Claude</span></div>
@@ -264,6 +253,10 @@ body.has-yt .me { margin-top: 246px; }
     <p class="end-parody" id="end-parody"></p>
   </div>
 </section>
+<div id="gate" hidden>
+  <div id="gate-arrow"><svg viewBox="0 0 120 60"><path d="M112 34C86 12 52 10 18 30M32 16 16 30l16 13"/></svg></div>
+  <div class="gate-card"><h2 id="gate-title"></h2><p id="gate-body"></p><button type="button" class="end-btn primary" id="gate-go"></button></div>
+</div>
 <div id="toast"></div>
 <script src="frames.js"></script>
 <script src="i18n.js"></script>
@@ -319,7 +312,6 @@ function applyLang(code) {
     $("#history").append(d);
     return d;
   });
-  try { localStorage.setItem("bad-apple-lang", lang); } catch {}
 }
 
 /* ---------------------------------------------------------------- frames */
@@ -941,10 +933,15 @@ function ytSource(YT, p, card) {
   let hold = 0, anchor = null, lastRaw = -1, fallback = null;
   p.addEventListener("onError", () => { fallback = silentMusic(); fallback.start(src.time()); });
   const src = {
+    prime() {   // show the player and let it run muted, so a pre-roll ad can be skipped before the show
+      card.classList.remove("stowed");
+      document.body.classList.add("has-yt");
+      p.mute(); p.playVideo();
+    },
     start(at) {
       card.classList.remove("stowed");
       document.body.classList.add("has-yt");
-      hold = at; anchor = null; fallback = null; p.seekTo(at, true); p.playVideo();
+      hold = at; anchor = null; fallback = null; p.unMute(); p.seekTo(at, true); p.playVideo();
     },
     time() {
       if (fallback) return fallback.time();
@@ -972,6 +969,39 @@ function startMusic(at) {
   if (!music) music = silentMusic();
   music.start(at);
   startedAt = performance.now();
+}
+// The "start" click: wake the player (or just start, if there is no player).
+function goPick(at) {
+  if (music && music.prime) music.prime(); else startMusic(at);
+}
+// Cover the page and point at the player until the viewer says go.
+function adGate(at) {
+  if (startedAt || !music || !music.prime) return Promise.resolve();
+  const gate = $("#gate"), arrow = $("#gate-arrow");
+  $("#gate-title").textContent = L.adTitle;
+  $("#gate-body").textContent = L.adBody;
+  $("#gate-go").textContent = L.adReady;
+  gate.hidden = false;
+  document.body.classList.add("gated");
+  const place = () => {
+    const r = $("#yt").getBoundingClientRect(), mid = r.top + r.height / 2;
+    let x, y, turn;
+    if (r.top < innerHeight / 3) { x = r.left + r.width / 2 - 60; y = r.bottom + 14; turn = 90; }       // player above: point up
+    else if (r.left < innerWidth / 2) { x = r.right + 14; y = mid - 30; turn = 0; }                   // player on the left
+    else { x = r.left - 134; y = mid - 30; turn = 180; }                                              // player on the right
+    Object.assign(arrow.style, { left: x + "px", top: y + "px", transform: `rotate(${turn}deg)` });
+  };
+  place();
+  addEventListener("resize", place);
+  return new Promise(resolve => {
+    $("#gate-go").onclick = () => {
+      startMusic(at);
+      removeEventListener("resize", place);
+      gate.hidden = true;
+      document.body.classList.remove("gated");
+      resolve();
+    };
+  });
 }
 const playerCorner = () => matchMedia("(max-width: 760px)").matches ? L.whereMobile : L.whereDesktop;
 
@@ -1094,8 +1124,8 @@ function curtainCall(finished) {
   title.textContent = "";
   scramble(title, "Bad Apple!!", 1400);
   return new Promise(resolve => {
-    $("#replay").onclick = () => { startMusic(0); end.hidden = true; resolve(); };
-    $("#restart").onclick = () => { location.href = location.pathname + location.search; };
+    $("#replay").onclick = () => { goPick(0); end.hidden = true; resolve(); };
+    $("#restart").onclick = () => { location.href = location.pathname + location.search; };   // back to a fresh chat
   });
 }
 async function run(startAt) {
@@ -1103,6 +1133,7 @@ async function run(startAt) {
     const finished = await play(startAt);
     startAt = 0;
     await curtainCall(finished);
+    await adGate(0);
   }
 }
 
@@ -1159,7 +1190,8 @@ async function story() {
   if (c3 === 1) await say(L.r3b);
   await say(L.safe[0], { p: 500 }, "\n\n" + L.safe[1], { p: 800 }, "\n\n" + L.warn, { p: 300 }, "\n\n" + L.ready);
   await Promise.race([loadMusic(), sleep(6000)]);
-  await choose([{ label: L.start, pick: () => startMusic(0) }]);
+  await choose([{ label: L.start, pick: () => goPick(0) }]);
+  await adGate(0);
   await run(0);
 }
 
@@ -1168,72 +1200,20 @@ async function quickStart(at) {
   leaveWelcome();
   setTitle("Bad Apple!!");
   await Promise.race([loadMusic(), sleep(6000)]);
-  await choose([{ label: L.start, pick: () => startMusic(at) }]);
+  await choose([{ label: L.start, pick: () => goPick(at) }]);
+  await adGate(at);
   await run(at);
 }
 
-/* ------------------------------------------------------- language screen */
-// Every language's "choose your language" line takes turns, decoding through glyph noise.
-function chooseLanguage() {
-  const screen = $("#lang"), title = $("#lang-title"), grid = $("#lang-grid");
+/* ------------------------------------------------------------------ start */
+// Speak the viewer's language: ?lang=xx, else the browser's languages, else English.
+function detectLanguage() {
   const codes = Object.keys(I18N);
-  let saved = null;
-  try { saved = localStorage.getItem("bad-apple-lang"); } catch {}
-  const wanted = [saved, ...(navigator.languages || [navigator.language])].filter(Boolean);
+  const param = new URLSearchParams(location.search).get("lang");
   const match = l => codes.find(c => c.toLowerCase() === l.toLowerCase())
     || (/^zh-(tw|hk|mo)|hant/i.test(l) ? "zh-Hant" : /^zh/i.test(l) ? "zh-Hans" : codes.find(c => c === l.slice(0, 2)));
-  const suggested = wanted.map(match).find(Boolean) || "en";
-  segG = typeof Intl.Segmenter === "function" ? new Intl.Segmenter("en", { granularity: "grapheme" }) : null;
-  screen.hidden = false;
-
-  const order = [suggested, ...codes.filter(c => c !== suggested)];
-  const buttons = order.map((code, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "lang-btn" + (code === suggested ? " suggested" : "");
-    b.lang = code;
-    b.innerHTML = "<span></span><small></small>";
-    b.querySelector("small").textContent = code;
-    b.dataset.code = code;
-    grid.append(b);
-    setTimeout(() => scramble(b.querySelector("span"), I18N[code].name, 600), 200 + i * 45);
-    return b;
-  });
-  let hover = null, cycling = true;
-  (async () => {
-    for (let i = 0; cycling; i++) {
-      const code = hover || order[i % order.length];
-      title.lang = code;
-      await scramble(title, I18N[code].choose, 650);
-      for (let k = 0; k < 16 && cycling && !(hover && hover !== code); k++) await sleep(100);
-      if (hover) i--;
-    }
-  })();
-  for (const b of buttons) {
-    b.onmouseenter = b.onfocus = () => { hover = b.dataset.code; scramble(b.querySelector("span"), I18N[hover].name, 300); };
-    b.onmouseleave = b.onblur = () => { hover = null; };
-  }
-  setTimeout(() => buttons[0].focus({ preventScroll: true }), 300);
-
-  return new Promise(resolve => {
-    const pick = async code => {
-      if (!cycling) return;
-      cycling = false;
-      buttons.forEach(b => { b.onmouseenter = b.onmouseleave = b.onfocus = b.onblur = null; });
-      await Promise.all([
-        scramble(title, "", 450),
-        ...buttons.map(b => scramble(b.querySelector("span"), b.dataset.code === code ? I18N[code].name : "", 450)),
-      ]);
-      await screen.animate([{ clipPath: "inset(0 0 0 0)" }, { clipPath: "inset(0 0 100% 0)" }],
-        { duration: 450, easing: "cubic-bezier(.7,0,.3,1)" }).finished;
-      screen.hidden = true;
-      resolve(code);
-    };
-    grid.addEventListener("click", e => { const b = e.target.closest(".lang-btn"); if (b) pick(b.dataset.code); });
-  });
+  return [param, ...(navigator.languages || [navigator.language])].filter(Boolean).map(match).find(Boolean) || "en";
 }
-
-/* ------------------------------------------------------------------ start */
 (async () => {
   if (!("DecompressionStream" in window)) {
     applyLang("en");
@@ -1241,8 +1221,7 @@ function chooseLanguage() {
     thread.firstChild.textContent = L.oldBrowser;
     return;
   }
-  const param = new URLSearchParams(location.search).get("lang");
-  applyLang(I18N[param] ? param : await chooseLanguage());
+  applyLang(detectLanguage());
   const m = location.hash.match(/^#(play|t=(\d+))/);
   if (m) quickStart(+(m[2] || 0));
   else story();

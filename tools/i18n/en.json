@@ -1,6 +1,5 @@
 {
   "name": "English",
-  "choose": "Choose your language",
   "newChat": "New chat",
   "recent": "Recents",
   "guest": "Guest",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Original",
   "creditsArrange": "Arrangement",
   "creditsPV": "Shadow-art PV",
-  "oldBrowser": "This browser is too old. The shadows can't get out."
+  "oldBrowser": "This browser is too old. The shadows can't get out.",
+  "adTitle": "Before we start",
+  "adBody": "If the player is showing an ad, skip it first (if there is one).",
+  "adReady": "Ready, start"
 }

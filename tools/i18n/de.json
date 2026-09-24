@@ -1,6 +1,5 @@
 {
   "name": "Deutsch",
-  "choose": "Wähle deine Sprache",
   "newChat": "Neuer Chat",
   "recent": "Zuletzt",
   "guest": "Gast",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Original",
   "creditsArrange": "Arrangement",
   "creditsPV": "Schattenspiel-PV",
-  "oldBrowser": "Dieser Browser ist zu alt. Die Schatten kommen nicht raus."
+  "oldBrowser": "Dieser Browser ist zu alt. Die Schatten kommen nicht raus.",
+  "adTitle": "Bevor es losgeht",
+  "adBody": "Falls im Player Werbung läuft, überspring sie zuerst (falls vorhanden).",
+  "adReady": "Bereit, los"
 }

@@ -1,6 +1,5 @@
 {
   "name": "Français",
-  "choose": "Choisissez votre langue",
   "newChat": "Nouvelle discussion",
   "recent": "Récents",
   "guest": "Invité",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Original",
   "creditsArrange": "Arrangement",
   "creditsPV": "PV en ombres chinoises",
-  "oldBrowser": "Ce navigateur est trop vieux. Les ombres ne peuvent pas sortir."
+  "oldBrowser": "Ce navigateur est trop vieux. Les ombres ne peuvent pas sortir.",
+  "adTitle": "Avant de commencer",
+  "adBody": "Si le lecteur affiche une pub, passe-la d’abord (s’il y en a une).",
+  "adReady": "C’est bon, on y va"
 }

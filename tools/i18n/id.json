@@ -1,6 +1,5 @@
 {
   "name": "Bahasa Indonesia",
-  "choose": "Pilih bahasa",
   "newChat": "Chat baru",
   "recent": "Terbaru",
   "guest": "Tamu",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Lagu asli",
   "creditsArrange": "Aransemen",
   "creditsPV": "PV seni bayangan",
-  "oldBrowser": "Browser ini terlalu jadul. Bayangannya nggak bisa keluar."
+  "oldBrowser": "Browser ini terlalu jadul. Bayangannya nggak bisa keluar.",
+  "adTitle": "Sebelum mulai",
+  "adBody": "Kalau pemutarnya lagi menayangkan iklan, lewati dulu ya (kalau ada).",
+  "adReady": "Siap, mulai"
 }

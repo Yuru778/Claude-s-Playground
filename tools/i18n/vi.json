@@ -1,6 +1,5 @@
 {
   "name": "Tiếng Việt",
-  "choose": "Chọn ngôn ngữ",
   "newChat": "Đoạn chat mới",
   "recent": "Gần đây",
   "guest": "Khách",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Bản gốc",
   "creditsArrange": "Phối khí",
   "creditsPV": "PV nghệ thuật bóng",
-  "oldBrowser": "Trình duyệt này cũ quá rồi. Bóng không ra ngoài được."
+  "oldBrowser": "Trình duyệt này cũ quá rồi. Bóng không ra ngoài được.",
+  "adTitle": "Trước khi bắt đầu",
+  "adBody": "Nếu trình phát đang chạy quảng cáo, hãy bỏ qua trước (nếu có).",
+  "adReady": "Xong, bắt đầu"
 }

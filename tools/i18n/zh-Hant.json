@@ -1,6 +1,5 @@
 {
   "name": "繁體中文",
-  "choose": "選擇語言",
   "newChat": "新對話",
   "recent": "最近",
   "guest": "訪客",
@@ -131,5 +130,8 @@
   "creditsOriginal": "原曲",
   "creditsArrange": "編曲",
   "creditsPV": "影繪 PV",
-  "oldBrowser": "這個瀏覽器太舊了，影子出不來。"
+  "oldBrowser": "這個瀏覽器太舊了，影子出不來。",
+  "adTitle": "開始之前",
+  "adBody": "如果播放器正在播廣告，請先把它略過（有的話）。",
+  "adReady": "好了，開始"
 }

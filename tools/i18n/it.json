@@ -1,6 +1,5 @@
 {
   "name": "Italiano",
-  "choose": "Scegli la lingua",
   "newChat": "Nuova chat",
   "recent": "Recenti",
   "guest": "Ospite",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Originale",
   "creditsArrange": "Arrangiamento",
   "creditsPV": "PV in ombre cinesi",
-  "oldBrowser": "Questo browser è troppo vecchio. Le ombre non riescono a uscire."
+  "oldBrowser": "Questo browser è troppo vecchio. Le ombre non riescono a uscire.",
+  "adTitle": "Prima di iniziare",
+  "adBody": "Se il player mostra una pubblicità, saltala prima (se c’è).",
+  "adReady": "Pronto, via"
 }

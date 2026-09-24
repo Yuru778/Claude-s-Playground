@@ -1,6 +1,5 @@
 {
   "name": "Español",
-  "choose": "Elige tu idioma",
   "newChat": "Nuevo chat",
   "recent": "Recientes",
   "guest": "Invitado",
@@ -131,5 +130,8 @@
   "creditsOriginal": "Original",
   "creditsArrange": "Arreglo",
   "creditsPV": "PV de sombras",
-  "oldBrowser": "Este navegador es demasiado antiguo. Las sombras no pueden salir."
+  "oldBrowser": "Este navegador es demasiado antiguo. Las sombras no pueden salir.",
+  "adTitle": "Antes de empezar",
+  "adBody": "Si el reproductor muestra un anuncio, sáltalo primero (si lo hay).",
+  "adReady": "Listo, empezar"
 }
