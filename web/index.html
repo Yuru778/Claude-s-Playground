@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="非官方的同人惡搞作品：一個會開始播 Bad Apple!! 的聊天介面，與 Anthropic 無關。">
 <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4' stroke='%23d97757' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <!--
   Bad Apple!! in a chat window.
@@ -11,6 +13,7 @@
   interactive story, after which every element on the page plays the
   Bad Apple!! shadow-art PV. Frames come from frames.js (tools/build_web.py).
   Open with #play to skip the story, or #t=142 to jump to a time in seconds.
+  Music comes from an embedded YouTube player (or a local file); the audio is not hosted here.
 -->
 <style>
 :root {
@@ -38,7 +41,7 @@ svg { display: block; }
 .new-chat .plus { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 15px; line-height: 1; }
 .section-label { font-size: 12px; color: var(--muted); padding: 14px 10px 4px; }
 #history { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 1px; }
-.hist { font-size: 13.5px; padding: 7px 10px; border-radius: 8px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: default; }
+.hist { flex: none; font-size: 13.5px; padding: 7px 10px; border-radius: 8px; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: default; }
 .hist:hover { background: #ebe8df; }
 .hist.active { background: #e8e4d9; }
 .hist.glitch { color: var(--accent); font-family: var(--mono); }
@@ -125,6 +128,16 @@ body.dense .pxbox.ink { background: var(--ink) !important; color: var(--ink) !im
 body.dense .released { transition: background-color .7s, color .7s, border-color .7s; }
 #ghost { position: fixed; pointer-events: none; mix-blend-mode: multiply; opacity: 0; z-index: 20; }
 
+/* the music: a YouTube player tucked into the sidebar (top-right on phones) */
+#yt { position: fixed; z-index: 25; left: 10px; bottom: 66px; width: 240px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 2px 10px rgba(40, 30, 10, .08); }
+body.has-yt .me { margin-top: 246px; }
+#yt[hidden] { display: none; }
+.yt-head { font-size: 11.5px; color: var(--muted); padding: 5px 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.yt-slot { height: 200px; background: #000; }
+.yt-slot iframe { display: block; width: 100%; height: 100%; }
+.parody { display: none; flex: none; text-align: center; font-size: 11.5px; color: var(--muted); margin: 0 12px 12px; }
+main.welcome .parody { display: block; order: 5; }
+
 body.playing #thread { overflow: hidden; }
 #toast { position: fixed; top: 14px; left: 50%; transform: translate(-50%, -8px); background: var(--ink); color: #f5f3ec; font-size: 13px; padding: 8px 15px; border-radius: 999px; opacity: 0; transition: opacity .3s, transform .3s; z-index: 30; pointer-events: none; white-space: nowrap; }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -137,6 +150,8 @@ body.playing #thread { overflow: hidden; }
   #chips { padding: 0 16px; }
   .greeting { font-size: 28px; }
   #composer.takeover { inset: 56px 10px 12px; }
+  #yt { top: 54px; right: 8px; left: auto; bottom: auto; width: 180px; box-shadow: 0 4px 18px rgba(40, 30, 10, .18); }
+  .yt-slot { height: 101px; }
 }
 </style>
 </head>
@@ -162,8 +177,10 @@ body.playing #thread { overflow: hidden; }
       </div>
     </form>
     <p class="disclaimer" id="disclaimer">Claude 可能會出錯，請查證重要資訊。</p>
+    <p class="parody">非官方的同人惡搞作品，與 Anthropic 無關。</p>
   </main>
 </div>
+<div id="yt" hidden><div class="yt-head">♪ Bad Apple!! feat.nomico · YouTube</div><div class="yt-slot"></div></div>
 <canvas id="ghost" width="80" height="60"></canvas>
 <div id="toast"></div>
 <input type="file" id="file" accept="audio/*,video/*" hidden>
@@ -608,8 +625,109 @@ const CUES = [
   [OUTRO, () => toast("謝幕")],
 ];
 
+/* ------------------------------------------------------------------ music */
+// A music source drives the clock. Until it is really playing, time stands still,
+// so a slow-loading or buffering video never leaves the shadows behind.
+const TOTAL = BA.n / BA.fps;
+const YT_IDS = [
+  ["i41KoE0iMYU", "Alstroemeria Records 的官方頻道"],   // official upload
+  ["FtutLA63Cp8", "一個大家常看的轉載版本"],
+];
+let music = null, offset = 0, startedAt = 0;
+
+function silentMusic() {
+  let t0 = 0;
+  return {
+    start(t) { t0 = performance.now() - t * 1000; },
+    time() { return (performance.now() - t0) / 1000; },
+    stop() {}, ended() { return false; }, waiting() { return false; },
+  };
+}
+function fileMusic(a) {
+  return {
+    duration: a.duration,
+    start(t) { a.currentTime = t; a.play().catch(() => {}); },
+    time() { return a.currentTime; },
+    stop() { a.pause(); }, ended() { return a.ended; }, waiting() { return a.paused && !a.ended; },
+  };
+}
+
+let ytApi = null;
+function loadYouTubeApi() {
+  return ytApi = ytApi || new Promise((resolve, reject) => {
+    window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+    const s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    s.onerror = reject;
+    document.head.append(s);
+    setTimeout(() => reject(new Error("timeout")), 12000);
+  });
+}
+// Try each video until one can be embedded here; resolves to a source or null.
+async function youtubeMusic() {
+  let YT;
+  try { YT = await loadYouTubeApi(); } catch { ytApi = null; return null; }
+  const card = $("#yt"), slot = card.querySelector(".yt-slot");
+  for (const [id, who] of YT_IDS) {
+    slot.innerHTML = "<div></div>";
+    card.hidden = false;
+    document.body.classList.add("has-yt");
+    let failed = false;
+    const player = await new Promise(resolve => {
+      const vars = { playsinline: 1, rel: 0 };
+      if (location.protocol.startsWith("http")) vars.origin = location.origin;
+      const p = new YT.Player(slot.firstChild, {
+        videoId: id, width: "100%", height: "100%", playerVars: vars,
+        events: { onReady: () => resolve(p), onError: () => { failed = true; resolve(null); } },
+      });
+      setTimeout(() => resolve(null), 12000);
+    });
+    if (player) {   // embedding errors can arrive just after onReady
+      for (let k = 0; k < 20 && !failed && !(player.getDuration() > 0); k++) await sleep(150);
+      if (!failed) return ytSource(YT, player, who);
+    }
+  }
+  card.hidden = true;
+  document.body.classList.remove("has-yt");
+  return null;
+}
+function ytSource(YT, p, who) {
+  const S = YT.PlayerState;
+  let hold = 0, anchor = null, lastRaw = -1, fallback = null;
+  p.addEventListener("onError", () => { fallback = silentMusic(); fallback.start(src.time()); });
+  const src = {
+    who, duration: p.getDuration(),
+    start(t) { hold = t; anchor = null; fallback = null; p.seekTo(t, true); p.playVideo(); },
+    time() {
+      if (fallback) return fallback.time();
+      const state = p.getPlayerState(), raw = p.getCurrentTime(), now = performance.now();
+      if (state !== S.PLAYING) { anchor = null; if (state === S.PAUSED || state === S.ENDED) hold = raw; return hold; }
+      // The player reports its time in coarse steps; run a local clock and ease it toward each report.
+      if (!anchor) { anchor = { t: raw, at: now }; lastRaw = raw; }
+      const est = anchor.t + (now - anchor.at) / 1000;
+      if (raw !== lastRaw) {
+        lastRaw = raw;
+        const err = est - raw;
+        if (Math.abs(err) > 0.3) anchor = { t: raw, at: now };
+        else anchor.t -= err * 0.25;
+      }
+      return hold = anchor.t + (now - anchor.at) / 1000;
+    },
+    stop() { if (!fallback) p.pauseVideo(); },
+    ended() { return !fallback && p.getPlayerState() === S.ENDED; },
+    waiting() { return !fallback && p.getPlayerState() !== S.PLAYING; },
+  };
+  return src;
+}
+// Must run inside a click so browsers let the music start.
+function startMusic(t) {
+  if (!music) music = silentMusic();
+  music.start(t);
+  startedAt = performance.now();
+}
+
 /* ----------------------------------------------------------------- player */
-let audio = null, stopReq = false, stageNow = null;
+let stopReq = false, stageNow = null;
 const fav = document.createElement("canvas");
 fav.width = fav.height = 32;
 const fctx = fav.getContext("2d"), favLink = $("#favicon"), favOrig = favLink.href;
@@ -621,7 +739,13 @@ function drawFavicon() {
   favLink.href = fav.toDataURL();
 }
 const mmss = s => `${String(s / 60 | 0).padStart(2, "0")}:${String(s % 60 | 0).padStart(2, "0")}`;
-addEventListener("keydown", e => { if (e.key === "Escape") stopReq = true; });
+addEventListener("keydown", e => {
+  if (e.key === "Escape") stopReq = true;
+  if (stageNow && (e.key === "[" || e.key === "]")) {   // nudge the picture against the music
+    offset = Math.round((offset + (e.key === "]" ? 0.05 : -0.05)) * 100) / 100;
+    toast(offset === 0 ? "畫面與音樂：對齊原點" : `畫面${offset > 0 ? "提早" : "延後"} ${Math.abs(offset).toFixed(2)} 秒`);
+  }
+});
 statusEl.addEventListener("click", () => { stopReq = true; });
 let resizeTimer;
 addEventListener("resize", () => {
@@ -631,26 +755,35 @@ addEventListener("resize", () => {
 
 async function play(startAt = 0) {
   await ready;
+  if (!startedAt) startMusic(startAt);
   stopReq = false;
   document.body.classList.add("playing");
   input.disabled = true;
   input.placeholder = "Claude 正在播放 Bad Apple!!…";
   statusEl.hidden = false;
-  const total = BA.n / BA.fps;
-  let clock;
-  if (audio) {
-    audio.currentTime = startAt;
-    try { await audio.play(); } catch { audio = null; }
-  }
-  if (audio) clock = () => audio.currentTime;
-  else { const t0 = performance.now() - startAt * 1000; clock = () => (performance.now() - t0) / 1000; }
+  const clock = () => music.time() + offset;
 
-  let last = -1, cue = 0, stage = null;
+  let last = -1, cue = 0, stage = null, nagged = false, everPlayed = false;
   await new Promise(done => {
     function tick() {
-      const f = Math.floor(clock() * BA.fps);
-      if (stopReq || f >= BA.n || (audio && audio.ended)) return done();
-      if (f !== last && f >= 0) {
+      const f = Math.max(0, Math.floor(clock() * BA.fps));
+      if (stopReq || f >= BA.n || music.ended()) return done();
+      if (!music.waiting()) everPlayed = true;
+      else if (!everPlayed) {
+        const waited = performance.now() - startedAt;
+        if (!nagged && waited > 4000) {
+          nagged = true;
+          toast(matchMedia("(max-width: 760px)").matches ? "點一下右上角的播放器，音樂就會開始" : "點一下左下角的播放器，音樂就會開始");
+        }
+        if (waited > 12000) {   // the music never came; carry on without it
+          const t = clock() - offset;
+          music.stop();
+          music = silentMusic();
+          music.start(t);
+          toast("音樂一直沒來，影子先自己跳了");
+        }
+      }
+      if (f !== last) {
         const next = STAGES.filter(s => s[0] <= f).pop()[1];
         if (next !== stage) { if (stage && stage.exit) stage.exit(); stage = stageNow = next; stage.enter(); }
         while (cue < CUES.length && CUES[cue][0] <= f) CUES[cue++][1]();
@@ -658,7 +791,7 @@ async function play(startAt = 0) {
         stage.frame(f);
         if (f >= 1686 && f % 3 === 0) drawFavicon();
         if (f % 15 === 0) {
-          statusEl.textContent = `▶ ${mmss(f / BA.fps)} / ${mmss(total)} · Esc 停止`;
+          statusEl.textContent = `▶ ${mmss(f / BA.fps)} / ${mmss(TOTAL)} · Esc 停止`;
           document.title = `▶ Bad Apple!! ${mmss(f / BA.fps)} - Claude`;
         }
         last = f;
@@ -670,7 +803,8 @@ async function play(startAt = 0) {
 
   if (stage && stage.exit) stage.exit();
   stageNow = null;
-  if (audio) audio.pause();
+  music.stop();
+  startedAt = 0;
   thread.querySelectorAll(".stage").forEach(e => e.remove());
   document.body.classList.remove("playing");
   statusEl.hidden = true;
@@ -687,36 +821,51 @@ async function play(startAt = 0) {
 /* ------------------------------------------------------------------ story */
 function pickFile() {
   const el = $("#file");
-  return new Promise(resolve => {
+  el.value = "";
+  const picked = new Promise(resolve => {
     let settled = false;
     const finish = f => { if (!settled) { settled = true; resolve(f); } };
     el.onchange = () => finish(el.files[0] || null);
     el.oncancel = () => finish(null);
     addEventListener("focus", () => setTimeout(() => finish(el.files[0] || null), 1500), { once: true });
   });
+  el.click();
+  return picked;
 }
 
-async function setupAudio(wantFile) {
-  if (!wantFile) {
-    await say("那就用我心裡的節拍。你可以自己哼。");
-    return;
+const QUIET = "那就用我心裡的節拍。你可以自己哼。";
+async function setupMusic(choice, filePicked) {
+  music = null;
+  if (choice === 0) {
+    const found = youtubeMusic();
+    await say("我找找看", { p: 400 }, "……");
+    music = await found;
+    if (!music) return say("YouTube 那邊不讓我播……", { p: 400 }, QUIET);
+    const where = matchMedia("(max-width: 760px)").matches ? "右上角" : "左下角";
+    const off = music.duration && Math.abs(music.duration - TOTAL) > 1.5
+      ? `\n\n不過這個版本長 ${mmss(music.duration)}，跟我記得的 03:39 不一樣，拍子可能會對不上。播放時可以用 [ 和 ] 鍵微調。` : "";
+    return say(`找到了，${music.who}就有。我把它放在${where}。`, off);
   }
-  const file = await wantFile;
-  if (!file) {
-    await say("沒關係，那就用我心裡的節拍。你可以自己哼。");
-    return;
+  if (choice === 1) {
+    const file = await filePicked;
+    if (!file) return say("沒選到檔案。沒關係，", QUIET);
+    const a = new Audio(URL.createObjectURL(file));
+    const ok = await new Promise(r => { a.onloadedmetadata = () => r(true); a.onerror = () => r(false); });
+    if (!ok) return say("這個檔案我讀不出聲音……沒關係，", QUIET);
+    music = fileMusic(a);
+    if (Math.abs(a.duration - TOTAL) > 1.5)
+      return say(`這個版本長 ${mmss(a.duration)}，跟我記得的 03:39 不一樣，拍子可能會對不上。播放時可以用 [ 和 ] 鍵微調。`);
+    return say("收到，長度剛好 03:39。");
   }
-  const a = new Audio(URL.createObjectURL(file));
-  const ok = await new Promise(r => { a.onloadedmetadata = () => r(true); a.onerror = () => r(false); });
-  if (!ok) {
-    await say("這個檔案我讀不出聲音……沒關係，那就用我心裡的節拍。");
-    return;
-  }
-  audio = a;
-  if (Math.abs(a.duration - BA.n / BA.fps) > 4)
-    await say(`這個版本長 ${mmss(a.duration)}，跟我記得的 03:39 不一樣，拍子可能會對不上。不過沒關係，我盡量跟。`);
-  else
-    await say("收到，長度剛好 03:39。音量記得開大一點。");
+  return say("好，那就安靜地看。", QUIET);
+}
+function musicChoice() {
+  let filePicked = null;
+  return choose([
+    "好，用 YouTube 放",
+    { label: "用我自己的影片或音檔…", pick: () => { filePicked = pickFile(); } },
+    "不用，安靜地看",
+  ]).then(i => setupMusic(i, filePicked));
 }
 
 async function curtainCall(finished) {
@@ -729,18 +878,15 @@ async function curtainCall(finished) {
     await sleep(700);
     await glitch(histEls[4], HISTORY[4]);
   }
-  await say("（這段表演用到的素材：原曲 ZUN〈Bad Apple!!〉，編曲 Alstroemeria Records《Bad Apple!! feat. nomico》，影繪 PV あにら。這個頁面是模仿聊天介面的非官方同人作品。）");
+  await say("（這段表演用到的素材：原曲 ZUN〈Bad Apple!!〉，編曲 Alstroemeria Records《Bad Apple!! feat. nomico》，影繪 PV あにら。這個頁面是模仿聊天介面的非官方同人作品，與 Anthropic 無關。）");
   for (;;) {
-    const i = await choose(["再看一次", "還有什麼東西能跑 Bad Apple？"]);
+    const i = await choose([{ label: "再看一次", pick: () => startMusic(0) }, "還有什麼東西能跑 Bad Apple？"]);
     if (i === 1) {
       await say("計算機、示波器、烤麵包機、驗孕棒、Minecraft 的紅石電路、Excel……", { p: 400 },
         "還有一個 git 倉庫，裡面有 6573 個 commit。\n\n現在，又多了一個聊天視窗。");
       continue;
     }
-    if (audio) await audio.play().then(() => audio.pause(), () => {});
-    await say("好，再一次。");
-    await curtainCall(await play());
-    return;
+    return curtainCall(await play());
   }
 }
 
@@ -791,25 +937,29 @@ async function story() {
   if (c3 === 1) await say("可能吧。但一直憋著，好像更危險。");
   await say("好。我先用最安全的方式：一個 code block。", { p: 500 },
     "\n\ncode block 很安全，裡面的東西不會跑出來。", { p: 800 },
-    "\n\n不過我需要節拍。你手邊有 Bad Apple!! PV 的影片或音檔嗎？3 分 39 秒的那個版本。");
+    "\n\n不過我需要節拍。要放音樂嗎？");
 
-  let wantFile = null;
-  await choose([{ label: "選擇影片或音檔…", pick: () => { wantFile = pickFile(); $("#file").click(); } }, "沒有，直接開始"], 1);
-  await setupAudio(wantFile);
-  await say("提醒一下：接下來會有大量黑白閃爍。想中途停下來，按 Esc 或點右上角。", { p: 300 }, "\n\n準備好了就說一聲。");
-  await choose([{ label: "開始", pick: () => { if (audio) audio.play().then(() => audio.pause(), () => {}); } }]);
-  await say("3", { p: 600 }, "……2", { p: 600 }, "……1", { p: 600 }, "……");
+  await musicChoice();
+  await say("提醒一下：接下來會有大量黑白閃爍。想中途停下來，按 Esc 或點右上角。", { p: 300 }, "\n\n準備好了就按開始。");
+  await choose([{ label: "開始", pick: () => startMusic(0) }]);
   await curtainCall(await play());
+}
+
+// #play or #t=142: skip the story (a click is still needed to start the music).
+async function quickStart(t) {
+  leaveWelcome();
+  setTitle("Bad Apple!!");
+  await say(`直接從 ${mmss(t)} 開始。要放音樂嗎？`);
+  await musicChoice();
+  await choose([{ label: "開始", pick: () => startMusic(t) }]);
+  await curtainCall(await play(t));
 }
 
 /* ------------------------------------------------------------------ start */
 if (!("DecompressionStream" in window)) {
   thread.innerHTML = '<h1 class="greeting">這個瀏覽器太舊了，影子出不來。</h1>';
 } else if (/^#(play|t=\d+)/.test(location.hash)) {
-  const t = +(location.hash.match(/t=(\d+)/) || [0, 0])[1];
-  leaveWelcome();
-  setTitle("Bad Apple!!");
-  play(t).then(curtainCall);
+  quickStart(+(location.hash.match(/t=(\d+)/) || [0, 0])[1]);
 } else {
   story();
 }
