@@ -1358,14 +1358,13 @@ async function quickStart(at) {
 }
 
 /* ------------------------------------------------------------------ start */
-// Best guess at the viewer's language: last choice, else the browser's languages, else English.
+// Best guess at the viewer's language: the browser's languages, else English. Nothing is
+// remembered, so every visit can pick a different one.
 function guessLanguage() {
   const codes = Object.keys(I18N);
-  let saved = null;
-  try { saved = localStorage.getItem("chat-lang"); } catch {}
   const match = l => codes.find(c => c.toLowerCase() === l.toLowerCase())
     || (/^zh-(tw|hk|mo)|hant/i.test(l) ? "zh-Hant" : /^zh/i.test(l) ? "zh-Hans" : codes.find(c => c === l.slice(0, 2)));
-  return [saved, ...(navigator.languages || [navigator.language])].filter(Boolean).map(match).find(Boolean) || "en";
+  return [...(navigator.languages || [navigator.language])].filter(Boolean).map(match).find(Boolean) || "en";
 }
 
 // A language prompt in the app's own style. Its heading decodes from one language's
@@ -1411,7 +1410,6 @@ function chooseLanguage(suggested) {
       await scramble(title, I18N[code].choose, 350);
       await dlg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 280, easing: "ease-in" }).finished;
       dlg.hidden = true;
-      try { localStorage.setItem("chat-lang", code); } catch {}
       resolve(code);
     });
   });
