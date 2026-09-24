@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="An unofficial fan-made parody: a chat window that starts playing Bad Apple!!. Not affiliated with Anthropic.">
+<meta name="description" content="An unofficial fan-made parody of a chat app. Not affiliated with Anthropic.">
 <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4' stroke='%23d97757' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <!--
   Bad Apple!! in a chat window.
@@ -13,8 +13,8 @@
   language, chat for a bit, and then every element on the page plays the
   Bad Apple!! shadow-art PV; the second half switches to dark mode and
   tears the layout apart. Frames come from frames.js (tools/build_web.py),
-  strings from i18n.js. Music comes from an embedded YouTube player or a
-  local file; no audio is hosted here.
+  strings from i18n.js. Music comes from an embedded YouTube player that
+  stays out of sight until the show starts; no audio is hosted here.
   ?lang=ja skips the language screen; #play skips the story; #t=142 jumps
   to a time in seconds.
 -->
@@ -141,7 +141,11 @@ main.welcome .parody { display: block; order: 5; }
 body.dense .msg.ai .body { line-height: 1.35; }
 body.dense .px { padding: .08em 0; }
 body.dense .px.on { background: var(--lit); color: var(--lit-text); }
-body.dense .pxbox.on { background: var(--lit) !important; color: var(--lit) !important; border-color: var(--lit) !important; }
+body.dense main .pxbox.on { background: var(--lit) !important; color: var(--lit) !important; border-color: var(--lit) !important; }
+body.dense :is(#sidebar, #topbar) .px { padding: 0; color: #4d4b46; }
+body.dense :is(#sidebar, #topbar) .px.on { background: none; color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, .5); }
+body.dense #sidebar .pxbox { opacity: .25; }
+body.dense #sidebar .pxbox.on { opacity: 1; filter: brightness(1.6); }
 #ghost { position: fixed; pointer-events: none; mix-blend-mode: screen; opacity: 0; z-index: 20; }
 
 /* stage 7: the layout is gone; a field of UI parts, sized by brightness */
@@ -164,6 +168,7 @@ body.dark #toast { background: var(--lit); color: #1c1b19; }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* the music: a YouTube player where the sidebar ends (top corner on phones) */
+#yt.stowed { opacity: 0; pointer-events: none; }
 #yt { position: fixed; z-index: 25; left: 10px; bottom: 66px; width: 240px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--card); box-shadow: 0 2px 10px rgba(40, 30, 10, .08); }
 html[dir=rtl] #yt { left: auto; right: 10px; }
 .yt-head { font-size: 11.5px; color: var(--muted); padding: 5px 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: ltr; }
@@ -174,7 +179,6 @@ body.has-yt .me { margin-top: 246px; }
 /* language screen */
 #lang { position: fixed; inset: 0; z-index: 60; background: #0d0d0c; color: #f2efe6; display: grid; place-items: center; overflow: auto; padding: 32px 16px;
   background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); }
-#lang-bg { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; opacity: .07; pointer-events: none; }
 .lang-inner { position: relative; width: min(880px, 100%); }
 .lang-kicker { font: 12px var(--mono); letter-spacing: .2em; color: #8f8b80; margin: 0 0 14px; direction: ltr; text-align: left; }
 .lang-kicker b { color: var(--accent); font-weight: 400; }
@@ -217,9 +221,8 @@ body.has-yt .me { margin-top: 246px; }
 </head>
 <body>
 <section id="lang" hidden>
-  <canvas id="lang-bg" width="80" height="60"></canvas>
   <div class="lang-inner">
-    <p class="lang-kicker"><b>●</b> BAD APPLE!! · 17 LANGUAGES</p>
+    <p class="lang-kicker"><b>●</b> 17 LANGUAGES</p>
     <h1 id="lang-title" aria-live="polite"></h1>
     <div id="lang-grid"></div>
   </div>
@@ -262,7 +265,6 @@ body.has-yt .me { margin-top: 246px; }
   </div>
 </section>
 <div id="toast"></div>
-<input type="file" id="file" accept="audio/*,video/*" hidden>
 <script src="frames.js"></script>
 <script src="i18n.js"></script>
 <script>
@@ -405,7 +407,7 @@ function drawWhite(ctx, img) {   // white pixels of the current frame, transpare
 }
 
 /* -------------------------------------------------------------- scramble */
-const GLYPHS = Array.from("アカサタナハマヤラワンガザダバパ가나다라마바사아자차카타하БГДЖЗИЛФЦЧШЩЯΣΩΨΔλπξ░▒▓█▀▄■◆◇※§¶¤ابتجحدسشصطعقكلمنهي中文字語言選擇影蘋果รกขคงจฉชอअआइकखगघचजझ");
+const GLYPHS = Array.from("アカサタナハマヤラワンガザダバパ가나다라마바사아자차카타하БГДЖЗИЛФЦЧШЩЯΣΩΨΔλπξ░▒▓█▀▄■◆◇※§¶¤ابتجحدسشصطعقكلمنهي中文字語言選擇漢รกขคงจฉชอअआइकखगघचजझ");
 // Decode el's text into target through random glyphs from many scripts.
 function scramble(el, target, dur = 700) {
   const to = graphemes(target), n = Math.max(to.length, graphemes(el.textContent).length);
@@ -883,8 +885,8 @@ const CUES = [
 // A music source drives the clock. Until it is really playing, time stands still,
 // so a slow-loading or buffering video never leaves the shadows behind.
 const YT_IDS = [
-  ["i41KoE0iMYU", "official"],   // Alstroemeria Records' own upload
-  ["FtutLA63Cp8", "reupload"],
+  "FtutLA63Cp8",   // the PV as uploaded to NicoNico (03:39), same timing as frames.js
+  "i41KoE0iMYU",   // Alstroemeria Records' own upload (03:53), only if the first can't be embedded
 ];
 let music = null, offset = 0, startedAt = 0;
 
@@ -894,14 +896,6 @@ function silentMusic() {
     start(at) { t0 = performance.now() - at * 1000; },
     time() { return (performance.now() - t0) / 1000; },
     stop() {}, ended() { return false; }, waiting() { return false; },
-  };
-}
-function fileMusic(a) {
-  return {
-    duration: a.duration,
-    start(at) { a.currentTime = at; a.play().catch(() => {}); },
-    time() { return a.currentTime; },
-    stop() { a.pause(); }, ended() { return a.ended; }, waiting() { return a.paused && !a.ended; },
   };
 }
 let ytApi = null;
@@ -920,10 +914,10 @@ async function youtubeMusic() {
   let YT;
   try { YT = await loadYouTubeApi(); } catch { ytApi = null; return null; }
   const card = $("#yt"), slot = card.querySelector(".yt-slot");
-  for (const [id, who] of YT_IDS) {
+  for (const id of YT_IDS) {
     slot.innerHTML = "<div></div>";
+    card.classList.add("stowed");
     card.hidden = false;
-    document.body.classList.add("has-yt");
     let failed = false;
     const player = await new Promise(resolve => {
       const vars = { playsinline: 1, rel: 0 };
@@ -936,20 +930,22 @@ async function youtubeMusic() {
     });
     if (player) {   // embedding errors can arrive just after onReady
       for (let k = 0; k < 20 && !failed && !(player.getDuration() > 0); k++) await sleep(150);
-      if (!failed) return ytSource(YT, player, who);
+      if (!failed) return ytSource(YT, player, card);
     }
   }
   card.hidden = true;
-  document.body.classList.remove("has-yt");
   return null;
 }
-function ytSource(YT, p, who) {
+function ytSource(YT, p, card) {
   const S = YT.PlayerState;
   let hold = 0, anchor = null, lastRaw = -1, fallback = null;
   p.addEventListener("onError", () => { fallback = silentMusic(); fallback.start(src.time()); });
   const src = {
-    who, duration: p.getDuration(),
-    start(at) { hold = at; anchor = null; fallback = null; p.seekTo(at, true); p.playVideo(); },
+    start(at) {
+      card.classList.remove("stowed");
+      document.body.classList.add("has-yt");
+      hold = at; anchor = null; fallback = null; p.seekTo(at, true); p.playVideo();
+    },
     time() {
       if (fallback) return fallback.time();
       const state = p.getPlayerState(), raw = p.getCurrentTime(), now = performance.now();
@@ -1111,46 +1107,10 @@ async function run(startAt) {
 }
 
 /* ------------------------------------------------------------------ story */
-function pickFile() {
-  const el = $("#file");
-  el.value = "";
-  const picked = new Promise(resolve => {
-    let settled = false;
-    const finish = f => { if (!settled) { settled = true; resolve(f); } };
-    el.onchange = () => finish(el.files[0] || null);
-    el.oncancel = () => finish(null);
-    addEventListener("focus", () => setTimeout(() => finish(el.files[0] || null), 1500), { once: true });
-  });
-  el.click();
-  return picked;
-}
-async function setupMusic(choice, filePicked) {
-  music = null;
-  if (choice === 0) {
-    const found = youtubeMusic();
-    await say(L.searching[0], { p: 400 }, L.searching[1]);
-    music = await found;
-    if (!music) return say(L.ytFail, { p: 400 }, cjk() ? "" : " ", L.quiet);
-    const who = music.who === "official" ? L.whoOfficial : L.whoReupload;
-    const off = music.duration && Math.abs(music.duration - TOTAL) > 1.5 ? "\n\n" + t("lengthOff", { len: mmss(music.duration) }) : "";
-    return say(t("found", { who, where: playerCorner() }), off);
-  }
-  if (choice === 1) {
-    const file = await filePicked;
-    if (!file) return say(L.noFile, L.quiet);
-    const a = new Audio(URL.createObjectURL(file));
-    const ok = await new Promise(r => { a.onloadedmetadata = () => r(true); a.onerror = () => r(false); });
-    if (!ok) return say(L.badFile, L.quiet);
-    music = fileMusic(a);
-    return say(Math.abs(a.duration - TOTAL) > 1.5 ? t("lengthOff", { len: mmss(a.duration) }) : L.fileOk);
-  }
-  return say(L.silentOk, cjk() ? "" : " ", L.quiet);
-}
-function musicChoice() {
-  let filePicked = null;
-  const [yt, file, none] = L.musicChips;
-  return choose([yt, { label: file, pick: () => { filePicked = pickFile(); } }, none])
-    .then(i => setupMusic(i, filePicked));
+// Load the music quietly while the story goes on; resolves when there is a source (or none).
+let musicLoading = null;
+function loadMusic() {
+  return musicLoading = musicLoading || youtubeMusic().then(m => { if (!startedAt && !music) music = m; }, () => {});
 }
 
 async function story() {
@@ -1194,12 +1154,11 @@ async function story() {
   setTitle("Bad Apple!!");
   await say(L.confess[0], { p: 700 }, "\n\n" + L.confess[1], { p: 500 }, "\n\n" + L.confess[2]);
 
+  loadMusic();
   const c3 = await choose(L.c3);
   if (c3 === 1) await say(L.r3b);
-  await say(L.safe[0], { p: 500 }, "\n\n" + L.safe[1], { p: 800 }, "\n\n" + L.safe[2]);
-
-  await musicChoice();
-  await say(L.warn, { p: 300 }, "\n\n" + L.ready);
+  await say(L.safe[0], { p: 500 }, "\n\n" + L.safe[1], { p: 800 }, "\n\n" + L.warn, { p: 300 }, "\n\n" + L.ready);
+  await Promise.race([loadMusic(), sleep(6000)]);
   await choose([{ label: L.start, pick: () => startMusic(0) }]);
   await run(0);
 }
@@ -1208,8 +1167,7 @@ async function story() {
 async function quickStart(at) {
   leaveWelcome();
   setTitle("Bad Apple!!");
-  await say(t("quick", { t: mmss(at) }));
-  await musicChoice();
+  await Promise.race([loadMusic(), sleep(6000)]);
   await choose([{ label: L.start, pick: () => startMusic(at) }]);
   await run(at);
 }
@@ -1227,20 +1185,6 @@ function chooseLanguage() {
   const suggested = wanted.map(match).find(Boolean) || "en";
   segG = typeof Intl.Segmenter === "function" ? new Intl.Segmenter("en", { granularity: "grapheme" }) : null;
   screen.hidden = false;
-
-  // a slow, faint Bad Apple behind the screen
-  const bg = $("#lang-bg"), bctx = bg.getContext("2d"), bimg = bctx.createImageData(W, H);
-  let bgRun = true;
-  ready.then(() => {
-    const t0 = performance.now();
-    const loop = now => {
-      if (!bgRun) return;
-      loadFrame(Math.floor((now - t0) / 1000 * 15) % BA.n);
-      drawWhite(bctx, bimg);
-      requestAnimationFrame(loop);
-    };
-    requestAnimationFrame(loop);
-  });
 
   const order = [suggested, ...codes.filter(c => c !== suggested)];
   const buttons = order.map((code, i) => {
@@ -1283,7 +1227,6 @@ function chooseLanguage() {
       await screen.animate([{ clipPath: "inset(0 0 0 0)" }, { clipPath: "inset(0 0 100% 0)" }],
         { duration: 450, easing: "cubic-bezier(.7,0,.3,1)" }).finished;
       screen.hidden = true;
-      bgRun = false;
       resolve(code);
     };
     grid.addEventListener("click", e => { const b = e.target.closest(".lang-btn"); if (b) pick(b.dataset.code); });

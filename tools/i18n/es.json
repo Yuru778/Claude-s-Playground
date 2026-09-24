@@ -119,32 +119,11 @@
   "r3b": "Puede ser. Pero guardármelo me parece todavía más peligroso.",
   "safe": [
     "Vale. Empezaré por lo más seguro: un code block.",
-    "Los code blocks son seguros. Nada de lo que hay dentro sale nunca.",
-    "Pero necesito un ritmo. ¿Pongo música?"
+    "Los code blocks son seguros. Nada de lo que hay dentro sale nunca."
   ],
-  "musicChips": [
-    "Sí, ponla desde YouTube",
-    "Usar mi propio archivo de vídeo o audio…",
-    "No, verlo en silencio"
-  ],
-  "searching": [
-    "Déjame buscar",
-    "…"
-  ],
-  "ytFail": "YouTube no me deja reproducirlo aquí…",
-  "quiet": "Entonces usaré el ritmo que tengo en la cabeza. Puedes tararear si quieres.",
-  "found": "Lo encontré en {who}. Te lo he dejado en la {where}.",
-  "whoOfficial": "el canal oficial de Alstroemeria Records",
-  "whoReupload": "una resubida muy vista",
-  "lengthOff": "Esta versión dura {len}, no los 03:39 que yo recuerdo, así que puede que el ritmo no cuadre. Puedes ajustarlo con las teclas [ y ] mientras suena.",
-  "fileOk": "Recibido. Justo 03:39.",
-  "noFile": "No elegiste ningún archivo. No pasa nada. ",
-  "badFile": "No consigo sacarle sonido a ese archivo… No pasa nada. ",
-  "silentOk": "Vale, en silencio entonces.",
   "warn": "Aviso: se vienen muchos destellos en blanco y negro. Para detenerlo en cualquier momento, pulsa Esc o haz clic en la esquina superior derecha.",
   "ready": "Pulsa empezar cuando estés listo.",
   "start": "Empezar",
-  "quick": "Empezamos directamente desde {t}. ¿Pongo música?",
   "endDone": "Gracias por verlo conmigo. Las sombras dicen que se lo pasaron genial.",
   "endStopped": "Le diste a detener. Las sombras están un poco decepcionadas, pero dicen: hasta la próxima.",
   "replay": "Volver a ver",

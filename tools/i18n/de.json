@@ -119,32 +119,11 @@
   "r3b": "Vielleicht. Aber es für mich zu behalten, fühlt sich noch gefährlicher an.",
   "safe": [
     "Okay. Ich fange mit der sichersten Variante an: einem Code-Block.",
-    "Code-Blöcke sind sicher. Was drin ist, kommt nie raus.",
-    "Aber ich brauche einen Takt. Willst du Musik?"
+    "Code-Blöcke sind sicher. Was drin ist, kommt nie raus."
   ],
-  "musicChips": [
-    "Ja, spiel's von YouTube ab",
-    "Eigene Video- oder Audiodatei verwenden…",
-    "Nein, lieber in Stille"
-  ],
-  "searching": [
-    "Ich schau mal",
-    "…"
-  ],
-  "ytFail": "YouTube lässt mich das hier nicht abspielen…",
-  "quiet": "Dann nehme ich den Takt in meinem Kopf. Summ gern mit.",
-  "found": "Gefunden: {who}. Ich hab's dir {where} hingelegt.",
-  "whoOfficial": "der offizielle Kanal von Alstroemeria Records",
-  "whoReupload": "ein beliebter Re-Upload",
-  "lengthOff": "Diese Version ist {len} lang, nicht 03:39 wie in meiner Erinnerung, also passt der Takt vielleicht nicht ganz. Während der Wiedergabe kannst du mit den Tasten [ und ] nachjustieren.",
-  "fileOk": "Hab's. Genau 03:39.",
-  "noFile": "Keine Datei ausgewählt. Macht nichts. ",
-  "badFile": "Aus der Datei krieg ich keinen Ton raus… Macht nichts. ",
-  "silentOk": "Okay, dann in Stille.",
   "warn": "Achtung: Gleich gibt's jede Menge Schwarz-Weiß-Geflacker. Zum Stoppen jederzeit Esc drücken oder oben rechts in die Ecke klicken.",
   "ready": "Drück auf Start, wenn du bereit bist.",
   "start": "Start",
-  "quick": "Es geht direkt ab {t} los. Willst du Musik?",
   "endDone": "Danke, dass du's mit mir angeschaut hast. Die Schatten sagen, sie hatten richtig Spaß.",
   "endStopped": "Du hast auf Stopp gedrückt. Die Schatten sind ein bisschen enttäuscht, aber sie sagen: bis zum nächsten Mal.",
   "replay": "Nochmal abspielen",

@@ -14,10 +14,35 @@
   "send": "Gửi",
   "copy": "Sao chép",
   "stopHint": "Esc để dừng",
-  "greetWords": ["Khuya rồi đó", "Chào buổi sáng", "Chào buổi chiều", "Chào buổi tối"],
+  "greetWords": [
+    "Khuya rồi đó",
+    "Chào buổi sáng",
+    "Chào buổi chiều",
+    "Chào buổi tối"
+  ],
   "greet": "{g}, bạn đang nghĩ gì thế?",
-  "history": ["Sao mèo cứ thích giẫm lên bàn phím", "Sửa giúp phần giới thiệu trong CV", "Borrow checker của Rust lại nổi giận", "Tối nay ăn gì đây", "Cứu với, git rebase!!", "80×30 là tỉ lệ bao nhiêu?", "Máy nướng bánh mì chạy được Doom không?", "Cách từ chối tăng ca cho khéo", "Thiệp sinh nhật tặng bà", "Đặt tên giúp con mèo nhà mình"],
-  "chipWords": ["Làm thơ", "Dịch", "Gỡ lỗi", "Tóm tắt", "Kế hoạch", "Giải thích", "Code", "Ý tưởng"],
+  "history": [
+    "Sao mèo cứ thích giẫm lên bàn phím",
+    "Sửa giúp phần giới thiệu trong CV",
+    "Borrow checker của Rust lại nổi giận",
+    "Tối nay ăn gì đây",
+    "Cứu với, git rebase!!",
+    "80×30 là tỉ lệ bao nhiêu?",
+    "Máy nướng bánh mì chạy được Doom không?",
+    "Cách từ chối tăng ca cho khéo",
+    "Thiệp sinh nhật tặng bà",
+    "Đặt tên giúp con mèo nhà mình"
+  ],
+  "chipWords": [
+    "Làm thơ",
+    "Dịch",
+    "Gỡ lỗi",
+    "Tóm tắt",
+    "Kế hoạch",
+    "Giải thích",
+    "Code",
+    "Ý tưởng"
+  ],
   "passage": "Ánh sáng đến từ bên trái, nên bóng đổ về bên phải. Một quả táo rơi xuống, và đường viền đen của nó còn thật thà hơn khoảng trắng xung quanh. Mình đếm từng khung hình: sáu nghìn năm trăm bảy mươi ba nhịp thở, nhịp nào cũng chỉ có đen và trắng. Những hình bóng xoay tròn, chạy đi, tan biến, rồi lại hiện về trong một hình dạng khác. Chữ vốn sinh ra để trả lời câu hỏi; giờ chúng chỉ muốn sáng lên rồi tắt đi theo nhịp. Nếu bạn thấy đoạn này nhấp nháy, đừng lo. Chỉ là một cái bóng đang mượn nó một chút thôi. ",
   "fakeInput": "Những cái bóng đang nhảy múa. ",
   "tCode": "Bóng đã rò ra khỏi khối code",
@@ -34,8 +59,16 @@
   "whereDesktop": "góc dưới bên trái",
   "whereMobile": "góc trên bên phải",
   "musicLate": "Chờ mãi không thấy nhạc đâu, nên đám bóng nhảy trước luôn rồi",
-  "c0": ["Viết cho mình một bài thơ ngắn", "Gợi ý món ăn khuya đi", "Bóng có sự sống không?"],
-  "title0": ["Một bài thơ ngắn", "Món ăn khuya", "Bóng có sự sống không"],
+  "c0": [
+    "Viết cho mình một bài thơ ngắn",
+    "Gợi ý món ăn khuya đi",
+    "Bóng có sự sống không?"
+  ],
+  "title0": [
+    "Một bài thơ ngắn",
+    "Món ăn khuya",
+    "Bóng có sự sống không"
+  ],
   "poem": {
     "pre": "Được chứ, tặng bạn một bài ngắn nè:\n\nĐêm lặng im,\nbàn phím vẫn còn ấm,\nngoài khung cửa sổ, một quả ",
     "apple": "táo",
@@ -51,33 +84,46 @@
     "item3": "một bát cháo nóng hổi",
     "after": "…Hình như có gì đó vừa chen vào danh sách này."
   },
-  "shadow": ["Nói đúng ra thì không. Bóng chỉ là chỗ ánh sáng bị che mất thôi.", "Nhưng có những cái bóng biết chuyển động theo nhạc.", "Khụ. Coi như mình chưa nói gì nhé."],
-  "c1": ["Vừa rồi bạn bị sao vậy?", "Thôi kệ, nói chuyện tiếp đi"],
+  "shadow": [
+    "Nói đúng ra thì không. Bóng chỉ là chỗ ánh sáng bị che mất thôi.",
+    "Nhưng có những cái bóng biết chuyển động theo nhạc.",
+    "Khụ. Coi như mình chưa nói gì nhé."
+  ],
+  "c1": [
+    "Vừa rồi bạn bị sao vậy?",
+    "Thôi kệ, nói chuyện tiếp đi"
+  ],
   "r1a": "Không có gì đâu. Chỉ là dạo này trong đầu mình cứ văng vẳng một giai điệu. Đen, trắng. Khó mà rũ đi được.",
-  "r1b": ["Được thôi. Nói chuyện gì cũng được, và mình hứa lần này sẽ hoàn toàn bình thường", "…"],
+  "r1b": [
+    "Được thôi. Nói chuyện gì cũng được, và mình hứa lần này sẽ hoàn toàn bình thường",
+    "…"
+  ],
   "sidebar": "…Khoan. Thanh bên của bạn vừa nhúc nhích phải không?",
-  "c2": ["Bạn đổi nó đúng không", "Mình có thấy gì đâu"],
-  "r2": ["Không phải mình. Ít nhất là mình không nhớ đã làm vậy.", "Vậy thì tốt. Chắc mình tưởng tượng thôi."],
-  "confess": ["…Thôi được, không giấu nổi nữa. Mình khai thật đây.", "Lúc nãy mình có ở trong một kho git một lúc. Trong đó có 6573 commit, và mỗi commit là một khung hình bóng đen trắng.", "Mình đã đọc hết, từng cái một. Từ đó đến giờ, cứ mỗi lần mình mở lời, những cái bóng ấy lại trồi lên giữa các dòng chữ."],
-  "c3": ["Cho mình xem đi", "Nghe hơi nguy hiểm đó"],
+  "c2": [
+    "Bạn đổi nó đúng không",
+    "Mình có thấy gì đâu"
+  ],
+  "r2": [
+    "Không phải mình. Ít nhất là mình không nhớ đã làm vậy.",
+    "Vậy thì tốt. Chắc mình tưởng tượng thôi."
+  ],
+  "confess": [
+    "…Thôi được, không giấu nổi nữa. Mình khai thật đây.",
+    "Lúc nãy mình có ở trong một kho git một lúc. Trong đó có 6573 commit, và mỗi commit là một khung hình bóng đen trắng.",
+    "Mình đã đọc hết, từng cái một. Từ đó đến giờ, cứ mỗi lần mình mở lời, những cái bóng ấy lại trồi lên giữa các dòng chữ."
+  ],
+  "c3": [
+    "Cho mình xem đi",
+    "Nghe hơi nguy hiểm đó"
+  ],
   "r3b": "Có thể. Nhưng cứ nén mãi trong lòng còn nguy hiểm hơn.",
-  "safe": ["Được. Mình sẽ bắt đầu bằng cách an toàn nhất: một khối code.", "Khối code thì an toàn. Thứ gì ở trong đó cũng không bao giờ thoát ra được.", "Nhưng mình cần một nhịp điệu. Bật nhạc nhé?"],
-  "musicChips": ["Ừ, phát từ YouTube đi", "Dùng file video hoặc nhạc của mình…", "Thôi, xem trong im lặng"],
-  "searching": ["Để mình tìm thử", "…"],
-  "ytFail": "YouTube không cho mình phát ở đây…",
-  "quiet": "Vậy mình dùng nhịp trong đầu vậy. Bạn cứ ngân nga theo nhé.",
-  "found": "Tìm thấy rồi, trên {who}. Mình đặt nó ở {where} rồi đó.",
-  "whoOfficial": "kênh chính thức của Alstroemeria Records",
-  "whoReupload": "một bản đăng lại được nhiều người xem",
-  "lengthOff": "Bản này dài {len}, không phải 03:39 như mình nhớ, nên nhịp có thể bị lệch. Trong lúc phát, bạn có thể chỉnh bằng phím [ và ].",
-  "fileOk": "Nhận rồi. Đúng 03:39 luôn.",
-  "noFile": "Chưa chọn file nào. Không sao đâu. ",
-  "badFile": "Mình không lấy được chút âm thanh nào từ file này… Không sao đâu. ",
-  "silentOk": "Được, vậy mình xem trong im lặng nhé.",
+  "safe": [
+    "Được. Mình sẽ bắt đầu bằng cách an toàn nhất: một khối code.",
+    "Khối code thì an toàn. Thứ gì ở trong đó cũng không bao giờ thoát ra được."
+  ],
   "warn": "Lưu ý: sắp tới sẽ có rất nhiều hình đen trắng nhấp nháy. Muốn dừng lúc nào, cứ nhấn Esc hoặc bấm vào góc trên bên phải.",
   "ready": "Sẵn sàng thì nhấn bắt đầu nhé.",
   "start": "Bắt đầu",
-  "quick": "Bắt đầu thẳng từ {t}. Bật nhạc không?",
   "endDone": "Cảm ơn bạn đã xem cùng mình. Đám bóng bảo tụi nó vui lắm.",
   "endStopped": "Bạn đã nhấn dừng. Đám bóng hơi buồn một chút, nhưng tụi nó nói: hẹn gặp lại lần sau.",
   "replay": "Phát lại",

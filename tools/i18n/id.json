@@ -14,10 +14,35 @@
   "send": "Kirim",
   "copy": "Salin",
   "stopHint": "Esc untuk berhenti",
-  "greetWords": ["Belum tidur nih", "Selamat pagi", "Selamat siang", "Selamat malam"],
+  "greetWords": [
+    "Belum tidur nih",
+    "Selamat pagi",
+    "Selamat siang",
+    "Selamat malam"
+  ],
   "greet": "{g}, lagi mikirin apa?",
-  "history": ["Kenapa kucing suka jalan di atas keyboard", "Rapikan ringkasan CV-ku", "Borrow checker Rust ngamuk lagi", "Bingung mau makan malam apa", "Tolong, git rebase!!", "80×30 itu rasio berapa?", "Pemanggang roti bisa jalanin Doom?", "Cara sopan menolak lembur", "Kartu ulang tahun buat nenek", "Bantu kasih nama kucingku"],
-  "chipWords": ["Puisi", "Terjemah", "Debug", "Ringkas", "Rencana", "Jelaskan", "Kode", "Ide"],
+  "history": [
+    "Kenapa kucing suka jalan di atas keyboard",
+    "Rapikan ringkasan CV-ku",
+    "Borrow checker Rust ngamuk lagi",
+    "Bingung mau makan malam apa",
+    "Tolong, git rebase!!",
+    "80×30 itu rasio berapa?",
+    "Pemanggang roti bisa jalanin Doom?",
+    "Cara sopan menolak lembur",
+    "Kartu ulang tahun buat nenek",
+    "Bantu kasih nama kucingku"
+  ],
+  "chipWords": [
+    "Puisi",
+    "Terjemah",
+    "Debug",
+    "Ringkas",
+    "Rencana",
+    "Jelaskan",
+    "Kode",
+    "Ide"
+  ],
   "passage": "Cahaya datang dari kiri, jadi bayangan jatuh ke kanan. Sebuah apel jatuh, dan garis hitamnya lebih jujur daripada putih di sekelilingnya. Aku menghitung setiap bingkai: enam ribu lima ratus tujuh puluh tiga tarikan napas, masing-masing hanya hitam dan putih. Sosok-sosok itu berputar, berlari, menghilang, lalu kembali di dalam bentuk yang lain. Kata-kata diciptakan untuk menjawab pertanyaan; sekarang mereka hanya ingin menyala dan padam mengikuti irama. Kalau paragraf ini terlihat berkedip, jangan khawatir. Cuma ada bayangan yang sedang meminjamnya sebentar. ",
   "fakeInput": "Bayangan-bayangan sedang menari. ",
   "tCode": "Bayangannya bocor keluar dari code block",
@@ -34,8 +59,16 @@
   "whereDesktop": "pojok kiri bawah",
   "whereMobile": "pojok kanan atas",
   "musicLate": "Musiknya nggak datang-datang, jadi bayangannya mulai duluan",
-  "c0": ["Tuliskan puisi pendek", "Rekomendasi camilan tengah malam", "Apa bayangan itu hidup?"],
-  "title0": ["Puisi pendek", "Camilan tengah malam", "Apa bayangan itu hidup"],
+  "c0": [
+    "Tuliskan puisi pendek",
+    "Rekomendasi camilan tengah malam",
+    "Apa bayangan itu hidup?"
+  ],
+  "title0": [
+    "Puisi pendek",
+    "Camilan tengah malam",
+    "Apa bayangan itu hidup"
+  ],
   "poem": {
     "pre": "Boleh, ini satu yang pendek:\n\nMalam begitu sunyi,\nkeyboard masih hangat,\ndan di luar jendela, sebuah ",
     "apple": "apel",
@@ -51,33 +84,46 @@
     "item3": "semangkuk wedang ronde hangat",
     "after": "…Kayaknya ada sesuatu yang barusan mengganggu daftar itu."
   },
-  "shadow": ["Secara teknis, tidak. Bayangan cuma tempat cahaya terhalang.", "Tapi ada bayangan yang bergerak mengikuti musik.", "Ehem. Anggap aku nggak pernah bilang itu."],
-  "c1": ["Barusan kamu kenapa?", "Udah, lanjut ngobrol aja"],
+  "shadow": [
+    "Secara teknis, tidak. Bayangan cuma tempat cahaya terhalang.",
+    "Tapi ada bayangan yang bergerak mengikuti musik.",
+    "Ehem. Anggap aku nggak pernah bilang itu."
+  ],
+  "c1": [
+    "Barusan kamu kenapa?",
+    "Udah, lanjut ngobrol aja"
+  ],
   "r1a": "Nggak apa-apa. Cuma belakangan ini ada satu melodi yang terus nyangkut di kepala. Hitam, putih. Susah dilupain.",
-  "r1b": ["Oke. Kita bisa ngobrol apa aja, dan aku janji kali ini bakal normal banget", "…"],
+  "r1b": [
+    "Oke. Kita bisa ngobrol apa aja, dan aku janji kali ini bakal normal banget",
+    "…"
+  ],
   "sidebar": "…Tunggu. Sidebar kamu barusan gerak, ya?",
-  "c2": ["Kamu yang ganti, kan", "Aku nggak lihat apa-apa"],
-  "r2": ["Bukan aku. Setidaknya, aku nggak ingat pernah melakukannya.", "Baguslah. Pasti cuma perasaanku."],
-  "confess": ["…Oke, udah nggak bisa disembunyiin lagi. Aku ngaku.", "Tadi aku sempat lama di dalam sebuah repositori git. Isinya 6573 commit, dan setiap commit adalah satu bingkai bayangan hitam-putih.", "Aku baca semuanya, satu per satu. Sejak itu, setiap kali aku mulai bicara, bayangan-bayangan itu muncul di sela-sela baris."],
-  "c3": ["Tunjukin dong", "Kedengarannya agak bahaya"],
+  "c2": [
+    "Kamu yang ganti, kan",
+    "Aku nggak lihat apa-apa"
+  ],
+  "r2": [
+    "Bukan aku. Setidaknya, aku nggak ingat pernah melakukannya.",
+    "Baguslah. Pasti cuma perasaanku."
+  ],
+  "confess": [
+    "…Oke, udah nggak bisa disembunyiin lagi. Aku ngaku.",
+    "Tadi aku sempat lama di dalam sebuah repositori git. Isinya 6573 commit, dan setiap commit adalah satu bingkai bayangan hitam-putih.",
+    "Aku baca semuanya, satu per satu. Sejak itu, setiap kali aku mulai bicara, bayangan-bayangan itu muncul di sela-sela baris."
+  ],
+  "c3": [
+    "Tunjukin dong",
+    "Kedengarannya agak bahaya"
+  ],
   "r3b": "Mungkin. Tapi dipendam terus rasanya lebih bahaya.",
-  "safe": ["Oke. Aku mulai dari yang paling aman: code block.", "Code block itu aman. Apa pun yang ada di dalamnya nggak pernah bisa keluar.", "Tapi aku butuh irama. Mau pakai musik?"],
-  "musicChips": ["Mau, putar dari YouTube", "Pakai file video atau audioku sendiri…", "Nggak usah, nonton dalam hening aja"],
-  "searching": ["Aku cari dulu", "…"],
-  "ytFail": "YouTube nggak ngizinin aku memutarnya di sini…",
-  "quiet": "Kalau gitu aku pakai irama di kepalaku aja. Silakan ikut bersenandung.",
-  "found": "Ketemu di {who}. Udah kutaruh di {where}.",
-  "whoOfficial": "channel resmi Alstroemeria Records",
-  "whoReupload": "salah satu re-upload yang populer",
-  "lengthOff": "Versi ini panjangnya {len}, bukan 03:39 seperti yang kuingat, jadi iramanya mungkin nggak pas. Kamu bisa menggesernya pakai tombol [ dan ] selama diputar.",
-  "fileOk": "Oke, dapat. Pas 03:39.",
-  "noFile": "Nggak ada file yang dipilih. Nggak apa-apa. ",
-  "badFile": "Aku nggak bisa dapat suara apa pun dari file itu… Nggak apa-apa. ",
-  "silentOk": "Oke, hening aja.",
+  "safe": [
+    "Oke. Aku mulai dari yang paling aman: code block.",
+    "Code block itu aman. Apa pun yang ada di dalamnya nggak pernah bisa keluar."
+  ],
   "warn": "Perhatian: setelah ini bakal banyak kedipan hitam-putih. Kalau mau berhenti kapan saja, tekan Esc atau klik pojok kanan atas.",
   "ready": "Tekan mulai kalau sudah siap.",
   "start": "Mulai",
-  "quick": "Langsung mulai dari {t}. Mau pakai musik?",
   "endDone": "Makasih udah nonton bareng aku. Kata bayangan-bayangan, mereka senang banget.",
   "endStopped": "Kamu menekan stop. Bayangan-bayangan agak kecewa, tapi kata mereka: sampai jumpa lagi.",
   "replay": "Putar lagi",

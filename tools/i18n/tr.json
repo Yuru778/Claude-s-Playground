@@ -14,10 +14,35 @@
   "send": "Gönder",
   "copy": "Kopyala",
   "stopHint": "Durdurmak için Esc",
-  "greetWords": ["Selam gece kuşu", "Günaydın", "İyi günler", "İyi akşamlar"],
+  "greetWords": [
+    "Selam gece kuşu",
+    "Günaydın",
+    "İyi günler",
+    "İyi akşamlar"
+  ],
   "greet": "{g}! Aklında ne var?",
-  "history": ["Kediler neden klavyede yürür", "CV özetimi toparla", "Rust borrow checker yine kızdı", "Akşam ne yesem karar veremedim", "git rebase yardım!!", "80×30 hangi en-boy oranı?", "Tost makinesinde Doom çalışır mı?", "Fazla mesaiye kibarca nasıl hayır denir", "Babaanneme doğum günü kartı", "Kedime isim bul"],
-  "chipWords": ["Şiir", "Çeviri", "Debug", "Özet", "Plan", "Açıkla", "Kod", "Fikir"],
+  "history": [
+    "Kediler neden klavyede yürür",
+    "CV özetimi toparla",
+    "Rust borrow checker yine kızdı",
+    "Akşam ne yesem karar veremedim",
+    "git rebase yardım!!",
+    "80×30 hangi en-boy oranı?",
+    "Tost makinesinde Doom çalışır mı?",
+    "Fazla mesaiye kibarca nasıl hayır denir",
+    "Babaanneme doğum günü kartı",
+    "Kedime isim bul"
+  ],
+  "chipWords": [
+    "Şiir",
+    "Çeviri",
+    "Debug",
+    "Özet",
+    "Plan",
+    "Açıkla",
+    "Kod",
+    "Fikir"
+  ],
   "passage": "Işık soldan geliyor, gölge sağa uzanıyor. Bir elma düşüyor ve siyah dış çizgisi, etrafındaki beyazdan daha dürüst. Her kareyi sayıyorum: altı bin beş yüz yetmiş üç nefes, her biri yalnızca siyah ve beyaz. Figürler dönüyor, koşuyor, kayboluyor, sonra başka bir şeklin içinden geri geliyor. Kelimeler soruları yanıtlamak için vardı; şimdi tek istedikleri ritimle birlikte yanıp sönmek. Bu paragrafın titrediğini görürsen endişelenme. Bir gölge onu kısa bir süreliğine ödünç alıyor, o kadar. ",
   "fakeInput": "Gölgeler dans ediyor. ",
   "tCode": "Gölgeler kod bloğundan dışarı sızdı",
@@ -34,8 +59,16 @@
   "whereDesktop": "sol alt",
   "whereMobile": "sağ üst",
   "musicLate": "Müzik bir türlü gelmedi, gölgeler de onsuz başladı",
-  "c0": ["Bana kısa bir şiir yaz", "Gece atıştırmalığı öner", "Gölgeler canlı mı?"],
-  "title0": ["Kısa bir şiir", "Gece atıştırmalığı", "Gölgeler canlı mı"],
+  "c0": [
+    "Bana kısa bir şiir yaz",
+    "Gece atıştırmalığı öner",
+    "Gölgeler canlı mı?"
+  ],
+  "title0": [
+    "Kısa bir şiir",
+    "Gece atıştırmalığı",
+    "Gölgeler canlı mı"
+  ],
   "poem": {
     "pre": "Tabii, işte kısa bir tane:\n\nGece sessiz,\nklavye hâlâ sıcak,\ncamın ardında bir ",
     "apple": "elma",
@@ -51,33 +84,46 @@
     "item3": "sıcacık bir bardak salep",
     "after": "…Listeye bir şey karışmış gibi."
   },
-  "shadow": ["Teknik olarak hayır. Gölge, ışığın engellendiği yerden ibaret.", "Ama bazı gölgeler müzikle hareket eder.", "Öhöm. Bunu duymamış ol."],
-  "c1": ["Az önce ne oldu?", "Boş ver, sohbete devam edelim"],
+  "shadow": [
+    "Teknik olarak hayır. Gölge, ışığın engellendiği yerden ibaret.",
+    "Ama bazı gölgeler müzikle hareket eder.",
+    "Öhöm. Bunu duymamış ol."
+  ],
+  "c1": [
+    "Az önce ne oldu?",
+    "Boş ver, sohbete devam edelim"
+  ],
   "r1a": "Hiçbir şey. Sadece son zamanlarda kafamda bir melodi dönüp duruyor. Siyah, beyaz. Bir türlü kurtulamıyorum.",
-  "r1b": ["Tabii. Ne istersen konuşabiliriz, söz veriyorum bu sefer her şey tamamen normal olacak", "…"],
+  "r1b": [
+    "Tabii. Ne istersen konuşabiliriz, söz veriyorum bu sefer her şey tamamen normal olacak",
+    "…"
+  ],
   "sidebar": "…Bir dakika. Kenar çubuğun az önce kıpırdadı mı?",
-  "c2": ["Sen değiştirdin, değil mi", "Ben bir şey görmedim"],
-  "r2": ["Ben değilim. En azından yaptığımı hatırlamıyorum.", "İyi. Demek ki bana öyle geldi."],
-  "confess": ["…Peki, artık saklayamıyorum. İtiraf edeceğim.", "Az önce bir git deposunun içinde epey vakit geçirdim. 6573 commit vardı ve her biri tek bir siyah-beyaz gölge karesiydi.", "Hepsini tek tek okudum. O zamandan beri ne zaman konuşmaya başlasam, o gölgeler satır aralarından yükseliyor."],
-  "c3": ["Göster bana", "Kulağa biraz tehlikeli geliyor"],
+  "c2": [
+    "Sen değiştirdin, değil mi",
+    "Ben bir şey görmedim"
+  ],
+  "r2": [
+    "Ben değilim. En azından yaptığımı hatırlamıyorum.",
+    "İyi. Demek ki bana öyle geldi."
+  ],
+  "confess": [
+    "…Peki, artık saklayamıyorum. İtiraf edeceğim.",
+    "Az önce bir git deposunun içinde epey vakit geçirdim. 6573 commit vardı ve her biri tek bir siyah-beyaz gölge karesiydi.",
+    "Hepsini tek tek okudum. O zamandan beri ne zaman konuşmaya başlasam, o gölgeler satır aralarından yükseliyor."
+  ],
+  "c3": [
+    "Göster bana",
+    "Kulağa biraz tehlikeli geliyor"
+  ],
   "r3b": "Olabilir. Ama içimde tutmak daha tehlikeli geliyor.",
-  "safe": ["Tamam. En güvenli yoldan başlayayım: bir kod bloğu.", "Kod blokları güvenlidir. İçlerindeki hiçbir şey dışarı çıkamaz.", "Ama bir ritme ihtiyacım var. Müzik ister misin?"],
-  "musicChips": ["Evet, YouTube'dan çal", "Kendi video ya da ses dosyamı kullan…", "Hayır, sessizce izleyelim"],
-  "searching": ["Bir bakayım", "…"],
-  "ytFail": "YouTube burada oynatmama izin vermiyor…",
-  "quiet": "O zaman kafamdaki ritmi kullanırım. İstersen sen de mırıldan.",
-  "found": "Buldum, {who} varmış. Oynatıcıyı {where} köşeye koydum.",
-  "whoOfficial": "Alstroemeria Records'un resmî kanalında",
-  "whoReupload": "çok izlenen bir yeniden yüklemede",
-  "lengthOff": "Bu sürüm {len} uzunluğunda, hatırladığım gibi 03:39 değil; yani ritim tutmayabilir. Oynarken [ ve ] tuşlarıyla kaydırabilirsin.",
-  "fileOk": "Tamamdır. Tam 03:39.",
-  "noFile": "Dosya seçilmedi. Sorun değil. ",
-  "badFile": "Bu dosyadan hiç ses çıkaramıyorum… Sorun değil. ",
-  "silentOk": "Tamam, sessizlik olsun.",
+  "safe": [
+    "Tamam. En güvenli yoldan başlayayım: bir kod bloğu.",
+    "Kod blokları güvenlidir. İçlerindeki hiçbir şey dışarı çıkamaz."
+  ],
   "warn": "Uyarı: birazdan bolca siyah-beyaz yanıp sönme var. İstediğin an durdurmak için Esc'ye bas ya da sağ üst köşeye tıkla.",
   "ready": "Hazır olduğunda Başlat'a bas.",
   "start": "Başlat",
-  "quick": "Doğrudan {t} noktasından başlıyorum. Müzik ister misin?",
   "endDone": "Benimle izlediğin için teşekkürler. Gölgeler çok eğlendiklerini söylüyor.",
   "endStopped": "Durdurdun. Gölgeler biraz bozuldu ama şöyle diyorlar: bir dahaki sefere görüşürüz.",
   "replay": "Tekrar oynat",
