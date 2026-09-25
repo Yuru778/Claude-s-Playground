@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>夕焼けシグナル</title>
+<meta name="description" content="A J-pop instrumental written in Strudel. Opens in strudel.cc.">
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #1f1a24; color: #f3e9dc;
+         font: 16px/1.6 ui-sans-serif, system-ui, sans-serif; text-align: center; padding: 16px; }
+  a { color: #ffb38a; }
+</style>
+</head>
+<body>
+<p>夕焼けシグナル — Sunset Signal<br><a id="go" href="music/yuyake-signal.js">Opening in Strudel…</a></p>
+<script>
+// Hand the song to strudel.cc the way its share links do: UTF-8 → base64 in the URL hash.
+fetch("music/yuyake-signal.js", { cache: "no-cache" })
+  .then(r => r.text())
+  .then(code => {
+    const bytes = new TextEncoder().encode(code);
+    const url = "https://strudel.cc/#" + encodeURIComponent(btoa(String.fromCharCode(...bytes)));
+    document.getElementById("go").href = url;
+    location.replace(url);
+  });
+</script>
+</body>
+</html>

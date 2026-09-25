@@ -74,3 +74,23 @@ python3 tools/build.py badapple.mp4 | git fast-import
 - 影繪 PV：あにら（NicoNico `sm8628149`）
 
 這個倉庫只存 80×60 的黑白剪影，不包含影片或音訊。
+
+## 🎵 夕焼けシグナル（Sunset Signal）：用 Strudel 寫的 J-pop
+
+[`web/music/yuyake-signal.js`](web/music/yuyake-signal.js) 是一首用 [Strudel](https://strudel.cc) 程式碼寫成的 J-pop 器樂曲，原創旋律，約 1 分鐘。
+
+▶ **直接聽：<https://yuru778.github.io/Claude-s-Playground/sunset.html>**（會自動打開 strudel.cc 並載入程式碼，按播放或 Ctrl+Enter）
+
+| 段落 | 小節 | 和聲 |
+|---|---|---|
+| 前奏 | 4 | 王道進行前半，琶音＋鋪底，最後一小節小鼓滾奏 |
+| A 段 | 8 | Bm–G–A–D，鋼琴切分、8 分音符貝斯 |
+| B 段 | 8 | 丸サ進行 GM7–F#7–Bm7–Am7 D7，最後停在 A 準備進副歌 |
+| 副歌 | 8 | 王道進行 IV–V–iii–vi（G–A–F#m–Bm–Em–A–D） |
+| 間奏 | 2 | A → B♭，爵士鼓過門，旋律往上爬 |
+| 最後副歌 | 8 | 整首升半音到 E♭（J-pop 經典的最後轉調） |
+| 尾奏 | 4 | A♭–B♭–E♭ 收尾 |
+
+- 速度 172 BPM（`setcpm(172 / 4)`，一個 cycle 一小節），D 大調
+- 音色：supersaw 主旋律、鋼琴、supersaw 鋪底、三角波琶音、鋸齒波貝斯、TR-909 鼓組
+- 寫好後用 `@strudel/core` 在 Node 裡實際執行、逐小節檢查過：112 個強拍旋律音沒有任何一個落在和弦音上方半音
