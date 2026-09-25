@@ -94,3 +94,7 @@ python3 tools/build.py badapple.mp4 | git fast-import
 - 速度 172 BPM（`setcpm(172 / 4)`，一個 cycle 一小節），D 大調
 - 音色：supersaw 主旋律、鋼琴、supersaw 鋪底、三角波琶音、鋸齒波貝斯、TR-909 鼓組
 - 寫好後用 `@strudel/core` 在 Node 裡實際執行、逐小節檢查過：112 個強拍旋律音沒有任何一個落在和弦音上方半音
+
+## 🎤 夕焼けシグナル（vocal ver.）：有歌聲的動畫主題曲風 J-pop
+
+[`song/`](song/)：同一個主題延伸成有歌詞、有人聲、有樂團的完整歌曲，約 80 秒。作詞作曲編曲都寫在 Python 裡，歌聲用 NNSVS 神經網路歌聲合成、樂器用 FluidSynth 渲染再混音。▶ [yuyake-signal.mp3](song/yuyake-signal.mp3)
